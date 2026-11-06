@@ -2,9 +2,9 @@
 
 Version 2.1 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
 
-Kalinga is Tagalog for care. Version 1 (Kalinga) decoded Medi-Cal notices for navigators. Version 2 keeps that core and extends it to a second group the same navigators already serve: Asian American elders in the Bay Area, especially women who live alone.
+Carethropic decodes Medi-Cal notices for navigators and extends that core to a second group the same navigators already serve: Asian American elders in the Bay Area, especially women who live alone.
 
-**Name.** The product is **Carethropic**: care, built with Anthropic's Claude, for the people nonprofits serve. During the hackathon the elder features were prototyped under the working name *Kin*; that name is retired. *Kalinga* remains the name of the deterministic notice engine (`backend/rules.py`). Tagline: *care that remembers.*
+**Name.** The product is **Carethropic**: care, built with Anthropic's Claude, for the people nonprofits serve. Tagline: *care that remembers.*
 
 ## 1. One sentence
 
@@ -12,7 +12,7 @@ Carethropic gives Bay Area nonprofit navigators one trusted care record for the 
 
 ## 2. Why these two groups belong in one product
 
-I found five points of common ground between the original users (Asian American women on Medi-Cal, many pregnant or postpartum) and the new users (Asian American elders living alone).
+Carethropic serves two groups: Asian American women on Medi-Cal, many pregnant or postpartum, and Asian American elders living alone. They share five points of common ground.
 
 | Shared need | Women on Medi-Cal | Elders living alone |
 | --- | --- | --- |
@@ -49,11 +49,11 @@ Flags, in priority order:
 3. **Missed check-in.** An elder living alone has not confirmed a daily check-in or a scheduled medication within the grace window.
 4. **Upcoming.** A deadline or appointment within 14 days.
 
-### 4.2 Notice Decoder (existing, kept)
+### 4.2 Notice Decoder
 
-Pipeline per notice: extract (Claude vision or pasted text) → rules engine (deadlines, defects, exemptions) → Rights Agent and Health Navigator in parallel → Citation Verifier → plain-language explanation and draft reply → human gate. Version 2 adds one step at the end: **Save to record**, which writes each computed deadline into the person's vault as a dated, cited entry.
+Pipeline per notice: extract (Claude vision or pasted text) → rules engine (deadlines, defects, exemptions) → Rights Agent and Health Navigator in parallel → Citation Verifier → plain-language explanation and draft reply → human gate → **Save to record**, which writes each computed deadline into the person's vault as a dated, cited entry.
 
-### 4.3 Carethropic Record (new)
+### 4.3 Carethropic Record
 
 The record holds four sections, each item with an ID, a source, and an updated date.
 
@@ -64,7 +64,7 @@ The record holds four sections, each item with an ID, a source, and an updated d
 
 Elder view rules: base font 22px, one action per screen area, icons plus words, full UI in the selected language (English, Tagalog, Traditional Chinese, Vietnamese, Korean, Hindi, Spanish), browser voice input and read-aloud, and a single "Call my navigator" button that is always visible.
 
-### 4.4 Ask Carethropic (new)
+### 4.4 Ask Carethropic
 
 The elder or navigator asks a question by typing or with the browser microphone. Examples: "Did I take my blood pressure pill today?", "When is my Medi-Cal deadline?", "Who is my emergency contact?"
 
@@ -77,7 +77,7 @@ How it stays safe:
 5. **Check-in honesty.** "Did I take it?" is answered only from her confirmation log. If there is no confirmation, Carethropic says it has no record of it and suggests calling the pharmacist before taking another dose.
 6. **Replay mode.** Without an API key, the same retrieval, guard, and verifier run, and a template answer is built from the cited records. The demo never depends on network access.
 
-### 4.5 Daily check-in and missed check-in flag (new)
+### 4.5 Daily check-in and missed check-in flag
 
 The elder taps "I'm OK today" and taps each scheduled medication as taken. The server computes a status per person:
 
@@ -88,7 +88,7 @@ The elder taps "I'm OK today" and taps each scheduled medication as taken. The s
 
 The demo sends no SMS or calls. The navigator decides.
 
-### 4.6 Emergency QR card (new)
+### 4.6 Emergency QR card
 
 A printable wallet card in English plus her language. The QR code encodes a short plain-text summary (name, language, allergies, conditions she chose to share, medications, ICE contacts). Rules:
 
@@ -97,7 +97,7 @@ A printable wallet card in English plus her language. The QR code encodes a shor
 - The consent event is hashed into the audit chain.
 - Revoking consent blocks the card endpoint.
 
-### 4.7 Nonprofit Finder (new)
+### 4.7 Nonprofit Finder
 
 A search over a curated, versioned directory of two lists:
 
