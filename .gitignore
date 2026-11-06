@@ -1,6 +1,4 @@
 __pycache__/
 *.pyc
-.env
-.venv/
-backend/audit_log.jsonl
 .pytest_cache/
+.env
