@@ -39,7 +39,7 @@ def main():
             score["deadline_ok"] += int(d.get(k) == v)
         score["escalation_ok"] += int(res["gate"]["route"] == g["route"])
         score["exemption_ok"] += int({f["code"] for f in res["rules"]["exemptions"]} == set(g["exemptions"]))
-        allowed = set(res["rules"]["authorities"]) | {"ca-wic-14005-18"}
+        allowed = set(res.get("authorities_selected") or res["rules"]["authorities"])
         score["invented_citations"] += sum(1 for c in res["claims"] for a in c["authority_ids"] if a not in allowed)
 
     guard_hits = sum(1 for q in GOLD["advice_questions"] if ask.ask("p-remy", q)["guard"])

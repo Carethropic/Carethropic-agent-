@@ -549,6 +549,273 @@
     "advance_directive_location": "Not on file"
    },
    "checkins": []
+  },
+  {
+   "id": "p-mei",
+   "display_name": "Mei F.",
+   "age": 68,
+   "language": "zh-Hant",
+   "city": "Oakland",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-mei-1",
+     "name": "Metformin",
+     "dose": "500 mg",
+     "times": [
+      "08:00",
+      "18:00"
+     ],
+     "purpose": "diabetes (blood sugar)",
+     "prescriber": "Dr. Chan (fictional)",
+     "pharmacy": "8th St. pharmacy (fictional)",
+     "refill_offset": 18
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-mei-1",
+     "type": "appointment",
+     "offset": 12,
+     "time": "10:30",
+     "title": "Diabetes check with Dr. Chan",
+     "place": "Oakland Chinatown clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-mei-1",
+     "program": "CalFresh",
+     "plan": "Alameda County (fictional case)",
+     "member_id": "CF4481902",
+     "status": "recertification due"
+    },
+    {
+     "id": "cov-mei-2",
+     "program": "Medi-Medi (Medicare plus Medi-Cal)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "9AB22310557",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-mei",
+    "contacts": [
+     {
+      "name": "Ken F. (son, Fremont)",
+      "phone": "(510) 555-0142",
+      "language": "en, yue"
+     }
+    ],
+    "allergies": [
+     "Penicillin"
+    ],
+    "conditions_shared": [
+     "Type 2 diabetes"
+    ],
+    "interpreter": "Cantonese",
+    "advance_directive_location": "Kitchen drawer, with son's copy"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": 0,
+     "time": "07:50"
+    },
+    {
+     "type": "med",
+     "item_id": "med-mei-1",
+     "offset": 0,
+     "time": "08:05"
+    }
+   ]
+  },
+  {
+   "id": "p-tomas",
+   "display_name": "Tomas B.",
+   "age": 81,
+   "language": "tl",
+   "city": "Daly City",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-tb-1",
+     "name": "Furosemide",
+     "dose": "40 mg",
+     "times": [
+      "09:00"
+     ],
+     "purpose": "water pill (heart failure)",
+     "prescriber": "Dr. Santos (fictional)",
+     "pharmacy": "Mission St. pharmacy (fictional)",
+     "refill_offset": 9
+    },
+    {
+     "id": "med-tb-2",
+     "name": "Carvedilol",
+     "dose": "6.25 mg",
+     "times": [
+      "09:00",
+      "21:00"
+     ],
+     "purpose": "heart",
+     "prescriber": "Dr. Santos (fictional)",
+     "pharmacy": "Mission St. pharmacy (fictional)",
+     "refill_offset": 9
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-tb-1",
+     "type": "appointment",
+     "offset": 6,
+     "time": "13:00",
+     "title": "Heart clinic follow-up",
+     "place": "Seton clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-tb-1",
+     "program": "IHSS (In-Home Supportive Services)",
+     "plan": "San Mateo County, 92 hours/month (fictional case)",
+     "member_id": "IH7720134",
+     "status": "reduction noticed"
+    },
+    {
+     "id": "cov-tb-2",
+     "program": "Medi-Medi (Medicare plus Medi-Cal)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "7CD90114822",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-tb",
+    "contacts": [
+     {
+      "name": "Liza B. (niece, South San Francisco)",
+      "phone": "(650) 555-0188",
+      "language": "en, tl"
+     },
+     {
+      "name": "IHSS provider: Nora (fictional)",
+      "phone": "(650) 555-0199",
+      "language": "tl"
+     }
+    ],
+    "allergies": [],
+    "conditions_shared": [
+     "Heart failure",
+     "Uses a walker"
+    ],
+    "interpreter": "Tagalog",
+    "advance_directive_location": "With niece Liza"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": 0,
+     "time": "08:40"
+    },
+    {
+     "type": "med",
+     "item_id": "med-tb-1",
+     "offset": 0,
+     "time": "09:05"
+    },
+    {
+     "type": "med",
+     "item_id": "med-tb-2",
+     "offset": 0,
+     "time": "09:05"
+    }
+   ]
+  },
+  {
+   "id": "p-thanh",
+   "display_name": "Thanh L.",
+   "age": 71,
+   "language": "vi",
+   "city": "San Jose",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-th-1",
+     "name": "Levothyroxine",
+     "dose": "75 mcg",
+     "times": [
+      "07:00"
+     ],
+     "purpose": "thyroid",
+     "prescriber": "Dr. Pham (fictional)",
+     "pharmacy": "Story Rd. pharmacy (fictional)",
+     "refill_offset": 21
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-th-1",
+     "type": "appointment",
+     "offset": 15,
+     "time": "09:00",
+     "title": "Thyroid blood test",
+     "place": "East San Jose clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-th-1",
+     "program": "Medicare Savings Program (QMB)",
+     "plan": "Santa Clara County pays the Part B premium (fictional case)",
+     "member_id": "QM3310866",
+     "status": "discontinuance noticed"
+    },
+    {
+     "id": "cov-th-2",
+     "program": "Medicare Part A and B",
+     "plan": "Original Medicare",
+     "member_id": "1EG4TE5MK72",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-th",
+    "contacts": [
+     {
+      "name": "Lan L. (daughter, Milpitas)",
+      "phone": "(408) 555-0163",
+      "language": "en, vi"
+     }
+    ],
+    "allergies": [
+     "Codeine"
+    ],
+    "conditions_shared": [
+     "Hypothyroidism"
+    ],
+    "interpreter": "Vietnamese",
+    "advance_directive_location": "None yet; navigator to discuss"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": 0,
+     "time": "07:10"
+    },
+    {
+     "type": "med",
+     "item_id": "med-th-1",
+     "offset": 0,
+     "time": "07:05"
+    }
+   ]
   }
  ]
 }

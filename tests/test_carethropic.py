@@ -292,3 +292,95 @@ def test_reset_endpoint_clears_persisted_results():
     assert c.post("/api/reset").json()["ok"]
     assert STORE.load_results() == {}
     assert c.get("/api/meta").json()["seeded_on"] == "2026-11-06"
+
+
+# ---------- CalFresh, IHSS, Medicare Savings Program rules ----------
+def test_calfresh_adverse_action_continued_benefits_and_short_notice():
+    r = rules.evaluate({"notice_type": "calfresh_adverse_action", "notice_date": "2026-11-02", "effective_date": "2026-11-09",
+                        "legal_basis_cited": True, "confidence": {}}, {"age": 68}, TODAY)
+    d = r.deadline_map()
+    assert d["continued_benefits"] == "2026-11-06"     # Nov 8 is a Sunday → Fri Nov 6
+    assert d["hearing_deadline"] == "2027-01-29"       # 90 days = Sun Jan 31 → Fri Jan 29
+    assert {f.code for f in r.defects} == {"short_advance_notice"}
+    assert next(f for f in r.defects if f.code == "short_advance_notice").authority == "fed-7-273-13"
+    assert r.route == "attorney" and r.urgent
+
+
+def test_calfresh_recertification_timely_and_late_windows():
+    r = rules.evaluate({"notice_type": "calfresh_recertification", "notice_date": "2026-11-04", "certification_end_date": "2026-12-31",
+                        "legal_basis_cited": True, "confidence": {}}, {"age": 68}, TODAY)
+    d = r.deadline_map()
+    assert d["recert_timely"] == "2026-12-15"          # 15th of the last month
+    assert d["recert_late_window"] == "2027-01-29"     # Dec 31 + 30 = Sat Jan 30 → Fri Jan 29
+    assert not r.defects and r.route == "navigator"
+    # Notice of expiration sent inside the last month is a defect
+    r2 = rules.evaluate({"notice_type": "calfresh_recertification", "notice_date": "2026-12-03", "certification_end_date": "2026-12-31",
+                         "legal_basis_cited": True, "confidence": {}}, {}, TODAY)
+    assert [f.code for f in r2.defects] == ["late_expiration_notice"] and r2.route == "attorney"
+    # A printed due date earlier than the 15th wins
+    r3 = rules.evaluate({"notice_type": "calfresh_recertification", "notice_date": "2026-11-04", "certification_end_date": "2026-12-31",
+                         "stated_due_date": "2026-12-05", "legal_basis_cited": True, "confidence": {}}, {}, TODAY)
+    assert r3.deadline_map()["recert_timely"] == "2026-12-04"   # Dec 5 is a Saturday
+
+
+def test_ihss_reduction_deadlines_good_cause_limit_and_termination_escalation():
+    r = rules.evaluate({"notice_type": "ihss_reduction", "notice_date": "2026-11-03", "effective_date": "2026-12-01",
+                        "legal_basis_cited": True, "confidence": {}}, {"age": 81, "lives_alone": True}, TODAY)
+    d = r.deadline_map()
+    assert d["aid_paid_pending"] == "2026-11-30"
+    assert d["hearing_deadline"] == "2027-02-01"
+    assert d["hearing_good_cause_limit"] == "2027-04-30"   # 180 days = Sun May 2 → Fri Apr 30
+    assert r.route == "navigator" and not r.defects
+    t = rules.evaluate({"notice_type": "ihss_termination", "notice_date": "2026-11-03", "effective_date": "2026-11-10",
+                        "legal_basis_cited": False, "confidence": {}}, {"age": 81, "lives_alone": True}, TODAY)
+    codes = {f.code for f in t.defects}
+    assert codes == {"short_advance_notice", "missing_legal_basis"}
+    assert next(f for f in t.defects if f.code == "missing_legal_basis").authority == "ca-mpp-22-001"
+    assert any(e.code == "ihss_loss_lives_alone" for e in t.escalations) and t.route == "attorney"
+
+
+def test_asset_limit_and_msp_screening():
+    assert rules.asset_limit(1) == 130_000
+    assert rules.asset_limit(2) == 195_000
+    assert rules.asset_limit(0) == 130_000
+    notice = {"notice_type": "msp_discontinuance", "notice_date": "2026-11-01", "effective_date": "2026-12-01",
+              "reason": "Assets over the limit; includes a transfer to a family member in March 2025.", "legal_basis_cited": True, "confidence": {}}
+    client = {"age": 71, "household_size": 1, "countable_assets": 112_000, "retirement_account_in_distribution": True,
+              "asset_transfer_dates": ["2025-03-15"]}
+    r = rules.evaluate(notice, client, TODAY)
+    d = r.deadline_map()
+    assert d["aid_paid_pending"] == "2026-11-30" and d["hearing_deadline"] == "2027-01-29"
+    assert d["asset_spend_down"] == "2026-12-31"       # end of the month after the notice
+    assert {f.code for f in r.exemptions} == {"under_asset_limit", "retirement_account_exempt"}
+    assert [f.code for f in r.defects] == ["transfer_in_safe_harbor_window"] and r.route == "attorney"
+    # Over the limit, transfer outside the window: no exemption, no defect
+    r2 = rules.evaluate(notice, {"household_size": 1, "countable_assets": 150_000, "asset_transfer_dates": ["2026-02-01"]}, TODAY)
+    assert not r2.exemptions and not r2.defects and r2.route == "navigator"
+    # A notice about income never triggers asset screening
+    r3 = rules.evaluate({**notice, "reason": "Income over the limit."}, client, TODAY)
+    assert not r3.exemptions and not r3.defects
+
+
+def test_msp_renewal_short_window_defect():
+    r = rules.evaluate({"notice_type": "msp_renewal", "notice_date": "2026-11-04", "stated_due_date": "2026-11-20",
+                        "legal_basis_cited": True, "confidence": {}}, {"age": 71}, TODAY)
+    assert r.deadline_map()["renewal_response"] == "2026-11-20"
+    assert [f.code for f in r.defects] == ["short_renewal_window"]
+
+
+def test_new_program_cases_run_in_replay_with_no_removed_claims_and_cited_authorities():
+    for cid in ("mei", "tomas", "thanh"):
+        res = pipeline.run_case(cid)
+        assert res["claims"] and not res["removed_claims"], cid
+        for c in res["claims"]:
+            for a in c["authority_ids"]:
+                assert a in pipeline.KB["authorities"], (cid, a)
+        assert "{{deadline" not in res["drafts"]["letter"]
+    assert "61" in pipeline.RESULTS["tomas"]["drafts"]["letter"] or any("92" in c["text"] for c in pipeline.RESULTS["tomas"]["claims"])
+
+
+def test_regex_extraction_recognises_the_new_programs():
+    assert pipeline._regex_extract("Your IHSS hours change from 92 to 61 effective 2026-12-01")["notice_type"] == "ihss_reduction"
+    assert pipeline._regex_extract("NOTICE OF EXPIRATION: your CalFresh certification period ends 12/31/2026")["notice_type"] == "calfresh_recertification"
+    assert pipeline._regex_extract("Your CalFresh benefits will be reduced effective 12/01/2026")["notice_type"] == "calfresh_adverse_action"
+    assert pipeline._regex_extract("Your Qualified Medicare Beneficiary (QMB) coverage will stop")["notice_type"] == "msp_discontinuance"

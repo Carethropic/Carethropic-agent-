@@ -1,53 +1,113 @@
 {
- "version": "kb-2026.11.06",
+ "version": "kb-2026.11.06b",
  "authorities": {
   "fed-431-210": {
-   "cite": "42 C.F.R. \u00a7 431.210",
+   "cite": "42 C.F.R. § 431.210",
    "title": "Content of notice",
    "summary": "A notice must state the action, the reasons, and the specific rule that supports it.",
    "url": "https://www.ecfr.gov/current/title-42/section-431.210"
   },
   "fed-431-211": {
-   "cite": "42 C.F.R. \u00a7 431.211",
+   "cite": "42 C.F.R. § 431.211",
    "title": "Advance notice",
    "summary": "The agency must mail notice at least 10 days before the date of action.",
    "url": "https://www.ecfr.gov/current/title-42/section-431.211"
   },
   "fed-431-221": {
-   "cite": "42 C.F.R. \u00a7 431.221",
+   "cite": "42 C.F.R. § 431.221",
    "title": "Request for hearing",
    "summary": "Members get a reasonable time, up to 90 days, to request a fair hearing.",
    "url": "https://www.ecfr.gov/current/title-42/section-431.221"
   },
   "fed-431-230": {
-   "cite": "42 C.F.R. \u00a7 431.230",
+   "cite": "42 C.F.R. § 431.230",
    "title": "Maintaining services",
    "summary": "If a hearing is requested before the date of action, benefits continue until the decision.",
    "url": "https://www.ecfr.gov/current/title-42/section-431.230"
   },
   "fed-435-916": {
-   "cite": "42 C.F.R. \u00a7 435.916",
+   "cite": "42 C.F.R. § 435.916",
    "title": "Renewals",
    "summary": "Members get at least 30 days to return renewal information, and a 90-day reconsideration period after termination for not returning it.",
    "url": "https://www.ecfr.gov/current/title-42/section-435.916"
   },
   "ca-wic-10951": {
-   "cite": "Cal. Welf. & Inst. Code \u00a7 10951",
+   "cite": "Cal. Welf. & Inst. Code § 10951",
    "title": "State hearing deadline",
-   "summary": "A state hearing request is timely within 90 days of the notice.",
+   "summary": "A state hearing request is timely within 90 days of the notice. A late request may be heard only for good cause (a substantial reason beyond the person's control) and never more than 180 days after the notice.",
    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=10951.&lawCode=WIC"
   },
   "pl-119-21-71119": {
-   "cite": "Pub. L. 119-21, \u00a7 71119",
+   "cite": "Pub. L. 119-21, § 71119",
    "title": "Medicaid community engagement requirements",
    "summary": "Adults 19 to 64 in the expansion group must report work or community engagement starting by January 1, 2027, with exemptions including pregnancy, postpartum, caretakers of a child 13 or younger, and medically frail members. Noncompliance notices give 30 days to respond.",
    "url": "https://www.congress.gov/bill/119th-congress/house-bill/1"
   },
   "ca-wic-14005-18": {
-   "cite": "Cal. Welf. & Inst. Code \u00a7 14005.18",
+   "cite": "Cal. Welf. & Inst. Code § 14005.18",
    "title": "Postpartum care extension",
    "summary": "Medi-Cal postpartum coverage continues for 12 months after pregnancy ends.",
    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=14005.18.&lawCode=WIC"
+  },
+  "fed-7-273-13": {
+   "cite": "7 C.F.R. § 273.13",
+   "title": "SNAP notice of adverse action",
+   "summary": "Before reducing or ending SNAP (CalFresh) benefits during a certification period, the agency must mail a notice at least 10 days before the action takes effect. The notice must state the action, the reason, the right to a fair hearing, and that benefits can continue during the appeal.",
+   "url": "https://www.ecfr.gov/current/title-7/section-273.13"
+  },
+  "fed-7-273-14": {
+   "cite": "7 C.F.R. § 273.14",
+   "title": "SNAP recertification",
+   "summary": "The notice of expiration must be sent before the first day of the last month of the certification period. A recertification filed by the 15th of that last month keeps benefits uninterrupted. One filed within 30 days after the period ends is still treated as a recertification, with benefits prorated from the filing date.",
+   "url": "https://www.ecfr.gov/current/title-7/section-273.14"
+  },
+  "fed-7-273-15": {
+   "cite": "7 C.F.R. § 273.15",
+   "title": "SNAP fair hearings and continued benefits",
+   "summary": "A household may request a fair hearing on any action within 90 days. If the request is made within the advance-notice period, benefits continue at the prior level until the hearing decision unless the household waives that.",
+   "url": "https://www.ecfr.gov/current/title-7/section-273.15"
+  },
+  "ca-mpp-22-072": {
+   "cite": "Cal. MPP § 22-072",
+   "title": "Timely notice and aid paid pending",
+   "summary": "A notice of action must be mailed at least 10 days before the effective date. If a hearing is requested before the effective date, aid continues unchanged (aid paid pending) until the hearing decision.",
+   "url": "https://www.cdss.ca.gov/inforesources/letters-regulations/legislation-and-regulations/state-hearings-regulations"
+  },
+  "ca-mpp-22-001": {
+   "cite": "Cal. MPP § 22-001(a)(1)",
+   "title": "Adequate notice",
+   "summary": "An adequate notice is written in the person's language and states the action, the reasons, the specific regulations that support it, the effective date, and the right to request a state hearing.",
+   "url": "https://www.cdss.ca.gov/inforesources/letters-regulations/legislation-and-regulations/state-hearings-regulations"
+  },
+  "ca-wic-12301-1": {
+   "cite": "Cal. Welf. & Inst. Code § 12301.1",
+   "title": "IHSS reassessment",
+   "summary": "The county must reassess an IHSS recipient's need at least once every 12 months, may extend that by up to six months only when documented conditions are met, and must reassess when the recipient reports a change in need.",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=12301.1.&lawCode=WIC"
+  },
+  "ca-acwdl-25-14": {
+   "cite": "DHCS ACWDL 25-14 (June 30, 2025); AB 116 (2025) § 59",
+   "title": "Medi-Cal asset limit reinstated",
+   "summary": "Starting January 1, 2026 the asset limit for non-MAGI Medi-Cal, including the Medicare Savings Programs (QMB, SLMB, QI, QDWI), is $130,000 for one person plus $65,000 for each additional household member. Existing members are checked at their first renewal on or after that date. The home the person lives in, one vehicle, personal items, and retirement accounts in regular distribution are exempt.",
+   "url": "https://www.dhcs.ca.gov/services/medi-cal/eligibility/letters/Documents/25-14.pdf"
+  },
+  "ca-ab-116-88": {
+   "cite": "AB 116 (2025) § 88",
+   "title": "Asset transfers in 2024 and 2025 not considered",
+   "summary": "Transfers of assets made between January 1, 2024 and December 31, 2025, while there was no asset limit, may not be counted against the person or used to impose a penalty period.",
+   "url": "https://justiceinaging.org/reinstatement-of-medi-cal-asset-limit-faq/"
+  },
+  "ca-hca-asset-tip": {
+   "cite": "Health Consumer Alliance, Asset Limits Practice Tip (updated March 2026)",
+   "title": "Spend-down after an asset-limit notice",
+   "summary": "Secondary source for navigators: an existing member who receives a termination notice for excess assets generally has until the end of the month after the notice to reduce countable assets and keep coverage. Confirm against the county's notice and DHCS MEDIL 25-23.",
+   "url": "https://healthconsumer.org/wp/wp-content/uploads/2026/03/Asset-Limits-Practice-Tip-12-2025-March-2026-Update.pdf"
+  },
+  "fed-1396d-p": {
+   "cite": "42 U.S.C. § 1396d(p); 42 U.S.C. § 1396a(a)(10)(E)",
+   "title": "Medicare Savings Programs",
+   "summary": "Through the Qualified Medicare Beneficiary, Specified Low-Income Medicare Beneficiary, and Qualifying Individual programs, Medicaid (Medi-Cal) pays Medicare Part B premiums and, for QMB, Medicare deductibles and copayments. Losing the program means the premium is deducted from Social Security again.",
+   "url": "https://www.law.cornell.edu/uscode/text/42/1396d"
   }
  }
 }
