@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "carethropic": {
+      "type": "http",
+      "url": "${CARETHROPIC_MCP_URL}",
+      "headers": {
+        "Authorization": "Bearer ${CARETHROPIC_MCP_TOKEN}"
+      }
+    }
+  }
+}

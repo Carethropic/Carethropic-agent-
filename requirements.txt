@@ -1,6 +1,7 @@
 fastapi>=0.115
 uvicorn[standard]>=0.30
 anthropic>=0.40
+mcp>=2.3
 qrcode[pil]>=7.4
 python-multipart>=0.0.9
 pytest>=8

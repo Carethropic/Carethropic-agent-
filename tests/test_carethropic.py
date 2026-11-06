@@ -417,3 +417,94 @@ def test_briefing_endpoint_and_spoken_checkin_feedback():
     keys = set(briefing.I18N["voice"]["en"])
     for lang, strings in briefing.I18N["voice"].items():
         assert set(strings) == keys, lang
+
+
+# ---------- MCP connector ----------
+def _rpc(c, method, params=None, token=None):
+    headers = {"Accept": "application/json, text/event-stream", "Content-Type": "application/json"}
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    return c.post("/mcp", json={"jsonrpc": "2.0", "id": 1, "method": method, "params": params or {}}, headers=headers)
+
+
+def _tool(c, name, **args):
+    r = _rpc(c, "tools/call", {"name": name, "arguments": args})
+    assert r.status_code == 200, r.text
+    import json as _json
+    return _json.loads(r.json()["result"]["content"][0]["text"])
+
+
+def test_mcp_tools_are_listed_with_annotations_and_run_the_real_modules():
+    with TestClient(app) as c:        # context manager runs the lifespan that starts the MCP session manager
+        r = _rpc(c, "tools/list")
+        assert r.status_code == 200
+        tools = {t["name"]: t for t in r.json()["result"]["tools"]}
+        assert {"navigator_console", "list_people", "get_record", "run_case", "decode_notice", "approve_letter",
+                "save_deadlines_to_record", "record_checkin", "ask_record", "daily_briefing", "record_consent",
+                "emergency_card", "find_nonprofits", "audit_trail", "list_cases", "get_case"} <= set(tools)
+        assert tools["get_record"]["annotations"]["readOnlyHint"] is True
+        assert tools["record_checkin"]["annotations"]["readOnlyHint"] is False
+        assert all(t["annotations"]["openWorldHint"] is False for t in tools.values())
+
+        assert len(_tool(c, "list_people")["people"]) == len(vault.all_people())
+        res = _tool(c, "run_case", case_id="thanh")
+        assert res["gate"]["route"] == "attorney" and "trace" not in res
+        assert {d["key"] for d in res["rules"]["deadlines"]} == {"hearing_deadline", "aid_paid_pending", "asset_spend_down"}
+        saved = _tool(c, "save_deadlines_to_record", case_id="thanh")["saved"]
+        assert len(saved) == 3 and all(e["source"] == "notice:thanh" for e in saved)
+        a = _tool(c, "ask_record", person_id="p-thanh", question="Can I double my dose?")
+        assert a["guard"] is True
+        assert _tool(c, "emergency_card", person_id="p-thanh")["error"].startswith("Record consent")
+        _tool(c, "record_consent", person_id="p-thanh", granted=True, given_by="self", recorded_by="A. Navigator")
+        card = _tool(c, "emergency_card", person_id="p-thanh")
+        assert card["lines"][0] == "CARETHROPIC EMERGENCY INFO" and "qr_svg" not in card
+        assert _tool(c, "get_record", person_id="nope")["error"].startswith("Unknown person")
+        dec = _tool(c, "decode_notice", person_id="p-mei", notice_text="CalFresh benefits reduced effective 11/20/2026. Notice date 11/04/2026. SSN 123-45-6789.")
+        assert dec["notice"]["notice_type"] == "calfresh_adverse_action" and "123-45-6789" not in str(dec)
+        assert _tool(c, "find_nonprofits", query="Claude nonprofit sponsors in San Francisco")["groups"][0]["results"][0]["id"] == "tipping-point"
+        assert _tool(c, "audit_trail", limit=3)["valid"] is True
+        # the web API and the connector share one store
+        assert c.get("/api/people/p-thanh").json()["consent"]["given_by"] == "self"
+
+
+def test_mcp_bearer_token_gate(monkeypatch):
+    import importlib
+    import mcp_server
+    monkeypatch.setenv("CARETHROPIC_MCP_TOKEN", "secret")
+    gated = mcp_server.build_app()
+    from starlette.testclient import TestClient as STC
+    with STC(gated) as c:
+        body = {"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+        h = {"Accept": "application/json, text/event-stream"}
+        assert c.post("/mcp", json=body, headers=h).status_code == 401
+        assert c.post("/mcp", json=body, headers={**h, "Authorization": "Bearer wrong"}).status_code == 401
+        ok = c.post("/mcp", json=body, headers={**h, "Authorization": "Bearer secret"})
+        assert ok.status_code == 200 and ok.json()["result"]["tools"]
+    monkeypatch.delenv("CARETHROPIC_MCP_TOKEN")
+
+
+# ---------- plugin packaging ----------
+def test_plugin_skills_follow_the_skill_rules_and_name_only_real_tools():
+    import re, json, asyncio
+    import mcp_server
+    root = Path(__file__).resolve().parent.parent / "plugin" / "carethropic"
+    manifest = json.loads((root / ".claude-plugin" / "plugin.json").read_text())
+    assert re.fullmatch(r"[a-z0-9-]+", manifest["name"])
+    cfg = json.loads((root / ".mcp.json").read_text())
+    assert cfg["mcpServers"]["carethropic"]["type"] == "http"
+    real = {t.name for t in asyncio.run(mcp_server.mcp.list_tools())}
+    skills = list((root / "skills").glob("*/SKILL.md"))
+    assert len(skills) == 2
+    for sk in skills:
+        text = sk.read_text()
+        fm = re.match(r"---\n(.*?)\n---\n", text, re.S).group(1)
+        name = re.search(r"^name: (.+)$", fm, re.M).group(1).strip()
+        desc = re.search(r"^description: (.+)$", fm, re.M).group(1).strip()
+        assert name == sk.parent.name and re.fullmatch(r"[a-z0-9-]{1,64}", name)
+        assert "claude" not in name and "anthropic" not in name
+        assert 0 < len(desc) <= 1024 and "<" not in desc
+        assert text.count("\n") < 500
+        used = set(re.findall(r"carethropic:([a-z_]+)", text))
+        assert used and used <= real, used - real
+        for ref in re.findall(r"\]\((references/[^)]+)\)", text):
+            assert (sk.parent / ref).exists(), ref

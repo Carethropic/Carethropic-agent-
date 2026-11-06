@@ -1,0 +1,11 @@
+{
+  "name": "carethropic",
+  "version": "0.1.0",
+  "description": "Decode Medi-Cal, CalFresh, IHSS and Medicare Savings Program notices, keep one care record per client, run elder check-ins, and find Bay Area nonprofits. For navigators at nonprofits serving Asian American women and elders.",
+  "author": { "name": "Carethropic" },
+  "homepage": "https://github.com/Carethropic/Carethropic-agent-",
+  "repository": "https://github.com/Carethropic/Carethropic-agent-",
+  "license": "MIT",
+  "keywords": ["nonprofit", "medi-cal", "calfresh", "ihss", "medicare-savings-program", "benefits", "navigator", "elders"],
+  "mcpServers": "./.mcp.json"
+}
