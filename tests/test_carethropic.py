@@ -6,6 +6,7 @@ from pathlib import Path
 
 os.environ["CARETHROPIC_REPLAY"] = "1"
 os.environ["CARETHROPIC_NOW"] = "2026-11-06T10:30"
+os.environ["CARETHROPIC_DB"] = ":memory:"
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
 
 import pytest  # noqa: E402
@@ -240,3 +241,54 @@ def test_env_prefers_carethropic_and_falls_back_to_kalinga(monkeypatch):
     monkeypatch.setenv("CARETHROPIC_MODEL", "new-model")
     assert env("MODEL") == "new-model"
     assert env("DOES_NOT_EXIST", "dflt") == "dflt"
+
+
+# ---------- persistence ----------
+def test_store_round_trips_people_results_and_audit_across_reopen(tmp_path):
+    from common import AuditChain
+    from store import Store
+
+    path = tmp_path / "carethropic.db"
+    s1 = Store(path)
+    chain = AuditChain()
+    chain.attach(s1)
+    s1.save_person({"id": "p-x", "display_name": "X", "medications": [], "events": [], "coverage": [], "checkins": [], "consent": None})
+    s1.save_result("case-x", {"gate": {"route": "approve"}, "saved_to_record": False})
+    s1.set_meta("seeded_on", "2026-11-06")
+    chain.add("checkin", {"pid": "p-x"})
+    chain.add("consent_granted", {"pid": "p-x"})
+    s1.close()
+
+    s2 = Store(path)
+    assert s2.load_people()["p-x"]["display_name"] == "X"
+    assert s2.load_results()["case-x"]["gate"]["route"] == "approve"
+    assert s2.get_meta("seeded_on") == "2026-11-06"
+    chain2 = AuditChain()
+    chain2.attach(s2)
+    assert [e["kind"] for e in chain2.entries] == ["checkin", "consent_granted"]
+    assert chain2.verify()
+    chain2.add("ask", {"pid": "p-x"})          # the chain continues from the stored tail
+    assert chain2.entries[-1]["prev"] == chain2.entries[-2]["hash"]
+    assert chain2.verify()
+    s2.close()
+
+
+def test_checkin_and_consent_are_written_through_to_the_store():
+    from store import STORE
+    vault.checkin("p-remy", "daily")
+    vault.set_consent("p-remy", True, "self", "A. Navigator")
+    saved = STORE.load_people()["p-remy"]
+    assert saved["checkins"][-1]["type"] == "daily"
+    assert saved["consent"]["given_by"] == "self"
+    vault.reset()
+    assert STORE.load_people()["p-remy"]["consent"] is None
+
+
+def test_reset_endpoint_clears_persisted_results():
+    from store import STORE
+    c = TestClient(app)
+    assert c.post("/api/cases/ligaya/run").status_code == 200
+    assert "ligaya" in STORE.load_results()
+    assert c.post("/api/reset").json()["ok"]
+    assert STORE.load_results() == {}
+    assert c.get("/api/meta").json()["seeded_on"] == "2026-11-06"

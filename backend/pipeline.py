@@ -10,11 +10,12 @@ import llm
 import rules
 import vault
 from common import load, today, scrub, mask, AUDIT
+from store import STORE
 
 KB = load("kb.json")
 I18N = load("i18n.json")
 _CASES = {c["id"]: c for c in load("cases.json")["cases"]}
-RESULTS: dict[str, dict] = {}
+RESULTS: dict[str, dict] = STORE.load_results()
 
 NOTICE_TYPES = ["discontinuance", "work_rule_noncompliance", "renewal_documents", "annual_renewal", "termination_no_renewal", "other"]
 
@@ -215,6 +216,7 @@ def _run(case_id: str, notice: dict, client: dict, person: dict, extraction_mode
               "rules": r.to_dict(), "claims": kept, "removed_claims": removed, "drafts": d, "gate": gate, "trace": trace,
               "kb_version": KB["version"], "saved_to_record": False}
     RESULTS[case_id] = result
+    STORE.save_result(case_id, result)
     AUDIT.add("pipeline_run", {"case": case_id, "route": r.route, "deadlines": r.deadline_map()})
     return result
 
@@ -282,6 +284,7 @@ def approve(case_id: str, navigator: str, letter: str | None = None) -> dict:
     res["gate"]["approved"] = True
     entry = AUDIT.add("navigator_approval", {"case": case_id, "navigator": navigator, "letter": res["drafts"]["letter"]})
     res["gate"]["approval_hash"] = entry["hash"]
+    STORE.save_result(case_id, res)
     return res["gate"]
 
 
@@ -297,4 +300,5 @@ def save_to_record(case_id: str) -> list[dict]:
               "source": f"notice:{case_id}", "dedupe_key": f"{case_id}:{d['key']}"}
         saved.append(vault.add_event(pid, ev))
     res["saved_to_record"] = True
+    STORE.save_result(case_id, res)
     return saved

@@ -65,6 +65,13 @@ class AuditChain:
     def __init__(self):
         self._lock = threading.Lock()
         self.entries: list[dict] = []
+        self._store = None
+
+    def attach(self, store) -> None:
+        """Persist the chain through `store` (see store.py). Loads what the store already holds."""
+        with self._lock:
+            self._store = store
+            self.entries = store.load_audit()
 
     @staticmethod
     def _h(s: str) -> str:
@@ -78,6 +85,8 @@ class AuditChain:
             h = self._h(prev + kind + payload_hash + ts)
             entry = {"i": len(self.entries), "ts": ts, "kind": kind, "payload_hash": payload_hash, "prev": prev, "hash": h}
             self.entries.append(entry)
+            if self._store is not None:
+                self._store.append_audit(entry)
             return entry
 
     def verify(self) -> bool:

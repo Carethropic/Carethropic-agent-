@@ -15,6 +15,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
 os.environ.setdefault("CARETHROPIC_NOW", "2026-11-06T10:30")
+os.environ.setdefault("CARETHROPIC_DB", ":memory:")
 
 GOLD = json.loads((Path(__file__).parent / "gold.json").read_text())
 
