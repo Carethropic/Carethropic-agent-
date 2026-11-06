@@ -2,7 +2,7 @@
 
 **Care that remembers.** One trusted care record for the Asian American women and elders that Bay Area nonprofit navigators serve, so a confusing Medi-Cal notice or a forgotten pill never costs someone her coverage or her safety.
 
-Kalinga is Tagalog for care. Built for **Code with Claude: Women in AI Hackathon** (Women's Health track), with a planned pilot at Filipino Advocates for Justice in the Bay Area. Full product spec: [SPEC.md](SPEC.md).
+Carethropic is for care. Built for **Code with Claude: Women in AI Hackathon** (Women's Health track), with a planned pilot at Filipino Advocates for Justice in the Bay Area. Full product spec: [SPEC.md](SPEC.md).
 
 ## The problem, in numbers
 
