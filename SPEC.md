@@ -1,6 +1,6 @@
 # Carethropic: Product Spec
 
-Version 2.1 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
+Version 2.2 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
 
 Kalinga is Tagalog for care. Version 1 (Kalinga) decoded Medi-Cal notices for navigators. Version 2 keeps that core and extends it to a second group the same navigators already serve: Asian American elders in the Bay Area, especially women who live alone.
 
@@ -190,9 +190,9 @@ Every Claude call uses a forced tool schema. Date math, deadline logic, status c
 
 | Metric | Target |
 | --- | --- |
-| Deadline accuracy on labeled notices | 100 percent (current: 8 of 8) |
-| Escalation recall | 100 percent (current: 5 of 5) |
-| Exemption detection | 100 percent (current: 5 of 5) |
+| Deadline accuracy on labeled notices | 100 percent (current: 16 of 16 across Medi-Cal, CalFresh, IHSS, MSP) |
+| Escalation recall | 100 percent (current: 8 of 8) |
+| Exemption detection | 100 percent (current: 8 of 8) |
 | Invented citations or record IDs | 0 (current: 0) |
 | Ask Carethropic advice-guard recall on dose-change questions in seven languages | 100 percent (current: 9 of 9) |
 | Grounded answers cite the right record kind | 100 percent (current: 6 of 6) |
@@ -210,7 +210,7 @@ Every Claude call uses a forced tool schema. Date math, deadline logic, status c
 ## 12. Roadmap
 
 1. Pilot with Filipino Advocates for Justice, then Self-Help for the Elderly, AACI, and HICAP programs.
-2. Add CalFresh, IHSS, and Medicare Savings Program notices.
+2. CalWORKs and SSI/SSP notices (CalFresh, IHSS and Medicare Savings Program notices shipped in 2.2).
 3. Voice-first elder mode with recorded prompts in each language.
 4. Optional, consented family digest.
 5. Claude for Nonprofits plugin packaging so partner organizations can install Carethropic skills directly.

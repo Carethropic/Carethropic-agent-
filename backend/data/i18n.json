@@ -290,21 +290,35 @@
     "work_rule_noncompliance": "the new work reporting rule",
     "renewal_documents": "documents for your Medi-Cal renewal",
     "annual_renewal": "your yearly Medi-Cal renewal",
-    "termination_no_renewal": "your Medi-Cal stopped because the renewal form was not received"
+    "termination_no_renewal": "your Medi-Cal stopped because the renewal form was not received",
+    "calfresh_adverse_action": "your CalFresh (food) benefits are set to be cut or stopped",
+    "calfresh_recertification": "your CalFresh recertification",
+    "ihss_reduction": "a cut to your IHSS home care hours",
+    "ihss_termination": "your IHSS home care is set to stop",
+    "msp_discontinuance": "your Medicare Savings Program (help with the Part B premium) is set to stop",
+    "msp_renewal": "your Medicare Savings Program renewal"
    },
    "labels": {
     "hearing_deadline": "Last day to ask for a state hearing",
     "aid_paid_pending": "Ask for a hearing by this day to keep your coverage during the appeal",
     "work_rule_response": "Send proof that you are exempt",
     "renewal_response": "Return the renewal form and documents",
-    "reconsideration": "Return the renewal form to restart coverage"
+    "reconsideration": "Return the renewal form to restart coverage",
+    "continued_benefits": "Ask for a hearing by this day to keep your CalFresh amount during the appeal",
+    "recert_timely": "File the CalFresh recertification to keep benefits going",
+    "recert_late_window": "Last day a late recertification still counts",
+    "hearing_good_cause_limit": "Absolute last day for a late hearing request",
+    "asset_spend_down": "Last day to bring savings under the limit"
    },
    "exemptions": {
     "pregnant": "pregnant",
     "postpartum": "postpartum",
     "caregiver_child_13": "caring for a child 13 or younger",
     "age_outside_19_64": "age outside 19 to 64",
-    "medically_frail": "medically frail"
+    "medically_frail": "medically frail",
+    "under_asset_limit": "savings are under the limit",
+    "retirement_account_exempt": "retirement account does not count",
+    "home_exempt": "your home does not count"
    }
   },
   "tl": {
@@ -317,21 +331,35 @@
     "work_rule_noncompliance": "ang bagong patakaran sa pag-uulat ng trabaho",
     "renewal_documents": "mga dokumento para sa renewal ng Medi-Cal mo",
     "annual_renewal": "ang taunang renewal ng Medi-Cal mo",
-    "termination_no_renewal": "huminto ang Medi-Cal mo dahil hindi natanggap ang renewal form"
+    "termination_no_renewal": "huminto ang Medi-Cal mo dahil hindi natanggap ang renewal form",
+    "calfresh_adverse_action": "babawasan o ititigil ang iyong CalFresh (pagkain)",
+    "calfresh_recertification": "ang recertification ng iyong CalFresh",
+    "ihss_reduction": "pagbabawas ng iyong oras ng IHSS na pag-aalaga sa bahay",
+    "ihss_termination": "ititigil ang iyong IHSS na pag-aalaga sa bahay",
+    "msp_discontinuance": "ititigil ang iyong Medicare Savings Program (tulong sa Part B premium)",
+    "msp_renewal": "ang renewal ng iyong Medicare Savings Program"
    },
    "labels": {
     "hearing_deadline": "Huling araw para humingi ng state hearing",
     "aid_paid_pending": "Humingi ng hearing bago ang araw na ito para tuloy ang coverage mo habang may apela",
     "work_rule_response": "Ipadala ang patunay na exempt ka",
     "renewal_response": "Ibalik ang renewal form at mga dokumento",
-    "reconsideration": "Ibalik ang renewal form para maibalik ang coverage"
+    "reconsideration": "Ibalik ang renewal form para maibalik ang coverage",
+    "continued_benefits": "Humiling ng hearing bago ang araw na ito para manatili ang halaga ng CalFresh habang umaapela",
+    "recert_timely": "Isumite ang CalFresh recertification para tuloy-tuloy ang benepisyo",
+    "recert_late_window": "Huling araw na tinatanggap pa ang nahuling recertification",
+    "hearing_good_cause_limit": "Pinakahuling araw para sa nahuling kahilingan ng hearing",
+    "asset_spend_down": "Huling araw para ibaba ang ipon sa limitasyon"
    },
    "exemptions": {
     "pregnant": "buntis",
     "postpartum": "kapapanganak (postpartum)",
     "caregiver_child_13": "nag-aalaga ng batang 13 taon pababa",
     "age_outside_19_64": "edad na wala sa 19 hanggang 64",
-    "medically_frail": "medically frail"
+    "medically_frail": "medically frail",
+    "under_asset_limit": "nasa ilalim ng limitasyon ang ipon",
+    "retirement_account_exempt": "hindi binibilang ang retirement account",
+    "home_exempt": "hindi binibilang ang iyong bahay"
    }
   },
   "zh-Hant": {
@@ -344,21 +372,35 @@
     "work_rule_noncompliance": "新的工作報告規定",
     "renewal_documents": "Medi-Cal 續期所需文件",
     "annual_renewal": "您每年的 Medi-Cal 續期",
-    "termination_no_renewal": "因未收到續期表格，您的 Medi-Cal 已停止"
+    "termination_no_renewal": "因未收到續期表格，您的 Medi-Cal 已停止",
+    "calfresh_adverse_action": "您的 CalFresh（糧食券）福利將被減少或停止",
+    "calfresh_recertification": "您的 CalFresh 重新認證",
+    "ihss_reduction": "您的 IHSS 居家照護時數將被減少",
+    "ihss_termination": "您的 IHSS 居家照護將被停止",
+    "msp_discontinuance": "您的 Medicare Savings Program（Part B 保費補助）將被停止",
+    "msp_renewal": "您的 Medicare Savings Program 續期"
    },
    "labels": {
     "hearing_deadline": "申請州聽證會的最後一天",
     "aid_paid_pending": "在這一天前申請聽證會，上訴期間保險可繼續",
     "work_rule_response": "寄出豁免證明",
     "renewal_response": "交回續期表格和文件",
-    "reconsideration": "交回續期表格以恢復保險"
+    "reconsideration": "交回續期表格以恢復保險",
+    "continued_benefits": "在此日前申請聽證，上訴期間可保留目前的 CalFresh 金額",
+    "recert_timely": "提交 CalFresh 重新認證以維持福利不中斷",
+    "recert_late_window": "逾期重新認證仍被接受的最後一天",
+    "hearing_good_cause_limit": "逾期申請聽證的絕對最後期限",
+    "asset_spend_down": "將存款降至上限以下的最後一天"
    },
    "exemptions": {
     "pregnant": "懷孕",
     "postpartum": "產後",
     "caregiver_child_13": "照顧 13 歲或以下的孩子",
     "age_outside_19_64": "年齡不在 19 至 64 歲之間",
-    "medically_frail": "身體虛弱"
+    "medically_frail": "身體虛弱",
+    "under_asset_limit": "存款低於上限",
+    "retirement_account_exempt": "退休帳戶不計算在內",
+    "home_exempt": "您居住的房屋不計算在內"
    }
   },
   "vi": {
@@ -371,21 +413,35 @@
     "work_rule_noncompliance": "quy định mới về báo cáo việc làm",
     "renewal_documents": "giấy tờ để gia hạn Medi-Cal",
     "annual_renewal": "gia hạn Medi-Cal hằng năm",
-    "termination_no_renewal": "Medi-Cal đã ngưng vì chưa nhận được đơn gia hạn"
+    "termination_no_renewal": "Medi-Cal đã ngưng vì chưa nhận được đơn gia hạn",
+    "calfresh_adverse_action": "trợ cấp CalFresh (thực phẩm) của bà sẽ bị giảm hoặc ngừng",
+    "calfresh_recertification": "tái chứng nhận CalFresh của bà",
+    "ihss_reduction": "giảm số giờ chăm sóc tại nhà IHSS của bà",
+    "ihss_termination": "dịch vụ chăm sóc tại nhà IHSS của bà sẽ bị ngừng",
+    "msp_discontinuance": "Chương trình Tiết kiệm Medicare (hỗ trợ phí Part B) của bà sẽ bị ngừng",
+    "msp_renewal": "gia hạn Chương trình Tiết kiệm Medicare của bà"
    },
    "labels": {
     "hearing_deadline": "Ngày cuối để xin điều trần tiểu bang",
     "aid_paid_pending": "Xin điều trần trước ngày này để giữ bảo hiểm trong lúc kháng cáo",
     "work_rule_response": "Gửi giấy tờ chứng minh được miễn",
     "renewal_response": "Gửi lại đơn gia hạn và giấy tờ",
-    "reconsideration": "Gửi lại đơn gia hạn để mở lại bảo hiểm"
+    "reconsideration": "Gửi lại đơn gia hạn để mở lại bảo hiểm",
+    "continued_benefits": "Yêu cầu điều trần trước ngày này để giữ nguyên mức CalFresh trong thời gian kháng cáo",
+    "recert_timely": "Nộp tái chứng nhận CalFresh để trợ cấp không bị gián đoạn",
+    "recert_late_window": "Ngày cuối cùng tái chứng nhận trễ vẫn được tính",
+    "hearing_good_cause_limit": "Ngày cuối cùng tuyệt đối để yêu cầu điều trần trễ",
+    "asset_spend_down": "Ngày cuối cùng để đưa tiền tiết kiệm xuống dưới mức giới hạn"
    },
    "exemptions": {
     "pregnant": "đang mang thai",
     "postpartum": "sau sinh",
     "caregiver_child_13": "chăm sóc con 13 tuổi trở xuống",
     "age_outside_19_64": "tuổi ngoài khoảng 19 đến 64",
-    "medically_frail": "sức khỏe yếu"
+    "medically_frail": "sức khỏe yếu",
+    "under_asset_limit": "tiền tiết kiệm dưới mức giới hạn",
+    "retirement_account_exempt": "tài khoản hưu trí không bị tính",
+    "home_exempt": "căn nhà bà đang ở không bị tính"
    }
   },
   "ko": {
@@ -398,21 +454,35 @@
     "work_rule_noncompliance": "새로운 근로 보고 규정",
     "renewal_documents": "Medi-Cal 갱신 서류",
     "annual_renewal": "연간 Medi-Cal 갱신",
-    "termination_no_renewal": "갱신 서류가 접수되지 않아 Medi-Cal이 중단됨"
+    "termination_no_renewal": "갱신 서류가 접수되지 않아 Medi-Cal이 중단됨",
+    "calfresh_adverse_action": "CalFresh(식품) 혜택이 줄거나 중단될 예정입니다",
+    "calfresh_recertification": "CalFresh 재인증",
+    "ihss_reduction": "IHSS 재가 돌봄 시간 축소",
+    "ihss_termination": "IHSS 재가 돌봄 중단 예정",
+    "msp_discontinuance": "Medicare Savings Program(Part B 보험료 지원) 중단 예정",
+    "msp_renewal": "Medicare Savings Program 갱신"
    },
    "labels": {
     "hearing_deadline": "주 청문회 신청 마지막 날",
     "aid_paid_pending": "이 날 전에 청문회를 신청하면 이의 신청 기간에도 보험이 유지돼요",
     "work_rule_response": "면제 증빙 보내기",
     "renewal_response": "갱신 서류와 증빙 제출",
-    "reconsideration": "갱신 서류를 내면 보험이 다시 시작돼요"
+    "reconsideration": "갱신 서류를 내면 보험이 다시 시작돼요",
+    "continued_benefits": "이 날까지 청문회를 신청하면 항소 중에도 현재 CalFresh 금액이 유지됩니다",
+    "recert_timely": "혜택이 끊기지 않도록 CalFresh 재인증을 제출하세요",
+    "recert_late_window": "늦은 재인증이 인정되는 마지막 날",
+    "hearing_good_cause_limit": "늦은 청문회 신청의 최종 마감일",
+    "asset_spend_down": "저축을 한도 아래로 낮출 수 있는 마지막 날"
    },
    "exemptions": {
     "pregnant": "임신",
     "postpartum": "출산 후",
     "caregiver_child_13": "13세 이하 자녀 돌봄",
     "age_outside_19_64": "19~64세 범위 밖",
-    "medically_frail": "의료적 허약"
+    "medically_frail": "의료적 허약",
+    "under_asset_limit": "저축이 한도 이하입니다",
+    "retirement_account_exempt": "퇴직 계좌는 계산되지 않습니다",
+    "home_exempt": "거주 중인 집은 계산되지 않습니다"
    }
   },
   "es": {
@@ -425,21 +495,35 @@
     "work_rule_noncompliance": "la nueva regla de reporte de trabajo",
     "renewal_documents": "documentos para renovar su Medi-Cal",
     "annual_renewal": "su renovación anual de Medi-Cal",
-    "termination_no_renewal": "su Medi-Cal terminó porque no se recibió el formulario de renovación"
+    "termination_no_renewal": "su Medi-Cal terminó porque no se recibió el formulario de renovación",
+    "calfresh_adverse_action": "sus beneficios de CalFresh (alimentos) se van a reducir o suspender",
+    "calfresh_recertification": "la recertificación de su CalFresh",
+    "ihss_reduction": "una reducción de sus horas de cuidado en el hogar IHSS",
+    "ihss_termination": "su cuidado en el hogar IHSS se va a suspender",
+    "msp_discontinuance": "su Programa de Ahorros de Medicare (ayuda con la prima de la Parte B) se va a suspender",
+    "msp_renewal": "la renovación de su Programa de Ahorros de Medicare"
    },
    "labels": {
     "hearing_deadline": "Último día para pedir una audiencia estatal",
     "aid_paid_pending": "Pida la audiencia antes de este día para mantener su cobertura durante la apelación",
     "work_rule_response": "Envíe prueba de que está exenta",
     "renewal_response": "Devuelva el formulario y los documentos",
-    "reconsideration": "Devuelva el formulario para reactivar su cobertura"
+    "reconsideration": "Devuelva el formulario para reactivar su cobertura",
+    "continued_benefits": "Pida una audiencia antes de este día para conservar su monto de CalFresh durante la apelación",
+    "recert_timely": "Presente la recertificación de CalFresh para que los beneficios no se interrumpan",
+    "recert_late_window": "Último día en que todavía cuenta una recertificación tardía",
+    "hearing_good_cause_limit": "Último día absoluto para pedir una audiencia tardía",
+    "asset_spend_down": "Último día para bajar sus ahorros por debajo del límite"
    },
    "exemptions": {
     "pregnant": "embarazada",
     "postpartum": "posparto",
     "caregiver_child_13": "cuida a un niño de 13 años o menos",
     "age_outside_19_64": "edad fuera de 19 a 64",
-    "medically_frail": "médicamente frágil"
+    "medically_frail": "médicamente frágil",
+    "under_asset_limit": "sus ahorros están por debajo del límite",
+    "retirement_account_exempt": "la cuenta de jubilación no cuenta",
+    "home_exempt": "su casa no cuenta"
    }
   },
   "hi": {
@@ -452,21 +536,35 @@
     "work_rule_noncompliance": "काम की रिपोर्टिंग का नया नियम",
     "renewal_documents": "Medi-Cal नवीनीकरण के दस्तावेज़",
     "annual_renewal": "आपका सालाना Medi-Cal नवीनीकरण",
-    "termination_no_renewal": "नवीनीकरण फ़ॉर्म न मिलने से आपका Medi-Cal बंद हो गया"
+    "termination_no_renewal": "नवीनीकरण फ़ॉर्म न मिलने से आपका Medi-Cal बंद हो गया",
+    "calfresh_adverse_action": "आपके CalFresh (भोजन) लाभ कम या बंद किए जाने वाले हैं",
+    "calfresh_recertification": "आपके CalFresh का पुनः प्रमाणन",
+    "ihss_reduction": "आपके IHSS घरेलू देखभाल घंटों में कटौती",
+    "ihss_termination": "आपकी IHSS घरेलू देखभाल बंद की जाने वाली है",
+    "msp_discontinuance": "आपका Medicare Savings Program (Part B प्रीमियम में सहायता) बंद किया जाने वाला है",
+    "msp_renewal": "आपके Medicare Savings Program का नवीनीकरण"
    },
    "labels": {
     "hearing_deadline": "राज्य सुनवाई माँगने का आखिरी दिन",
     "aid_paid_pending": "अपील के दौरान बीमा जारी रखने के लिए इस दिन से पहले सुनवाई माँगें",
     "work_rule_response": "छूट का प्रमाण भेजें",
     "renewal_response": "नवीनीकरण फ़ॉर्म और दस्तावेज़ लौटाएँ",
-    "reconsideration": "बीमा फिर से शुरू करने के लिए नवीनीकरण फ़ॉर्म लौटाएँ"
+    "reconsideration": "बीमा फिर से शुरू करने के लिए नवीनीकरण फ़ॉर्म लौटाएँ",
+    "continued_benefits": "अपील के दौरान CalFresh की राशि बनाए रखने के लिए इस दिन तक सुनवाई माँगें",
+    "recert_timely": "लाभ जारी रखने के लिए CalFresh पुनः प्रमाणन जमा करें",
+    "recert_late_window": "देर से किया गया पुनः प्रमाणन मान्य होने का अंतिम दिन",
+    "hearing_good_cause_limit": "देर से सुनवाई माँगने का अंतिम दिन",
+    "asset_spend_down": "बचत को सीमा से नीचे लाने का अंतिम दिन"
    },
    "exemptions": {
     "pregnant": "गर्भवती",
     "postpartum": "प्रसव के बाद",
     "caregiver_child_13": "13 साल या छोटे बच्चे की देखभाल",
     "age_outside_19_64": "उम्र 19 से 64 के बाहर",
-    "medically_frail": "चिकित्सकीय रूप से कमज़ोर"
+    "medically_frail": "चिकित्सकीय रूप से कमज़ोर",
+    "under_asset_limit": "बचत सीमा से कम है",
+    "retirement_account_exempt": "सेवानिवृत्ति खाता नहीं गिना जाता",
+    "home_exempt": "आपका घर नहीं गिना जाता"
    }
   }
  }

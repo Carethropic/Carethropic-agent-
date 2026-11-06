@@ -19,7 +19,7 @@ Starting January 1, 2027, new federal work reporting rules and six-month renewal
 
 ## What Carethropic does
 
-**For navigators (the notice decoder).** Snap a photo of a Medi-Cal notice. Claude extracts the fields with confidence scores. A tested Python rules engine computes every deadline (hearing, aid paid pending, 30-day work rule response, 90-day reconsideration), finds notice defects, and screens for work rule exemptions. Two agents draft in parallel, a verifier removes any claim that cites outside the knowledge base or states a date the engine did not compute, and nothing leaves without a navigator's approval. New in v2: **Save to record** turns each deadline into a dated, cited entry in the person's Carethropic record, with titles in her language.
+**For navigators (the notice decoder).** Snap a photo of a Medi-Cal, CalFresh, IHSS, or Medicare Savings Program notice. Claude extracts the fields with confidence scores. A tested Python rules engine computes every deadline (hearing, aid paid pending, 30-day work rule response, 90-day reconsideration), finds notice defects, and screens for work rule exemptions. Two agents draft in parallel, a verifier removes any claim that cites outside the knowledge base or states a date the engine did not compute, and nothing leaves without a navigator's approval. New in v2: **Save to record** turns each deadline into a dated, cited entry in the person's Carethropic record, with titles in her language.
 
 **For elders who live alone (new).** The **Carethropic record** holds her medicines, appointments and deadlines, coverage, and emergency information, in large type and in her language (Tagalog, Traditional Chinese, Vietnamese, Korean, Hindi, Spanish, English). She taps *I'm OK today* and taps each medicine as taken. **Ask Carethropic** answers questions like *Did I take my blood pressure pill?* only from her own record, cites the entry it used, and refuses to give dosing advice. Missed check-ins flag on the navigator console. A consented **emergency QR card** gives EMTs her allergies, medicines, language, and contacts, with no member IDs or addresses.
 
@@ -56,12 +56,12 @@ Docker: `docker build -t carethropic . && docker run -p 8000:8000 -e ANTHROPIC_A
 ## Tests and evals
 
 ```bash
-python -m pytest -q tests        # 31 tests: rules, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence
+python -m pytest -q tests        # 38 tests: rules for four programs, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence
 python evals/run_evals.py        # replay
 python evals/run_evals.py --live # Claude agents and re-ranker end to end
 ```
 
-Current replay results: deadline accuracy 8 of 8, escalation correct 5 of 5, exemptions correct 5 of 5, invented citations 0, advice guard recall 9 of 9, grounded answers 6 of 6, finder top result 5 of 5.
+Current replay results: deadline accuracy 16 of 16, escalation correct 8 of 8, exemptions correct 8 of 8, invented citations 0, advice guard recall 9 of 9, grounded answers 6 of 6, finder top result 5 of 5.
 
 ## Demo cases (synthetic)
 
@@ -74,6 +74,9 @@ Current replay results: deadline accuracy 8 of 8, escalation correct 5 of 5, exe
 | Hoa N., 74, lives alone, Vietnamese | Medi-Cal ended | 90-day reconsideration window, missing legal basis, low-confidence date. Attorney review. |
 | Lola Remy, 78, lives alone, Tagalog | Daily check-ins | Two days without a check-in. Ask Carethropic: "take two pills?" gets the advice guard. |
 | Kamala P., 76, lives alone, Hindi | Daily check-ins | All medicines confirmed. Emergency QR card after consent. |
+| Mei F., 68, lives alone, Cantonese | CalFresh recertification | File by the 15th of the last month; a late filing still counts for 30 days. |
+| Tomas B., 81, lives alone, Tagalog | IHSS hours cut 92 → 61 | Aid paid pending if the hearing is requested before Dec 1; 180-day good-cause limit. |
+| Thanh L., 71, lives alone, Vietnamese | Medicare Savings Program ending for assets | Under the reinstated 2026 asset limit once the IRA in payout is excluded; the 2025 transfer may not be counted. Attorney review. |
 
 All names, agencies, phone numbers, and case numbers are fictional.
 
@@ -112,10 +115,19 @@ evals/               gold labels and harness
 - Demo data is synthetic. Records are stored in a local SQLite file; production would encrypt it at rest on a nonprofit-controlled account. Anthropic does not train on nonprofit customer data by default.
 - Translations are drafts for the hackathon and will be reviewed by community members before the pilot.
 
+## Programs covered
+
+| Program | Notice types | Rules encoded |
+| --- | --- | --- |
+| Medi-Cal | discontinuance, work rule noncompliance, renewal documents, annual renewal, termination for no renewal | 10-day advance notice, 90-day hearing, aid paid pending, 30-day renewal window, 90-day reconsideration, 2027 work rule exemptions |
+| CalFresh | adverse action, recertification | 10-day advance notice, 90-day hearing, continued benefits, notice of expiration timing, timely (15th) and late (30-day) recertification |
+| IHSS | reduction, termination | 10-day timely notice, adequate notice, 90-day hearing with 180-day good-cause limit, aid paid pending, annual reassessment |
+| Medicare Savings Programs (QMB, SLMB, QI) | discontinuance, renewal | Medi-Cal notice rules plus the asset limit reinstated January 1, 2026 ($130,000 + $65,000 per additional person), exempt assets, and the 2024–2025 transfer safe harbor |
+
 ## Roadmap
 
 1. Pilot with Filipino Advocates for Justice, then Self-Help for the Elderly, AACI, and HICAP programs.
-2. Add CalFresh, IHSS, and Medicare Savings Program notices.
+2. CalWORKs and SSI/SSP notices.
 3. Voice-first elder mode with recorded prompts in each language.
 4. Optional, consented family digest.
 5. Package Carethropic as a Claude for Nonprofits plugin so partner organizations can install it directly.
