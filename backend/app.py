@@ -13,6 +13,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 import ask as ask_mod
+import briefing
 import emergency
 import llm
 import nonprofits
@@ -169,6 +170,16 @@ def person(pid: str):
 class Checkin(BaseModel):
     type: str = Field(pattern="^(daily|med)$")
     item_id: str | None = None
+    lang: str | None = None
+
+
+@app.get("/api/people/{pid}/briefing")
+def get_briefing(pid: str, lang: str | None = None):
+    """Spoken daily summary composed in code from her record, in her language. Lists the record IDs it used."""
+    p = vault.get(pid)
+    if p is None:
+        raise HTTPException(404, "Unknown person")
+    return briefing.compose(p, lang or p["language"])
 
 
 @app.post("/api/people/{pid}/checkin")
@@ -179,7 +190,14 @@ def checkin(pid: str, body: Checkin):
         entry = vault.checkin(pid, body.type, body.item_id)
     except ValueError as e:
         raise HTTPException(400, str(e))
-    return {"entry": entry, "status": vault.status(vault.get(pid))}
+    p = vault.get(pid)
+    lang = body.lang or p["language"]
+    if body.type == "med":
+        med = next(m for m in p["medications"] if m["id"] == body.item_id)
+        spoken = briefing.feedback("med", lang, name=med["name"], time=entry["time"])
+    else:
+        spoken = briefing.feedback("daily", lang)
+    return {"entry": entry, "status": vault.status(p), "spoken": spoken, "bcp47": briefing.BCP47.get(lang, "en-US")}
 
 
 class Ask(BaseModel):

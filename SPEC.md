@@ -1,6 +1,6 @@
 # Carethropic: Product Spec
 
-Version 2.2 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
+Version 2.3 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
 
 Kalinga is Tagalog for care. Version 1 (Kalinga) decoded Medi-Cal notices for navigators. Version 2 keeps that core and extends it to a second group the same navigators already serve: Asian American elders in the Bay Area, especially women who live alone.
 
@@ -64,6 +64,8 @@ The record holds four sections, each item with an ID, a source, and an updated d
 
 Elder view rules: base font 22px, one action per screen area, icons plus words, full UI in the selected language (English, Tagalog, Traditional Chinese, Vietnamese, Korean, Hindi, Spanish), browser voice input and read-aloud, and a single "Call my navigator" button that is always visible.
 
+**Voice-first mode.** A *Voice on* toggle (remembered per browser) turns the record into a spoken experience: on opening, Carethropic reads a daily briefing (`GET /api/people/{id}/briefing?lang=`) composed in code from her record: greeting and date, check-in status, medicines still to confirm, the next appointment or deadline, and what to tap. Every check-in returns a `spoken` confirmation in her language. A large *Ask by voice* button listens once and reads the answer back; an answer to a spoken question is always spoken even with voice off. The briefing response lists the record IDs it used. No model is involved; a pilot can replace browser speech synthesis with recorded prompts per language without changing the backend.
+
 ### 4.4 Ask Carethropic (new)
 
 The elder or navigator asks a question by typing or with the browser microphone. Examples: "Did I take my blood pressure pill today?", "When is my Medi-Cal deadline?", "Who is my emergency contact?"
@@ -126,6 +128,7 @@ backend/app.py (FastAPI)
    ├── ask.py          retrieval, advice guard, Claude call, verifier (Ask Carethropic)
    ├── nonprofits.py   query parser, scorer, grouping, re-rank
    ├── emergency.py    consent and QR card
+   ├── briefing.py     spoken daily briefing and tap confirmations (code, per language)
    ├── audit.py        SHA-256 hash chain, hashes only
    ├── llm.py          Claude client with forced tool schemas, replay fallback
    ├── privacy.py      scrubbing and masking
@@ -211,6 +214,6 @@ Every Claude call uses a forced tool schema. Date math, deadline logic, status c
 
 1. Pilot with Filipino Advocates for Justice, then Self-Help for the Elderly, AACI, and HICAP programs.
 2. CalWORKs and SSI/SSP notices (CalFresh, IHSS and Medicare Savings Program notices shipped in 2.2).
-3. Voice-first elder mode with recorded prompts in each language.
+3. Recorded prompts per language to replace browser speech synthesis in voice mode.
 4. Optional, consented family digest.
 5. Claude for Nonprofits plugin packaging so partner organizations can install Carethropic skills directly.

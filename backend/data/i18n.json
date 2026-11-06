@@ -32,7 +32,12 @@
    "status_late": "Coming due",
    "status_missed": "Something to confirm",
    "status_missed_2_days": "Two days without a check-in",
-   "status_none": "No check-ins set up"
+   "status_none": "No check-ins set up",
+   "voice_on": "Voice on",
+   "voice_off": "Voice off",
+   "ask_by_voice": "Ask by voice",
+   "read_today": "Read my day",
+   "listening": "Listening…"
   },
   "tl": {
    "my_meds": "Mga gamot ko",
@@ -56,7 +61,12 @@
    "status_late": "Malapit na ang oras",
    "status_missed": "May kailangang i-check",
    "status_missed_2_days": "Dalawang araw nang walang check-in",
-   "status_none": "Wala pang check-in"
+   "status_none": "Wala pang check-in",
+   "voice_on": "Boses: on",
+   "voice_off": "Boses: off",
+   "ask_by_voice": "Magtanong gamit ang boses",
+   "read_today": "Basahin ang araw ko",
+   "listening": "Nakikinig…"
   },
   "zh-Hant": {
    "my_meds": "我的藥物",
@@ -80,7 +90,12 @@
    "status_late": "快到時間了",
    "status_missed": "有項目待確認",
    "status_missed_2_days": "兩天沒有報平安",
-   "status_none": "尚未設定報平安"
+   "status_none": "尚未設定報平安",
+   "voice_on": "語音開",
+   "voice_off": "語音關",
+   "ask_by_voice": "用語音提問",
+   "read_today": "讀出今天",
+   "listening": "聆聽中…"
   },
   "vi": {
    "my_meds": "Thuốc của tôi",
@@ -104,7 +119,12 @@
    "status_late": "Sắp đến giờ",
    "status_missed": "Có mục cần xác nhận",
    "status_missed_2_days": "Hai ngày chưa báo bình an",
-   "status_none": "Chưa thiết lập báo bình an"
+   "status_none": "Chưa thiết lập báo bình an",
+   "voice_on": "Giọng nói: bật",
+   "voice_off": "Giọng nói: tắt",
+   "ask_by_voice": "Hỏi bằng giọng nói",
+   "read_today": "Đọc ngày của tôi",
+   "listening": "Đang nghe…"
   },
   "ko": {
    "my_meds": "내 약",
@@ -128,7 +148,12 @@
    "status_late": "곧 시간이 됩니다",
    "status_missed": "확인할 항목이 있어요",
    "status_missed_2_days": "이틀 동안 안부 확인 없음",
-   "status_none": "안부 확인 미설정"
+   "status_none": "안부 확인 미설정",
+   "voice_on": "음성 켜짐",
+   "voice_off": "음성 꺼짐",
+   "ask_by_voice": "음성으로 묻기",
+   "read_today": "오늘 읽어 주기",
+   "listening": "듣는 중…"
   },
   "es": {
    "my_meds": "Mis medicinas",
@@ -152,7 +177,12 @@
    "status_late": "Ya casi es la hora",
    "status_missed": "Algo por confirmar",
    "status_missed_2_days": "Dos días sin reportarse",
-   "status_none": "Sin reportes configurados"
+   "status_none": "Sin reportes configurados",
+   "voice_on": "Voz activada",
+   "voice_off": "Voz desactivada",
+   "ask_by_voice": "Preguntar con la voz",
+   "read_today": "Leer mi día",
+   "listening": "Escuchando…"
   },
   "hi": {
    "my_meds": "मेरी दवाइयाँ",
@@ -176,7 +206,12 @@
    "status_late": "समय होने वाला है",
    "status_missed": "कुछ पुष्टि करना बाकी है",
    "status_missed_2_days": "दो दिन से कोई चेक-इन नहीं",
-   "status_none": "चेक-इन सेट नहीं है"
+   "status_none": "चेक-इन सेट नहीं है",
+   "voice_on": "आवाज़ चालू",
+   "voice_off": "आवाज़ बंद",
+   "ask_by_voice": "आवाज़ से पूछें",
+   "read_today": "मेरा दिन पढ़ो",
+   "listening": "सुन रही हूँ…"
   }
  },
  "answers": {
@@ -566,6 +601,155 @@
     "retirement_account_exempt": "सेवानिवृत्ति खाता नहीं गिना जाता",
     "home_exempt": "आपका घर नहीं गिना जाता"
    }
+  }
+ },
+ "voice": {
+  "en": {
+   "list_sep": ", ",
+   "greeting": "Hello {name}. Today is {date}.",
+   "status_ok": "Everything is confirmed for today.",
+   "status_late": "One of your medicines is coming due.",
+   "status_missed": "One of your medicines has not been confirmed.",
+   "status_missed_2_days": "We have not heard from you for two days. Your navigator will check in.",
+   "status_none": "",
+   "meds_due": "{n} medicine to confirm: {list}.",
+   "meds_clear": "All your medicines are confirmed for today.",
+   "deadline": "Your next important date is {date}: {title}.",
+   "appointment": "Your next appointment: {title}, on {date} at {time}.",
+   "prompt_ok": "Tap the big green button if you are OK today, and tap each medicine after you take it.",
+   "prompt_ask": "Tap the microphone to ask about your record.",
+   "fb_daily": "Thank you. Your check-in for today is saved.",
+   "fb_med": "Noted. {name} taken at {time}.",
+   "fb_listening": "I am listening.",
+   "fb_voice_on": "Voice is on. I will read things aloud.",
+   "fb_voice_off": "Voice is off.",
+   "sentence_sep": " "
+  },
+  "tl": {
+   "list_sep": ", ",
+   "greeting": "Kumusta {name}. Ngayon ay {date}.",
+   "status_ok": "Kumpirmado na ang lahat para ngayong araw.",
+   "status_late": "Malapit nang oras ng isa sa mga gamot mo.",
+   "status_missed": "Hindi pa nakukumpirma ang isa sa mga gamot mo.",
+   "status_missed_2_days": "Dalawang araw na kaming walang balita sa iyo. Kukumustahin ka ng navigator mo.",
+   "status_none": "",
+   "meds_due": "{n} gamot na kailangang kumpirmahin: {list}.",
+   "meds_clear": "Kumpirmado na ang lahat ng gamot mo ngayong araw.",
+   "deadline": "Ang susunod mong mahalagang petsa ay {date}: {title}.",
+   "appointment": "Ang susunod mong appointment: {title}, sa {date} ng {time}.",
+   "prompt_ok": "Pindutin ang malaking berdeng button kung okay ka ngayon, at pindutin ang bawat gamot pagkatapos mong inumin.",
+   "prompt_ask": "Pindutin ang mikropono para magtanong tungkol sa record mo.",
+   "fb_daily": "Salamat. Naitala na ang check-in mo ngayong araw.",
+   "fb_med": "Naitala. Nainom ang {name} noong {time}.",
+   "fb_listening": "Nakikinig ako.",
+   "fb_voice_on": "Naka-on ang boses. Babasahin ko nang malakas.",
+   "fb_voice_off": "Naka-off ang boses.",
+   "sentence_sep": " "
+  },
+  "zh-Hant": {
+   "list_sep": "、",
+   "greeting": "{name}您好。今天是{date}。",
+   "status_ok": "今天的一切都已確認。",
+   "status_late": "您有一種藥快到服用時間了。",
+   "status_missed": "您有一種藥還沒有確認。",
+   "status_missed_2_days": "我們已經兩天沒有收到您的消息。您的協助員會聯絡您。",
+   "status_none": "",
+   "meds_due": "有{n}種藥需要確認：{list}。",
+   "meds_clear": "您今天的藥都已確認。",
+   "deadline": "您下一個重要日期是{date}：{title}。",
+   "appointment": "您下一次預約：{title}，{date} {time}。",
+   "prompt_ok": "如果您今天還好，請按大的綠色按鈕；每次服藥後請按該藥。",
+   "prompt_ask": "按麥克風可以詢問您的記錄。",
+   "fb_daily": "謝謝。今天的報平安已經儲存。",
+   "fb_med": "已記錄。{name}於{time}服用。",
+   "fb_listening": "我在聽。",
+   "fb_voice_on": "語音已開啟。我會讀出內容。",
+   "fb_voice_off": "語音已關閉。",
+   "sentence_sep": ""
+  },
+  "vi": {
+   "list_sep": ", ",
+   "greeting": "Chào {name}. Hôm nay là {date}.",
+   "status_ok": "Mọi việc hôm nay đã được xác nhận.",
+   "status_late": "Một loại thuốc của bà sắp đến giờ uống.",
+   "status_missed": "Một loại thuốc của bà chưa được xác nhận.",
+   "status_missed_2_days": "Đã hai ngày chúng tôi chưa nhận được tin của bà. Người hỗ trợ sẽ liên lạc.",
+   "status_none": "",
+   "meds_due": "{n} loại thuốc cần xác nhận: {list}.",
+   "meds_clear": "Tất cả thuốc hôm nay của bà đã được xác nhận.",
+   "deadline": "Ngày quan trọng tiếp theo của bà là {date}: {title}.",
+   "appointment": "Cuộc hẹn tiếp theo của bà: {title}, ngày {date} lúc {time}.",
+   "prompt_ok": "Bấm nút xanh lớn nếu hôm nay bà khỏe, và bấm từng loại thuốc sau khi uống.",
+   "prompt_ask": "Bấm vào micrô để hỏi về hồ sơ của bà.",
+   "fb_daily": "Cảm ơn bà. Đã lưu điểm danh hôm nay.",
+   "fb_med": "Đã ghi nhận. {name} đã uống lúc {time}.",
+   "fb_listening": "Tôi đang nghe.",
+   "fb_voice_on": "Giọng nói đã bật. Tôi sẽ đọc to.",
+   "fb_voice_off": "Giọng nói đã tắt.",
+   "sentence_sep": " "
+  },
+  "ko": {
+   "list_sep": ", ",
+   "greeting": "{name}님 안녕하세요. 오늘은 {date}입니다.",
+   "status_ok": "오늘 할 일이 모두 확인되었습니다.",
+   "status_late": "약 하나를 드실 시간이 다가옵니다.",
+   "status_missed": "약 하나가 아직 확인되지 않았습니다.",
+   "status_missed_2_days": "이틀 동안 소식이 없었습니다. 담당자가 연락드릴 것입니다.",
+   "status_none": "",
+   "meds_due": "확인할 약 {n}개: {list}.",
+   "meds_clear": "오늘 약을 모두 확인했습니다.",
+   "deadline": "다음 중요한 날짜는 {date}입니다: {title}.",
+   "appointment": "다음 예약: {title}, {date} {time}.",
+   "prompt_ok": "오늘 괜찮으시면 큰 초록 버튼을 누르시고, 약을 드신 뒤 각 약을 눌러 주세요.",
+   "prompt_ask": "마이크를 눌러 기록에 대해 물어보세요.",
+   "fb_daily": "감사합니다. 오늘 안부 확인이 저장되었습니다.",
+   "fb_med": "기록했습니다. {name}을(를) {time}에 복용했습니다.",
+   "fb_listening": "듣고 있습니다.",
+   "fb_voice_on": "음성이 켜졌습니다. 소리 내어 읽어 드리겠습니다.",
+   "fb_voice_off": "음성이 꺼졌습니다.",
+   "sentence_sep": " "
+  },
+  "es": {
+   "list_sep": ", ",
+   "greeting": "Hola {name}. Hoy es {date}.",
+   "status_ok": "Todo está confirmado para hoy.",
+   "status_late": "Pronto le toca una de sus medicinas.",
+   "status_missed": "Una de sus medicinas no se ha confirmado.",
+   "status_missed_2_days": "Hace dos días que no sabemos de usted. Su navegadora se comunicará.",
+   "status_none": "",
+   "meds_due": "{n} medicina por confirmar: {list}.",
+   "meds_clear": "Todas sus medicinas de hoy están confirmadas.",
+   "deadline": "Su próxima fecha importante es el {date}: {title}.",
+   "appointment": "Su próxima cita: {title}, el {date} a las {time}.",
+   "prompt_ok": "Toque el botón verde grande si está bien hoy, y toque cada medicina después de tomarla.",
+   "prompt_ask": "Toque el micrófono para preguntar sobre su expediente.",
+   "fb_daily": "Gracias. Su registro de hoy quedó guardado.",
+   "fb_med": "Anotado. {name} tomada a las {time}.",
+   "fb_listening": "La escucho.",
+   "fb_voice_on": "La voz está activada. Leeré en voz alta.",
+   "fb_voice_off": "La voz está desactivada.",
+   "sentence_sep": " "
+  },
+  "hi": {
+   "list_sep": ", ",
+   "greeting": "नमस्ते {name}। आज {date} है।",
+   "status_ok": "आज सब कुछ पुष्टि हो गया है।",
+   "status_late": "आपकी एक दवा का समय होने वाला है।",
+   "status_missed": "आपकी एक दवा की पुष्टि नहीं हुई है।",
+   "status_missed_2_days": "दो दिन से आपकी कोई खबर नहीं मिली। आपकी नेविगेटर संपर्क करेंगी।",
+   "status_none": "",
+   "meds_due": "{n} दवा की पुष्टि करनी है: {list}।",
+   "meds_clear": "आज की सभी दवाओं की पुष्टि हो गई है।",
+   "deadline": "आपकी अगली महत्वपूर्ण तारीख {date} है: {title}।",
+   "appointment": "आपकी अगली अपॉइंटमेंट: {title}, {date} को {time} बजे।",
+   "prompt_ok": "अगर आप आज ठीक हैं तो बड़ा हरा बटन दबाएँ, और हर दवा लेने के बाद उसे दबाएँ।",
+   "prompt_ask": "अपने रिकॉर्ड के बारे में पूछने के लिए माइक्रोफ़ोन दबाएँ।",
+   "fb_daily": "धन्यवाद। आज की हाज़िरी दर्ज हो गई।",
+   "fb_med": "दर्ज किया। {name} {time} बजे ली गई।",
+   "fb_listening": "मैं सुन रही हूँ।",
+   "fb_voice_on": "आवाज़ चालू है। मैं पढ़कर सुनाऊँगी।",
+   "fb_voice_off": "आवाज़ बंद है।",
+   "sentence_sep": " "
   }
  }
 }

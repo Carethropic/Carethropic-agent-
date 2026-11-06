@@ -109,6 +109,7 @@
     if (state.recordPid !== pid) state.recordLang = null;   // a new person starts in her own language
     state.record = p; state.recordPid = pid; state.recordLang = lang || state.recordLang || p.language;
     const L = state.recordLang; const T = await ui(L);
+    const V = window.CarethropicVoice; const BCP = { tl: 'fil-PH', 'zh-Hant': 'zh-HK', vi: 'vi-VN', ko: 'ko-KR', hi: 'hi-IN', es: 'es-US', en: 'en-US' }[L] || 'en-US';
     const st = p.status; const todayStr = state.meta.today;
     const dueState = (m) => { const items = st.items.filter((i) => i.item_id === m.id); const taken = items.filter((i) => i.state === 'taken').length; const due = items.length; return { taken, due, missed: items.some((i) => i.state === 'missed'), late: items.some((i) => i.state === 'late') }; };
     const meds = p.medications.map((m) => { const d = dueState(m); return `<li class="med"><div><div class="name">${esc(m.name)} ${esc(m.dose)}</div><div class="meta">${esc(m.purpose)} · ${m.times.join(', ')} · ${esc(T.refill)} ${esc(m.refill_date)}</div></div>
@@ -119,10 +120,12 @@
     const statusText = T['status_' + st.level] || st.level;
     const langButtons = Object.entries(state.meta.languages).map(([k, v]) => `<button class="${k === L ? 'active' : ''}" data-lang="${k}">${esc(v)}</button>`).join('');
     view.innerHTML = `<div class="elder">
-      <div class="row" style="justify-content:space-between;align-items:flex-start"><div><h1>${esc(p.display_name)}</h1><p class="sub">${esc(T.today)} ${esc(todayStr)} · <span class="statdot ${st.level}"></span>${esc(statusText)}</p></div><div class="langbar">${langButtons}</div></div>
+      <div class="row" style="justify-content:space-between;align-items:flex-start"><div><h1>${esc(p.display_name)}</h1><p class="sub">${esc(T.today)} ${esc(todayStr)} · <span class="statdot ${st.level}"></span>${esc(statusText)}</p></div>
+        <div><div class="langbar">${langButtons}</div><div class="row noprint" style="margin-top:8px;justify-content:flex-end"><button class="btn voice ${V.enabled ? 'on' : ''}" id="voiceBtn" aria-pressed="${V.enabled}">${V.enabled ? '🔊 ' + esc(T.voice_on) : '🔇 ' + esc(T.voice_off)}</button><button class="btn" id="readBtn">▶ ${esc(T.read_today)}</button></div></div></div>
+      <div id="briefing" class="briefing noprint" aria-live="polite"></div>
       <div class="grid two">
         <div class="card"><button class="btn big primary" id="okBtn">${esc(T.im_ok)}</button><p class="small muted noprint" style="margin:8px 0 0">${st.last_daily ? 'Last check-in ' + esc(st.last_daily) : 'No check-in yet'}. Missed check-ins show on the navigator console. No automatic calls or texts.</p></div>
-        <div class="card"><h2>${esc(T.ask_title)} <span class="pill gray small">answers only from her record</span></h2><div class="row"><input type="text" id="askInput" placeholder="${esc(T.ask_placeholder)}"><button class="btn" id="micBtn" title="Speak">🎤</button><button class="btn primary" id="askBtn">${esc(T.ask_button)}</button></div><div id="askOut"></div>
+        <div class="card"><h2>${esc(T.ask_title)} <span class="pill gray small">answers only from her record</span></h2><button class="btn big mic" id="micBtn" aria-label="${esc(T.ask_by_voice)}">🎤 ${esc(T.ask_by_voice)}</button><div class="row" style="margin-top:10px"><input type="text" id="askInput" placeholder="${esc(T.ask_placeholder)}"><button class="btn primary" id="askBtn">${esc(T.ask_button)}</button></div><div id="askOut" aria-live="polite"></div>
           <div class="row noprint" style="margin-top:8px"><button class="btn small" data-q="Did I take my blood pressure pill today?">Did I take my pill?</button><button class="btn small" data-q="When is my Medi-Cal deadline?">My Medi-Cal deadline?</button><button class="btn small" data-q="Should I take two pills since I forgot this morning?">Take two pills?</button><button class="btn small" data-q="Who is my emergency contact?">Emergency contact?</button></div></div>
         <div class="card"><h2>${esc(T.my_meds)}</h2><ul class="list">${meds}</ul></div>
         <div class="card"><h2>${esc(T.my_events)}</h2><ul class="list">${events}</ul></div>
@@ -132,8 +135,23 @@
       </div></div>
       <div class="callbar elder"><a class="btn warm" href="tel:${esc(state.meta.organization.navigator_phone)}">📞 ${esc(T.call_navigator)} · ${esc(state.meta.organization.navigator_phone)}</a></div>`;
     document.querySelectorAll('.langbar button').forEach((b) => b.onclick = () => renderRecord(pid, b.dataset.lang));
-    $('#okBtn').onclick = async () => { await post(`/people/${pid}/checkin`, { type: 'daily' }); toast('✓'); renderRecord(pid); };
-    document.querySelectorAll('[data-med]').forEach((b) => b.onclick = async () => { await post(`/people/${pid}/checkin`, { type: 'med', item_id: b.dataset.med }); toast('✓'); renderRecord(pid); });
+    $('#okBtn').onclick = async () => { const r = await post(`/people/${pid}/checkin`, { type: 'daily', lang: L }); toast('✓'); state.pendingSpeech = r.spoken; renderRecord(pid); };
+    document.querySelectorAll('[data-med]').forEach((b) => b.onclick = async () => { const r = await post(`/people/${pid}/checkin`, { type: 'med', item_id: b.dataset.med, lang: L }); toast('✓'); state.pendingSpeech = r.spoken; renderRecord(pid); });
+    const briefing = async ({ aloud }) => {
+      const b = await api(`/people/${pid}/briefing?lang=${encodeURIComponent(L)}`);
+      $('#briefing').innerHTML = `<div class="card brief"><div class="text">${b.sentences.map(esc).join(' ')}</div><div class="small muted">Composed in code from her record · cited ${b.cited_record_ids.map(esc).join(', ') || 'nothing'}</div></div>`;
+      if (aloud) V.speak(b.text, b.bcp47, { force: true });
+      return b;
+    };
+    $('#voiceBtn').onclick = async () => {
+      V.setEnabled(!V.enabled);
+      const T2 = await ui(L); const vb = $('#voiceBtn'); vb.classList.toggle('on', V.enabled); vb.setAttribute('aria-pressed', V.enabled);
+      vb.textContent = V.enabled ? '🔊 ' + T2.voice_on : '🔇 ' + T2.voice_off;
+      if (V.enabled) { if (!V.canSpeak) toast('Read-aloud is not available in this browser'); await briefing({ aloud: true }); }
+    };
+    $('#readBtn').onclick = () => briefing({ aloud: true });
+    if (state.pendingSpeech) { V.speak(state.pendingSpeech, BCP); state.pendingSpeech = null; }
+    else if (V.enabled && state.briefedFor !== pid + L) { state.briefedFor = pid + L; briefing({ aloud: true }); }
     document.querySelectorAll('[data-q]').forEach((b) => b.onclick = () => { $('#askInput').value = b.dataset.q; ask(); });
     const ask = async () => {
       const q = $('#askInput').value.trim(); if (!q) return;
@@ -142,14 +160,16 @@
         const a = await post(`/people/${pid}/ask`, { question: q, lang: L });
         const cites = a.cited.map((c) => `<span class="cite" title="${esc(c.id)}">${esc(c.label)}</span>`).join('');
         $('#askOut').innerHTML = `<div class="answer ${a.guard ? 'guard' : ''}">${esc(a.answer)}</div><div class="small muted" style="margin-top:6px">${a.guard ? 'Medical advice guard: Carethropic never advises on doses. ' : ''}Intent: ${esc(a.intent)} · ${a.mode === 'live' ? 'Claude phrased it' : 'template'} · cited ${cites || 'nothing'}${a.verifier.passed ? '' : ' · <b>verifier replaced the model answer</b>: ' + esc(a.verifier.notes.join(' '))}</div>`;
-        if (window.speechSynthesis && state.speak) { const u = new SpeechSynthesisUtterance(a.answer); u.lang = { tl: 'fil-PH', 'zh-Hant': 'zh-HK', vi: 'vi-VN', ko: 'ko-KR', hi: 'hi-IN', es: 'es-US', en: 'en-US' }[L] || 'en-US'; speechSynthesis.speak(u); }
+        V.speak(a.answer, BCP, { force: state.speakOnce }); state.speakOnce = false;
       } catch (e) { $('#askOut').innerHTML = `<div class="answer guard">${esc(e.message)}</div>`; }
     };
     $('#askBtn').onclick = ask; $('#askInput').onkeydown = (e) => { if (e.key === 'Enter') ask(); };
     $('#micBtn').onclick = () => {
-      const SR = window.SpeechRecognition || window.webkitSpeechRecognition; if (!SR) { toast('Voice input is not available in this browser'); return; }
-      const rec = new SR(); rec.lang = { tl: 'fil-PH', 'zh-Hant': 'zh-HK', vi: 'vi-VN', ko: 'ko-KR', hi: 'hi-IN', es: 'es-US', en: 'en-US' }[L] || 'en-US'; state.speak = true;
-      rec.onresult = (ev) => { $('#askInput').value = ev.results[0][0].transcript; ask(); }; rec.onerror = () => toast('Could not hear that'); rec.start(); toast('Listening…');
+      if (!V.canListen) { toast('Voice input is not available in this browser'); return; }
+      const mb = $('#micBtn'); mb.classList.add('listening'); toast(T.listening, 6000);
+      state.speakOnce = true;   // an answer to a spoken question is always spoken back, even with voice off
+      V.listen(BCP, (text) => { mb.classList.remove('listening'); $('#askInput').value = text; ask(); },
+               () => { mb.classList.remove('listening'); toast('Could not hear that'); });
     };
     $('#cardBtn').onclick = async () => {
       try {
@@ -208,6 +228,7 @@
 
   // ---------- router ----------
   async function route() {
+    if (window.CarethropicVoice) window.CarethropicVoice.stop();
     const h = location.hash || '#/console';
     const [, name, arg] = h.match(/^#\/([a-z]+)\/?([^/]*)/) || [];
     try {
