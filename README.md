@@ -1,4 +1,4 @@
-# Kin, by Kalinga
+# Carethropic
 
 **Care that remembers.** One trusted care record for the Asian American women and elders that Bay Area nonprofit navigators serve, so a confusing Medi-Cal notice or a forgotten pill never costs someone her coverage or her safety.
 
