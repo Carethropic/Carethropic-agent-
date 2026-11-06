@@ -63,29 +63,6 @@ python evals/run_evals.py --live # Claude agents and re-ranker end to end
 
 Current replay results: deadline accuracy 8 of 8, escalation correct 5 of 5, exemptions correct 5 of 5, invented citations 0, advice guard recall 9 of 9, grounded answers 6 of 6, finder top result 5 of 5.
 
-## Demo cases (synthetic)
-
-| Person | Track | What Carethropic catches |
-| --- | --- | --- |
-| Ligaya R., 24 weeks pregnant, Tagalog | Discontinuance | Coverage ends in 3 days. Act today. 7-day advance notice defect. Attorney review. |
-| Rosa D., 3 months postpartum, Tagalog | 2027 work rule notice | Exempt twice over (postpartum, child under 14). Draft claims both. |
-| Carmen F., caregiver, Spanish | Renewal documents | Notice gives 21 days; federal rules require 30. |
-| Wai Ling C., 82, lives alone, Cantonese | Annual renewal (Medi-Medi) | Deadline saved to her record; she can ask Carethropic for it in Chinese. |
-| Hoa N., 74, lives alone, Vietnamese | Medi-Cal ended | 90-day reconsideration window, missing legal basis, low-confidence date. Attorney review. |
-| Lola Remy, 78, lives alone, Tagalog | Daily check-ins | Two days without a check-in. Ask Carethropic: "take two pills?" gets the advice guard. |
-| Kamala P., 76, lives alone, Hindi | Daily check-ins | All medicines confirmed. Emergency QR card after consent. |
-
-All names, agencies, phone numbers, and case numbers are fictional.
-
-## Demo script (3 minutes)
-
-1. **Hook (15s).** "One Bay Area navigator serves a pregnant mother on Medi-Cal and an 82-year-old grandmother who lives alone. Both can lose care to one missed date."
-2. **Ligaya (40s).** Decode her discontinuance notice. Show Act today, the 7-day defect, attorney routing. Hover a citation.
-3. **Wai Ling (45s).** Decode her renewal, click *Save deadlines to Carethropic record*. Open her record in Traditional Chinese. Ask "When is my Medi-Cal deadline?" and show the cited date.
-4. **Lola Remy (40s).** Console shows her missed check-in. Open her record in Tagalog. Ask "Should I take two pills since I forgot?" Carethropic answers kindly, cites her medicine entry, and points to the pharmacist. Record consent and print her emergency card.
-5. **Finder (20s).** Search "Claude nonprofit sponsors in San Francisco." Tipping Point and Taproot appear first, then Self-Help for the Elderly, Kimochi, and API Legal Outreach.
-6. **Close (10s).** "Carethropic: every deadline caught, every answer cited, every record kept with care."
-
 ## Architecture
 
 ```
@@ -112,17 +89,10 @@ evals/               gold labels and harness
 - Demo data is synthetic. Records are stored in a local SQLite file; production would encrypt it at rest on a nonprofit-controlled account. Anthropic does not train on nonprofit customer data by default.
 - Translations are drafts for the hackathon and will be reviewed by community members before the pilot.
 
-## Roadmap
-
-1. Pilot with Filipino Advocates for Justice, then Self-Help for the Elderly, AACI, and HICAP programs.
-2. Add CalFresh, IHSS, and Medicare Savings Program notices.
-3. Voice-first elder mode with recorded prompts in each language.
-4. Optional, consented family digest.
-5. Package Carethropic as a Claude for Nonprofits plugin so partner organizations can install it directly.
-
 ## Builder
 
 Angelina Cayabyab: former air district permit engineer, JD candidate at Santa Clara Law (Tech Edge), Georgia Tech OMSCS (AI), and AI governance founder. Previously built GreenGuard at Cal Hacks.
+Yitian Liu
 
 ## License
 
