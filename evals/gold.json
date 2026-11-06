@@ -1,0 +1,20 @@
+{
+  "ligaya": {
+    "deadlines": {"AID_PAID_PENDING": "2026-11-06", "HEARING_90": "2027-01-29", "RECONSIDERATION_90": "2027-02-05"},
+    "review_status": "needs_human_expert",
+    "flags": ["SHORT_ADVANCE_NOTICE", "NO_REGULATION", "PRENATAL_AT_RISK", "LANGUAGE_ACCESS"],
+    "exemptions": []
+  },
+  "carmen": {
+    "deadlines": {"RFI_DUE": "2026-11-23"},
+    "review_status": "ready_for_navigator",
+    "flags": ["SHORT_RFI_WINDOW", "LANGUAGE_ACCESS"],
+    "exemptions": []
+  },
+  "rosa": {
+    "deadlines": {"CE_RESPONSE_30": "2027-04-02", "AID_PAID_PENDING": "2027-04-29", "HEARING_90": "2027-06-01"},
+    "review_status": "ready_for_navigator",
+    "flags": ["EXEMPTION_LIKELY", "POSTPARTUM_PROTECTED", "LANGUAGE_ACCESS"],
+    "exemptions": ["POSTPARTUM", "CAREGIVER_13"]
+  }
+}
