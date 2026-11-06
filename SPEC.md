@@ -183,7 +183,7 @@ Every Claude call uses a forced tool schema. Date math, deadline logic, status c
 | Nonprofit search | Curated directory plus Claude re-rank | Live web search | Reliable in a live demo, no invented organizations, cites sources |
 | Q&A scope | Closed-world over her own record | General health chatbot | Safer for elders, clear value, easy to verify |
 | Alerts | Navigator flag only | Automatic SMS to family | Respects autonomy, avoids false alarms, fits human gate |
-| Storage | In-memory with JSON seed | Database | Hackathon speed; storage interface allows swap |
+| Storage | SQLite document store seeded from JSON | Hosted database | Survives restarts with zero setup; one file to encrypt or back up; swap later without changing the API |
 | Frontend | Static files, no build | React app | Runs anywhere with one command |
 
 ## 10. Evaluation

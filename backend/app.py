@@ -32,6 +32,7 @@ def meta():
     return {"name": "Carethropic", "engine": "Kalinga", "mode": "live" if llm.live() else "replay", "model": llm.MODEL,
             "today": today().isoformat(), "now": now().strftime("%H:%M"), "kb_version": pipeline.KB["version"],
             "directory_version": nonprofits.DIR["version"], "organization": vault.ORG,
+            "seeded_on": vault.seeded_on(), "db": pipeline.STORE.path,
             "languages": I18N["languages"], "translation_review": I18N["review_status"]}
 
 
@@ -54,6 +55,7 @@ def audit():
 def reset():
     vault.reset()
     pipeline.RESULTS.clear()
+    pipeline.STORE.clear_results()
     return {"ok": True}
 
 

@@ -36,6 +36,7 @@ Starting January 1, 2027, new federal work reporting rules and six-month renewal
 | Honest memory | "Did I take it?" is answered only from her confirmation log. No confirmation means Carethropic says so and points to the pharmacist. |
 | Consent and privacy | Emergency cards print only after recorded consent. IDs are masked. Pasted text is scrubbed. The audit chain stores hashes only. |
 | Replay mode | Every feature runs without an API key through the same verifiers, so the demo never depends on the network. |
+| Durable records | Records, check-ins, consents, decoded notices and the audit chain live in SQLite and survive a restart. *Reset demo* reseeds from JSON. |
 | Evaluation harness | Labeled cases scored on deadline accuracy, escalation, exemptions, invented citations, advice-guard recall, grounding, and finder accuracy. |
 
 ## Quick start
@@ -48,14 +49,14 @@ uvicorn app:app --port 8000
 # open http://localhost:8000
 ```
 
-Optional: `CARETHROPIC_MODEL` (default `claude-sonnet-4-5`), `CARETHROPIC_FAST_MODEL` for the re-ranker and verifier, `CARETHROPIC_NOW=2026-11-06T10:30` to pin the clock for rehearsals, `CARETHROPIC_REPLAY=1` to force replay mode. The older `KALINGA_*` names still work.
+Optional: `CARETHROPIC_MODEL` (default `claude-sonnet-4-5`), `CARETHROPIC_FAST_MODEL` for the re-ranker and verifier, `CARETHROPIC_NOW=2026-11-06T10:30` to pin the clock for rehearsals, `CARETHROPIC_REPLAY=1` to force replay mode, `CARETHROPIC_DB` to choose the SQLite file (default `backend/carethropic.db`; `:memory:` for tests). The older `KALINGA_*` names still work.
 
 Docker: `docker build -t carethropic . && docker run -p 8000:8000 -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY carethropic`
 
 ## Tests and evals
 
 ```bash
-python -m pytest -q tests        # 28 tests: rules, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback
+python -m pytest -q tests        # 31 tests: rules, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence
 python evals/run_evals.py        # replay
 python evals/run_evals.py --live # Claude agents and re-ranker end to end
 ```
@@ -93,6 +94,7 @@ backend/app.py       FastAPI
   rules.py           deadlines, rollback, defects, exemptions, escalation
   pipeline.py        extract → rules → agents ∥ → verifier → drafts → human gate → save to record
   vault.py           Carethropic record, check-ins, status, consent
+  store.py           SQLite persistence for records, case results and the audit chain
   ask.py             Ask Carethropic: guard → retrieval → Claude (forced schema) → verifier → template fallback
   nonprofits.py      finder: parser, scorer, grouping, Claude re-rank (closed world)
   emergency.py       consent-gated QR card
@@ -107,7 +109,7 @@ evals/               gold labels and harness
 ## Privacy and safety
 
 - Built for trained navigators, with a human approving every output. Carethropic provides legal and health information, which is different from legal or medical advice.
-- Demo data is synthetic. Production would encrypt records at rest on a nonprofit-controlled account. Anthropic does not train on nonprofit customer data by default.
+- Demo data is synthetic. Records are stored in a local SQLite file; production would encrypt it at rest on a nonprofit-controlled account. Anthropic does not train on nonprofit customer data by default.
 - Translations are drafts for the hackathon and will be reviewed by community members before the pilot.
 
 ## Roadmap
