@@ -1,4 +1,4 @@
-"""Ask Kin: grounded answers over one person's own record.
+"""Ask Carethropic: grounded answers over one person's own record.
 
 Order of operations
 1. Advice guard (code). Dose-change questions never reach the model.
@@ -206,7 +206,7 @@ def ask(pid: str, question: str, lang: str | None = None) -> dict:
 
     if intent not in ("advice", "unknown") and cand and llm.live():
         lang_name = I18N["languages"].get(lang, "English")
-        system = ("You are Kin, a kind helper for an older adult or a mother working with a nonprofit navigator. "
+        system = ("You are Carethropic, a kind helper for an older adult or a mother working with a nonprofit navigator. "
                   f"Answer in {lang_name}, in two short sentences or fewer, using ONLY the record items provided. "
                   "Copy dates as YYYY-MM-DD and times as HH:MM exactly from the items. Cite the item IDs you used. "
                   "Never advise on taking, skipping, doubling, or changing any medicine; set needs_human true instead. "

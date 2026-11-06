@@ -92,7 +92,7 @@ def _health_replay(r: rules.RulesResult, client: dict, notice: dict) -> list[dic
     if client.get("age", 0) >= 65:
         out.append({"agent": "Health Navigator", "kind": "practical", "text": "Medicare stays in place. Medi-Cal helps pay Medicare costs and adds benefits, so returning the form protects both.", "authority_ids": []})
     if client.get("lives_alone"):
-        out.append({"agent": "Health Navigator", "kind": "practical", "text": "She lives alone. Save this deadline to her Kin record so check-ins and Ask Kin can remind her.", "authority_ids": []})
+        out.append({"agent": "Health Navigator", "kind": "practical", "text": "She lives alone. Save this deadline to her Carethropic record so check-ins and Ask Carethropic can remind her.", "authority_ids": []})
     if client.get("caregiver_for_parent"):
         out.append({"agent": "Health Navigator", "kind": "practical", "text": "She also manages care for her mother. Offer to check her mother's coverage dates in the same visit.", "authority_ids": []})
     return out

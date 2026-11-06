@@ -2,7 +2,7 @@
 
 **Care that remembers.** One trusted care record for the Asian American women and elders that Bay Area nonprofit navigators serve, so a confusing Medi-Cal notice or a forgotten pill never costs someone her coverage or her safety.
 
-Carethropic is for care. Built for **Code with Claude: Women in AI Hackathon** (Women's Health track), with a planned pilot at Filipino Advocates for Justice in the Bay Area. Full product spec: [SPEC.md](SPEC.md).
+Carethropic (from *kalinga*, Tagalog for care) was built for **Code with Claude: Women in AI Hackathon** (Women's Health track), with a planned pilot at Filipino Advocates for Justice in the Bay Area. Full product spec: [SPEC.md](SPEC.md).
 
 ## The problem, in numbers
 
@@ -19,7 +19,7 @@ Starting January 1, 2027, new federal work reporting rules and six-month renewal
 
 ## What Carethropic does
 
-**For navigators (the existing Carethropic decoder, kept and extended).** Snap a photo of a Medi-Cal notice. Claude extracts the fields with confidence scores. A tested Python rules engine computes every deadline (hearing, aid paid pending, 30-day work rule response, 90-day reconsideration), finds notice defects, and screens for work rule exemptions. Two agents draft in parallel, a verifier removes any claim that cites outside the knowledge base or states a date the engine did not compute, and nothing leaves without a navigator's approval. New in v2: **Save to record** turns each deadline into a dated, cited entry in the person's Carethropic record, with titles in her language.
+**For navigators (the notice decoder).** Snap a photo of a Medi-Cal notice. Claude extracts the fields with confidence scores. A tested Python rules engine computes every deadline (hearing, aid paid pending, 30-day work rule response, 90-day reconsideration), finds notice defects, and screens for work rule exemptions. Two agents draft in parallel, a verifier removes any claim that cites outside the knowledge base or states a date the engine did not compute, and nothing leaves without a navigator's approval. New in v2: **Save to record** turns each deadline into a dated, cited entry in the person's Carethropic record, with titles in her language.
 
 **For elders who live alone (new).** The **Carethropic record** holds her medicines, appointments and deadlines, coverage, and emergency information, in large type and in her language (Tagalog, Traditional Chinese, Vietnamese, Korean, Hindi, Spanish, English). She taps *I'm OK today* and taps each medicine as taken. **Ask Carethropic** answers questions like *Did I take my blood pressure pill?* only from her own record, cites the entry it used, and refuses to give dosing advice. Missed check-ins flag on the navigator console. A consented **emergency QR card** gives EMTs her allergies, medicines, language, and contacts, with no member IDs or addresses.
 
@@ -48,14 +48,14 @@ uvicorn app:app --port 8000
 # open http://localhost:8000
 ```
 
-Optional: `Carethropic_MODEL` (default `claude-sonnet-4-5`), `Carethropic_FAST_MODEL` for the re-ranker and verifier, `Carethropic_NOW=2026-11-06T10:30` to pin the clock for rehearsals, `Carethropic_REPLAY=1` to force replay mode.
+Optional: `CARETHROPIC_MODEL` (default `claude-sonnet-4-5`), `CARETHROPIC_FAST_MODEL` for the re-ranker and verifier, `CARETHROPIC_NOW=2026-11-06T10:30` to pin the clock for rehearsals, `CARETHROPIC_REPLAY=1` to force replay mode. The older `KALINGA_*` names still work.
 
-Docker: `docker build -t Carethropic . && docker run -p 8000:8000 -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY Carethropic`
+Docker: `docker build -t carethropic . && docker run -p 8000:8000 -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY carethropic`
 
 ## Tests and evals
 
 ```bash
-python -m pytest -q tests        # 27 tests: rules, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API
+python -m pytest -q tests        # 28 tests: rules, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback
 python evals/run_evals.py        # replay
 python evals/run_evals.py --live # Claude agents and re-ranker end to end
 ```
@@ -81,8 +81,8 @@ All names, agencies, phone numbers, and case numbers are fictional.
 1. **Hook (15s).** "One Bay Area navigator serves a pregnant mother on Medi-Cal and an 82-year-old grandmother who lives alone. Both can lose care to one missed date."
 2. **Ligaya (40s).** Decode her discontinuance notice. Show Act today, the 7-day defect, attorney routing. Hover a citation.
 3. **Wai Ling (45s).** Decode her renewal, click *Save deadlines to Carethropic record*. Open her record in Traditional Chinese. Ask "When is my Medi-Cal deadline?" and show the cited date.
-4. **Lola Remy (40s).** Console shows her missed check-in. Open her record in Tagalog. Ask "Should I take two pills since I forgot?" Carethropic answers Carethropicdly, cites her medicine entry, and points to the pharmacist. Record consent and print her emergency card.
-5. **Finder (20s).** Search "Claude Non-profit sponsors in san francisco." Tipping Point and Taproot appear first, then Self-Help for the Elderly, Kimochi, and API Legal Outreach.
+4. **Lola Remy (40s).** Console shows her missed check-in. Open her record in Tagalog. Ask "Should I take two pills since I forgot?" Carethropic answers kindly, cites her medicine entry, and points to the pharmacist. Record consent and print her emergency card.
+5. **Finder (20s).** Search "Claude nonprofit sponsors in San Francisco." Tipping Point and Taproot appear first, then Self-Help for the Elderly, Kimochi, and API Legal Outreach.
 6. **Close (10s).** "Carethropic: every deadline caught, every answer cited, every record kept with care."
 
 ## Architecture
@@ -97,10 +97,11 @@ backend/app.py       FastAPI
   nonprofits.py      finder: parser, scorer, grouping, Claude re-rank (closed world)
   emergency.py       consent-gated QR card
   llm.py             Claude client with forced tool schemas and replay fallback
-  common.py          clock, scrubbing, masCarethropicg, SHA-256 audit chain
+  common.py          clock, env, scrubbing, masking, SHA-256 audit chain
   data/              kb.json, cases.json, people.json, nonprofits.json, i18n.json, insights.json
 tests/               pytest suite
 evals/               gold labels and harness
+.github/workflows/   CI: tests and evals on every push
 ```
 
 ## Privacy and safety

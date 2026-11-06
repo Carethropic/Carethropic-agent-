@@ -18,9 +18,14 @@ except Exception:  # pragma: no cover
     TZ = timezone(timedelta(hours=-8))
 
 
+def env(name: str, default: str | None = None) -> str | None:
+    """Read CARETHROPIC_<name>; fall back to the legacy KALINGA_<name> so old .env files keep working."""
+    return os.environ.get(f"CARETHROPIC_{name}", os.environ.get(f"KALINGA_{name}", default))
+
+
 def now() -> datetime:
-    """Server clock in Pacific time. KALINGA_NOW=YYYY-MM-DDTHH:MM pins it for tests and rehearsals."""
-    pinned = os.environ.get("KALINGA_NOW")
+    """Server clock in Pacific time. CARETHROPIC_NOW=YYYY-MM-DDTHH:MM pins it for tests and rehearsals."""
+    pinned = env("NOW")
     if pinned:
         return datetime.fromisoformat(pinned).replace(tzinfo=TZ)
     return datetime.now(TZ)

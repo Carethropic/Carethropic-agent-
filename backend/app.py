@@ -1,4 +1,4 @@
-"""Kin, by Kalinga: FastAPI backend.
+"""Carethropic: FastAPI backend.
 
 Run:  cd backend && uvicorn app:app --port 8000
 """
@@ -20,7 +20,7 @@ import pipeline
 import vault
 from common import AUDIT, load, today, now, scrub
 
-app = FastAPI(title="Kin, by Kalinga", version="2.0")
+app = FastAPI(title="Carethropic", version="2.0")
 FRONTEND = Path(__file__).resolve().parent.parent / "frontend"
 I18N = load("i18n.json")
 INSIGHTS = load("insights.json")
@@ -29,7 +29,7 @@ INSIGHTS = load("insights.json")
 # ---------- meta ----------
 @app.get("/api/meta")
 def meta():
-    return {"name": "Kin", "engine": "Kalinga", "mode": "live" if llm.live() else "replay", "model": llm.MODEL,
+    return {"name": "Carethropic", "engine": "Kalinga", "mode": "live" if llm.live() else "replay", "model": llm.MODEL,
             "today": today().isoformat(), "now": now().strftime("%H:%M"), "kb_version": pipeline.KB["version"],
             "directory_version": nonprofits.DIR["version"], "organization": vault.ORG,
             "languages": I18N["languages"], "translation_review": I18N["review_status"]}

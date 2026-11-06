@@ -8,16 +8,18 @@ from __future__ import annotations
 import logging
 import os
 
-log = logging.getLogger("jade.llm")
+from common import env
 
-MODEL = os.environ.get("KALINGA_MODEL", "claude-sonnet-4-5")
-FAST_MODEL = os.environ.get("KALINGA_FAST_MODEL", MODEL)
+log = logging.getLogger("carethropic.llm")
+
+MODEL = env("MODEL", "claude-sonnet-4-5")
+FAST_MODEL = env("FAST_MODEL", MODEL)
 
 _client = None
 
 
 def live() -> bool:
-    return bool(os.environ.get("ANTHROPIC_API_KEY")) and os.environ.get("KALINGA_REPLAY") != "1"
+    return bool(os.environ.get("ANTHROPIC_API_KEY")) and env("REPLAY") != "1"
 
 
 def _get():

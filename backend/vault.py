@@ -1,4 +1,4 @@
-"""Kin Record: one care record per person (meds, events, coverage, emergency), check-ins, consent."""
+"""Carethropic record: one care record per person (meds, events, coverage, emergency), check-ins, consent."""
 from __future__ import annotations
 
 import copy

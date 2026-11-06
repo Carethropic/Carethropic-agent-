@@ -1,7 +1,7 @@
-"""Kin evaluation harness.
+"""Carethropic evaluation harness.
 
 Scores the recorded cases on deadline accuracy, escalation, exemptions, and invented citations,
-then scores Ask Kin on advice-guard recall and record grounding, and the Nonprofit Finder on its
+then scores Ask Carethropic on advice-guard recall and record grounding, and the Nonprofit Finder on its
 acceptance queries. Replay by default; --live runs the Claude agents and re-ranker end to end.
 """
 from __future__ import annotations
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "backend"))
-os.environ.setdefault("KALINGA_NOW", "2026-11-06T10:30")
+os.environ.setdefault("CARETHROPIC_NOW", "2026-11-06T10:30")
 
 GOLD = json.loads((Path(__file__).parent / "gold.json").read_text())
 
@@ -24,7 +24,7 @@ def main():
     ap.add_argument("--live", action="store_true")
     args = ap.parse_args()
     if not args.live:
-        os.environ["KALINGA_REPLAY"] = "1"
+        os.environ["CARETHROPIC_REPLAY"] = "1"
 
     import ask, nonprofits, pipeline, vault  # noqa: E401
     vault.reset()

@@ -1,5 +1,5 @@
 {
-  "note": "Gold labels assume KALINGA_NOW=2026-11-06T10:30. Dates were checked by hand against 42 C.F.R. 431.211/431.230/435.916, Cal. W&I Code 10951, and P.L. 119-21 sec. 71119, with weekend and holiday rollback to the prior business day.",
+  "note": "Gold labels assume CARETHROPIC_NOW=2026-11-06T10:30. Dates were checked by hand against 42 C.F.R. 431.211/431.230/435.916, Cal. W&I Code 10951, and P.L. 119-21 sec. 71119, with weekend and holiday rollback to the prior business day.",
   "cases": {
     "ligaya": {"deadlines": {"hearing_deadline": "2027-01-29", "aid_paid_pending": "2026-11-06"}, "route": "attorney", "exemptions": []},
     "rosa": {"deadlines": {"work_rule_response": "2027-03-03", "hearing_deadline": "2027-04-30"}, "route": "navigator", "exemptions": ["postpartum", "caregiver_child_13"]},

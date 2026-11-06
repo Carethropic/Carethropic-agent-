@@ -1,6 +1,6 @@
 """Deterministic legal core: deadlines, defects, exemptions, escalation.
 
-The model never does date math. Every date in any Kalinga output comes from here.
+The model never does date math. Every date in any Carethropic output comes from here.
 """
 from __future__ import annotations
 

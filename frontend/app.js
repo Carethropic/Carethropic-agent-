@@ -1,4 +1,4 @@
-/* Kin, by Kalinga — frontend. No build step. */
+/* Carethropic — frontend. No build step. */
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
   const view = $('#view');
@@ -87,10 +87,10 @@
     const extractMode = res.trace.find((t) => t.stage === 'extract')?.mode, agentMode = res.trace.find((t) => t.stage === 'agents')?.mode;
     view.innerHTML = `<div class="row" style="justify-content:space-between"><div><h1>${esc(res.person.name)} <span class="pill gray">${esc(langName(res.person.language))}</span> <span class="pill gray">${esc(SEGMENT[res.person.segment] || '')}</span></h1>
       <p class="sub">${esc(n.agency)} · case ${esc(n.case_number)} · ${esc(n.notice_type.replace(/_/g, ' '))} · extraction: ${esc(extractMode)} · agents: ${esc(agentMode)} · KB ${esc(res.kb_version)}</p></div>
-      <div class="row"><a class="btn" href="#/record/${res.person.id}">Open her Kin record</a><a class="btn" href="#/console">Console</a></div></div>
+      <div class="row"><a class="btn" href="#/record/${res.person.id}">Open her Carethropic record</a><a class="btn" href="#/console">Console</a></div></div>
       <div class="pipeline">${STAGES.map((s) => `<span class="stage done">${s}</span>`).join('')}</div>
       <div class="gate ${g.approved ? 'approved' : g.route}" id="gate"><div class="row" style="justify-content:space-between"><div><h2 style="margin:0">${g.approved ? 'Approved by navigator' : g.route === 'attorney' ? 'Routed to attorney review' : 'Ready for navigator review'} ${g.urgent ? '<span class="pill red">Act today</span>' : ''}</h2><div class="small">${g.reasons.map(esc).join(' · ') || 'Routine case.'}${g.approval_hash ? ` · approval hash <span class="mono">${g.approval_hash.slice(0, 16)}…</span>` : ''}</div></div>
-        <div class="row"><input type="text" id="navName" placeholder="Navigator name" style="width:180px" value="A. Navigator"><button class="btn primary" id="approveBtn" ${g.approved ? 'disabled' : ''}>Approve letter</button><button class="btn ${res.saved_to_record ? '' : 'warm'}" id="saveBtn">${res.saved_to_record ? 'Saved to Kin record' : 'Save deadlines to Kin record'}</button></div></div></div>
+        <div class="row"><input type="text" id="navName" placeholder="Navigator name" style="width:180px" value="A. Navigator"><button class="btn primary" id="approveBtn" ${g.approved ? 'disabled' : ''}>Approve letter</button><button class="btn ${res.saved_to_record ? '' : 'warm'}" id="saveBtn">${res.saved_to_record ? 'Saved to Carethropic record' : 'Save deadlines to Carethropic record'}</button></div></div></div>
       <div class="grid two" style="margin-top:16px">
         <div class="card"><h2>Deadlines <span class="pill gray">computed in code</span></h2>${deadlines}<h3 style="margin-top:14px">Findings</h3><ul class="list">${findings}</ul></div>
         <div class="card"><h2>What the notice says <span class="pill gray">extracted</span></h2><p>${esc(n.reason)}</p><div class="small"><b>Notice date</b> ${esc(n.notice_date)}${n.effective_date ? ` · <b>Effective</b> ${esc(n.effective_date)}` : ''}${n.stated_due_date ? ` · <b>Stated due</b> ${esc(n.stated_due_date)}` : ''}</div><div class="small"><b>Requested</b> ${(n.requested_documents || []).map(esc).join(', ') || '—'}</div><div style="margin-top:8px">${conf}</div>
@@ -141,7 +141,7 @@
       try {
         const a = await post(`/people/${pid}/ask`, { question: q, lang: L });
         const cites = a.cited.map((c) => `<span class="cite" title="${esc(c.id)}">${esc(c.label)}</span>`).join('');
-        $('#askOut').innerHTML = `<div class="answer ${a.guard ? 'guard' : ''}">${esc(a.answer)}</div><div class="small muted" style="margin-top:6px">${a.guard ? 'Medical advice guard: Kin never advises on doses. ' : ''}Intent: ${esc(a.intent)} · ${a.mode === 'live' ? 'Claude phrased it' : 'template'} · cited ${cites || 'nothing'}${a.verifier.passed ? '' : ' · <b>verifier replaced the model answer</b>: ' + esc(a.verifier.notes.join(' '))}</div>`;
+        $('#askOut').innerHTML = `<div class="answer ${a.guard ? 'guard' : ''}">${esc(a.answer)}</div><div class="small muted" style="margin-top:6px">${a.guard ? 'Medical advice guard: Carethropic never advises on doses. ' : ''}Intent: ${esc(a.intent)} · ${a.mode === 'live' ? 'Claude phrased it' : 'template'} · cited ${cites || 'nothing'}${a.verifier.passed ? '' : ' · <b>verifier replaced the model answer</b>: ' + esc(a.verifier.notes.join(' '))}</div>`;
         if (window.speechSynthesis && state.speak) { const u = new SpeechSynthesisUtterance(a.answer); u.lang = { tl: 'fil-PH', 'zh-Hant': 'zh-HK', vi: 'vi-VN', ko: 'ko-KR', hi: 'hi-IN', es: 'es-US', en: 'en-US' }[L] || 'en-US'; speechSynthesis.speak(u); }
       } catch (e) { $('#askOut').innerHTML = `<div class="answer guard">${esc(e.message)}</div>`; }
     };
@@ -192,10 +192,10 @@
     const facts = d.facts.map((f) => `<div class="fact"><div class="n">${esc(f.stat)}</div><div>${esc(f.text)}<div class="src">${esc(f.source)} · <a href="${esc(f.url)}" target="_blank" rel="noopener">source</a></div></div></div>`).join('');
     const cols = ['Cantonese', 'Mandarin', 'Vietnamese', 'Tagalog', 'Korean', 'Hindi', 'Punjabi'];
     const table = `<table class="langs"><thead><tr><th>County</th>${cols.map((c) => `<th>${c}</th>`).join('')}</tr></thead><tbody>${d.county_language.rows.map((r) => `<tr><td>${esc(r.county)}</td>${cols.map((c) => `<td>${(r[c] || 0).toLocaleString()}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-    view.innerHTML = `<h1>Why Kin</h1><p class="sub">${esc(d.framing)}</p><div class="grid two">${head}</div>
+    view.innerHTML = `<h1>Why Carethropic</h1><p class="sub">${esc(d.framing)}</p><div class="grid two">${head}</div>
       <div class="grid two" style="margin-top:16px"><div class="card"><h2>What the research says</h2>${facts}</div>
       <div><div class="card"><h2>Medi-Cal members by primary language <span class="pill gray">Oct 2026</span></h2>${table}<p class="src" style="margin-top:8px">${esc(d.computed_note)}</p></div>
-      <div class="card" style="margin-top:16px"><h2>Data gaps Kin works around</h2><ul class="list">${d.data_gaps.map((g) => `<li>${esc(g)}</li>`).join('')}</ul></div></div></div>`;
+      <div class="card" style="margin-top:16px"><h2>Data gaps Carethropic works around</h2><ul class="list">${d.data_gaps.map((g) => `<li>${esc(g)}</li>`).join('')}</ul></div></div></div>`;
   }
 
   // ---------- audit ----------

@@ -1,11 +1,11 @@
-"""Kin test suite: rules, vault status, Ask Kin guard and verifier, emergency consent, nonprofit finder, API."""
+"""Carethropic test suite: rules, vault status, Ask Carethropic guard and verifier, emergency consent, nonprofit finder, API."""
 import os
 import sys
 from datetime import date, datetime
 from pathlib import Path
 
-os.environ["KALINGA_REPLAY"] = "1"
-os.environ["KALINGA_NOW"] = "2026-11-06T10:30"
+os.environ["CARETHROPIC_REPLAY"] = "1"
+os.environ["CARETHROPIC_NOW"] = "2026-11-06T10:30"
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "backend"))
 
 import pytest  # noqa: E402
@@ -122,7 +122,7 @@ def test_status_late_inside_grace():
     assert vault.status(p, datetime(2026, 11, 6, 12, 0, tzinfo=TZ))["level"] == "missed"
 
 
-# ---------- Ask Kin ----------
+# ---------- Ask Carethropic ----------
 @pytest.mark.parametrize("q", ["Should I take two pills since I forgot?", "Can I double my dose?", "Dapat ko bang inumin ang dalawa?",
                                "我可以吃兩粒嗎", "Tôi có nên uống hai viên không", "두 알 먹어도 돼요?", "क्या मैं दो गोली ले सकती हूँ", "¿Puedo tomar dos pastillas?"])
 def test_advice_guard_recall(q):
@@ -229,3 +229,14 @@ def test_api_end_to_end():
     assert c.get("/api/audit").json()["valid"]
     d = c.post("/api/decode", data={"person_id": "p-hoa", "text": "NOTICE OF ACTION 10/20/2026. Your Medi-Cal will stop on 11/15/2026. SSN 123-45-6789."}).json()
     assert d["notice"]["notice_type"] == "discontinuance" and d["rules"]["deadlines"]
+
+
+# ---------- env names ----------
+def test_env_prefers_carethropic_and_falls_back_to_kalinga(monkeypatch):
+    from common import env
+    monkeypatch.delenv("CARETHROPIC_MODEL", raising=False)
+    monkeypatch.setenv("KALINGA_MODEL", "legacy-model")
+    assert env("MODEL") == "legacy-model"
+    monkeypatch.setenv("CARETHROPIC_MODEL", "new-model")
+    assert env("MODEL") == "new-model"
+    assert env("DOES_NOT_EXIST", "dflt") == "dflt"
