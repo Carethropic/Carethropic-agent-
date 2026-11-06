@@ -54,10 +54,24 @@ Optional: `CARETHROPIC_MODEL` (default `claude-sonnet-4-5`), `CARETHROPIC_FAST_M
 
 Docker: `docker build -t carethropic . && docker run -p 8000:8000 -e ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY carethropic`
 
+## Connector and plugin
+
+The same backend is an MCP server at `/mcp` (Streamable HTTP), so a navigator can work the caseload from claude.ai, Claude Code or any MCP client with 16 tools: console, records, decode and run notices, approve and save, check-ins, Ask Carethropic, daily briefing, consent and emergency card, nonprofit finder, audit trail. Every tool calls the same modules the web app uses; read-only tools are annotated as such, and nothing sends anything to a county or a client.
+
+```bash
+export CARETHROPIC_MCP_TOKEN=$(openssl rand -hex 24)   # required header: Authorization: Bearer <token>
+uvicorn app:app --port 8000
+cloudflared tunnel --url http://localhost:8000          # or ngrok; claude.ai needs a public HTTPS URL
+```
+
+Then add `https://<your-tunnel>/mcp` in claude.ai under Customize → Connectors, or in Claude Code with `claude mcp add --transport http carethropic https://<your-tunnel>/mcp --header "Authorization: Bearer <token>"`. Set `CARETHROPIC_MCP_ALLOWED_HOSTS=<your-tunnel-host>` to turn on Host and Origin checking for that name. The bearer token is a demo gate; a pilot should put OAuth in front of the server ([Building custom connectors](https://claude.com/docs/connectors/building)).
+
+[`plugin/carethropic`](plugin/carethropic) packages this as a Claude plugin: the connector config plus two skills, **decoding-benefits-notices** and **checking-in-on-elders**, that tell Claude how to run a notice and triage a caseload while reporting only what the tools computed. `claude plugin validate` passes; a test checks that every tool the skills name exists.
+
 ## Tests and evals
 
 ```bash
-python -m pytest -q tests        # 40 tests: rules for four programs, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence, voice briefing
+python -m pytest -q tests        # 43 tests: rules for four programs, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence, voice briefing, MCP connector, plugin
 python evals/run_evals.py        # replay
 python evals/run_evals.py --live # Claude agents and re-ranker end to end
 ```
@@ -104,8 +118,10 @@ backend/app.py       FastAPI
   emergency.py       consent-gated QR card
   briefing.py        spoken daily briefing and tap confirmations, composed in code per language
   llm.py             Claude client with forced tool schemas and replay fallback
+  mcp_server.py      the same operations as MCP tools, mounted at /mcp
   common.py          clock, env, scrubbing, masking, SHA-256 audit chain
   data/              kb.json, cases.json, people.json, nonprofits.json, i18n.json, insights.json
+plugin/carethropic/  Claude plugin: connector config and two navigator skills
 tests/               pytest suite
 evals/               gold labels and harness
 .github/workflows/   CI: tests and evals on every push
@@ -132,7 +148,7 @@ evals/               gold labels and harness
 2. CalWORKs and SSI/SSP notices.
 3. Recorded prompts per language to replace browser speech synthesis in voice mode.
 4. Optional, consented family digest.
-5. Package Carethropic as a Claude for Nonprofits plugin so partner organizations can install it directly.
+5. Submit the connector to the Claude directory with OAuth, so partner organizations can add it without a tunnel.
 
 ## Builder
 

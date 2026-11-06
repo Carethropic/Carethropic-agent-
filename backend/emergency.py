@@ -23,7 +23,7 @@ def card(pid: str) -> dict:
     em = p["emergency"]
     meds = [f"{m['name']} {m['dose']} ({', '.join(m['times'])})" for m in p["medications"]]
     lines = [
-        "KIN EMERGENCY INFO",
+        "CARETHROPIC EMERGENCY INFO",
         f"Name: {p['display_name']}",
         f"Language: {em.get('interpreter') or p['language']} (interpreter needed)",
         f"Allergies: {', '.join(em['allergies']) or 'None listed'}",

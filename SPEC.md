@@ -1,6 +1,6 @@
 # Carethropic: Product Spec
 
-Version 2.3 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
+Version 2.4 · November 6, 2026 · Code with Claude: Women in AI Hackathon (Women's Health track)
 
 Kalinga is Tagalog for care. Version 1 (Kalinga) decoded Medi-Cal notices for navigators. Version 2 keeps that core and extends it to a second group the same navigators already serve: Asian American elders in the Bay Area, especially women who live alone.
 
@@ -116,6 +116,10 @@ Search behavior:
 
 Acceptance test: the query **"Claude nonprofit sponsors in San Francisco"** must return San Francisco Claude partners first (Tipping Point Community, Taproot Foundation), then nationwide Claude partners, then San Francisco nonprofits serving AAPI women and elders (Self-Help for the Elderly, On Lok, API Legal Outreach, Kimochi, and more). Verified in pytest, in the eval harness, and in a browser run.
 
+### 4.8 Connector and plugin (new)
+
+The backend exposes its operations as MCP tools at `/mcp` so navigators can use Carethropic inside claude.ai or Claude Code. `plugin/carethropic` packages the connector with two skills that constrain Claude to report computed results and to act (approve, save, check in, consent) only on the navigator's instruction. See the README, "Connector and plugin".
+
 ## 5. Architecture
 
 ```
@@ -129,6 +133,7 @@ backend/app.py (FastAPI)
    ├── nonprofits.py   query parser, scorer, grouping, re-rank
    ├── emergency.py    consent and QR card
    ├── briefing.py     spoken daily briefing and tap confirmations (code, per language)
+   ├── mcp_server.py   the same operations as MCP tools at /mcp (connector)
    ├── audit.py        SHA-256 hash chain, hashes only
    ├── llm.py          Claude client with forced tool schemas, replay fallback
    ├── privacy.py      scrubbing and masking
@@ -216,4 +221,4 @@ Every Claude call uses a forced tool schema. Date math, deadline logic, status c
 2. CalWORKs and SSI/SSP notices (CalFresh, IHSS and Medicare Savings Program notices shipped in 2.2).
 3. Recorded prompts per language to replace browser speech synthesis in voice mode.
 4. Optional, consented family digest.
-5. Claude for Nonprofits plugin packaging so partner organizations can install Carethropic skills directly.
+5. Submit the connector to the Claude directory with OAuth (the plugin and connector shipped in 2.4).

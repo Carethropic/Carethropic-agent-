@@ -5,6 +5,7 @@ Run:  cd backend && uvicorn app:app --port 8000
 from __future__ import annotations
 
 import base64
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, UploadFile, File, Form
@@ -21,7 +22,22 @@ import pipeline
 import vault
 from common import AUDIT, load, today, now, scrub
 
-app = FastAPI(title="Carethropic", version="2.0")
+try:
+    import mcp_server
+except ImportError:  # the mcp package is optional; the web app runs without it
+    mcp_server = None
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    if mcp_server is not None:
+        async with mcp_server.mcp.session_manager.run():
+            yield
+    else:
+        yield
+
+
+app = FastAPI(title="Carethropic", version="2.4", lifespan=lifespan)
 FRONTEND = Path(__file__).resolve().parent.parent / "frontend"
 I18N = load("i18n.json")
 INSIGHTS = load("insights.json")
@@ -30,7 +46,7 @@ INSIGHTS = load("insights.json")
 # ---------- meta ----------
 @app.get("/api/meta")
 def meta():
-    return {"name": "Carethropic", "engine": "Kalinga", "mode": "live" if llm.live() else "replay", "model": llm.MODEL,
+    return {"name": "Carethropic", "engine": "Kalinga", "mode": "live" if llm.live() else "replay", "model": llm.MODEL, "mcp": mcp_server is not None,
             "today": today().isoformat(), "now": now().strftime("%H:%M"), "kb_version": pipeline.KB["version"],
             "directory_version": nonprofits.DIR["version"], "organization": vault.ORG,
             "seeded_on": vault.seeded_on(), "db": pipeline.STORE.path,
@@ -250,3 +266,5 @@ def index():
 
 
 app.mount("/static", StaticFiles(directory=str(FRONTEND)), name="static")
+if mcp_server is not None:
+    app.mount("/", mcp_server.build_app(), name="mcp")   # serves /mcp; mounted last so every API and static route wins first
