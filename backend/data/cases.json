@@ -1,0 +1,94 @@
+{
+  "note": "All names, agencies, and case numbers are fictional. Dates use offsets from today so the demo stays current; fixed dates are used for 2027 rule previews.",
+  "cases": [
+    {
+      "id": "ligaya",
+      "person_id": "p-ligaya",
+      "headline": "Medi-Cal discontinuance, 24 weeks pregnant",
+      "client": {"pregnant": true, "weeks_pregnant": 24, "age": 29, "children_ages": []},
+      "extraction": {
+        "notice_type": "discontinuance",
+        "agency": "Alameda County Social Services (fictional notice)",
+        "case_number": "AC-77310452",
+        "notice_date_offset": -4,
+        "effective_date_offset": 3,
+        "reason": "Income over limit based on a quarterly data match.",
+        "legal_basis_cited": true,
+        "requested_documents": ["Last 30 days of pay stubs", "Proof of pregnancy (doctor's note)"],
+        "confidence": {"notice_date": 0.97, "effective_date": 0.95, "reason": 0.9}
+      },
+      "notice_text": "NOTICE OF ACTION. Your Medi-Cal benefits will stop. Reason: income over limit (quarterly data match). Rules: 22 CCR 50179. If you disagree you can ask for a State Hearing."
+    },
+    {
+      "id": "rosa",
+      "person_id": "p-rosa",
+      "headline": "2027 work rule noncompliance, 3 months postpartum (preview of 2027 rules)",
+      "client": {"postpartum_months": 3, "age": 31, "children_ages": [0, 6]},
+      "extraction": {
+        "notice_type": "work_rule_noncompliance",
+        "agency": "Solano County Health and Social Services (fictional notice)",
+        "case_number": "SC-20448117",
+        "notice_date": "2027-02-01",
+        "reason": "No hours of work or community engagement reported for January 2027.",
+        "legal_basis_cited": true,
+        "requested_documents": ["Proof of exemption or 80 hours of qualifying activity"],
+        "confidence": {"notice_date": 0.96, "reason": 0.92}
+      },
+      "notice_text": "NOTICE: You did not meet Medi-Cal community engagement requirements for January 2027. Respond within 30 days or your coverage may end."
+    },
+    {
+      "id": "carmen",
+      "person_id": "p-carmen",
+      "headline": "Renewal documents request, caregiver for her mother",
+      "client": {"age": 46, "children_ages": [15], "caregiver_for_parent": true},
+      "extraction": {
+        "notice_type": "renewal_documents",
+        "agency": "Alameda County Social Services (fictional notice)",
+        "case_number": "AC-55102938",
+        "notice_date_offset": -2,
+        "stated_due_offset": 19,
+        "reason": "Annual renewal. Proof of income needed.",
+        "legal_basis_cited": true,
+        "requested_documents": ["Proof of income", "Proof of address"],
+        "confidence": {"notice_date": 0.95, "stated_due_date": 0.93}
+      },
+      "notice_text": "MEDI-CAL RENEWAL. Please send the documents listed below within 21 days."
+    },
+    {
+      "id": "wai-ling",
+      "person_id": "p-wailing",
+      "headline": "Annual Medi-Cal renewal packet, 82, lives alone (Medi-Medi)",
+      "client": {"age": 82, "lives_alone": true},
+      "extraction": {
+        "notice_type": "annual_renewal",
+        "agency": "San Francisco Human Services Agency (fictional notice)",
+        "case_number": "SF-30917264",
+        "notice_date_offset": -6,
+        "stated_due_offset": 24,
+        "reason": "Annual renewal for Medi-Cal (you also have Medicare).",
+        "legal_basis_cited": true,
+        "requested_documents": ["Signed renewal form", "Bank statement", "Social Security award letter"],
+        "confidence": {"notice_date": 0.94, "stated_due_date": 0.92}
+      },
+      "notice_text": "MEDI-CAL ANNUAL RENEWAL. Return the enclosed form and documents within 30 days to keep your Medi-Cal."
+    },
+    {
+      "id": "hoa",
+      "person_id": "p-hoa",
+      "headline": "Medi-Cal ended for an unreturned renewal, 74, lives alone",
+      "client": {"age": 74, "lives_alone": true},
+      "extraction": {
+        "notice_type": "termination_no_renewal",
+        "agency": "Santa Clara County Social Services (fictional notice)",
+        "case_number": "SCC-81140573",
+        "notice_date_offset": -25,
+        "effective_date_offset": -10,
+        "reason": "Renewal form was not returned.",
+        "legal_basis_cited": false,
+        "requested_documents": ["Signed renewal form"],
+        "confidence": {"notice_date": 0.93, "effective_date": 0.62}
+      },
+      "notice_text": "Your Medi-Cal has stopped because we did not get your renewal form."
+    }
+  ]
+}

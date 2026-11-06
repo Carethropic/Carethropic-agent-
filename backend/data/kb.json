@@ -1,0 +1,53 @@
+{
+ "version": "kb-2026.11.06",
+ "authorities": {
+  "fed-431-210": {
+   "cite": "42 C.F.R. \u00a7 431.210",
+   "title": "Content of notice",
+   "summary": "A notice must state the action, the reasons, and the specific rule that supports it.",
+   "url": "https://www.ecfr.gov/current/title-42/section-431.210"
+  },
+  "fed-431-211": {
+   "cite": "42 C.F.R. \u00a7 431.211",
+   "title": "Advance notice",
+   "summary": "The agency must mail notice at least 10 days before the date of action.",
+   "url": "https://www.ecfr.gov/current/title-42/section-431.211"
+  },
+  "fed-431-221": {
+   "cite": "42 C.F.R. \u00a7 431.221",
+   "title": "Request for hearing",
+   "summary": "Members get a reasonable time, up to 90 days, to request a fair hearing.",
+   "url": "https://www.ecfr.gov/current/title-42/section-431.221"
+  },
+  "fed-431-230": {
+   "cite": "42 C.F.R. \u00a7 431.230",
+   "title": "Maintaining services",
+   "summary": "If a hearing is requested before the date of action, benefits continue until the decision.",
+   "url": "https://www.ecfr.gov/current/title-42/section-431.230"
+  },
+  "fed-435-916": {
+   "cite": "42 C.F.R. \u00a7 435.916",
+   "title": "Renewals",
+   "summary": "Members get at least 30 days to return renewal information, and a 90-day reconsideration period after termination for not returning it.",
+   "url": "https://www.ecfr.gov/current/title-42/section-435.916"
+  },
+  "ca-wic-10951": {
+   "cite": "Cal. Welf. & Inst. Code \u00a7 10951",
+   "title": "State hearing deadline",
+   "summary": "A state hearing request is timely within 90 days of the notice.",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=10951.&lawCode=WIC"
+  },
+  "pl-119-21-71119": {
+   "cite": "Pub. L. 119-21, \u00a7 71119",
+   "title": "Medicaid community engagement requirements",
+   "summary": "Adults 19 to 64 in the expansion group must report work or community engagement starting by January 1, 2027, with exemptions including pregnancy, postpartum, caretakers of a child 13 or younger, and medically frail members. Noncompliance notices give 30 days to respond.",
+   "url": "https://www.congress.gov/bill/119th-congress/house-bill/1"
+  },
+  "ca-wic-14005-18": {
+   "cite": "Cal. Welf. & Inst. Code \u00a7 14005.18",
+   "title": "Postpartum care extension",
+   "summary": "Medi-Cal postpartum coverage continues for 12 months after pregnancy ends.",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=14005.18.&lawCode=WIC"
+  }
+ }
+}

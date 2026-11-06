@@ -1,0 +1,554 @@
+{
+ "note": "Synthetic people for the demo. Phone numbers use the fictional 555 range. Offsets are days from today.",
+ "organization": {
+  "id": "faj",
+  "name": "Filipino Advocates for Justice (pilot)",
+  "navigator_phone": "(510) 555-0100"
+ },
+ "people": [
+  {
+   "id": "p-remy",
+   "display_name": "Remedios S. (Lola Remy)",
+   "age": 78,
+   "language": "tl",
+   "city": "Daly City",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-remy-1",
+     "name": "Amlodipine",
+     "dose": "5 mg",
+     "times": [
+      "08:00"
+     ],
+     "purpose": "blood pressure",
+     "prescriber": "Dr. Reyes (fictional)",
+     "pharmacy": "Westlake pharmacy (fictional)",
+     "refill_offset": 9
+    },
+    {
+     "id": "med-remy-2",
+     "name": "Metformin",
+     "dose": "500 mg",
+     "times": [
+      "08:00",
+      "18:00"
+     ],
+     "purpose": "blood sugar",
+     "prescriber": "Dr. Reyes (fictional)",
+     "pharmacy": "Westlake pharmacy (fictional)",
+     "refill_offset": 20
+    },
+    {
+     "id": "med-remy-3",
+     "name": "Atorvastatin",
+     "dose": "20 mg",
+     "times": [
+      "21:00"
+     ],
+     "purpose": "cholesterol",
+     "prescriber": "Dr. Reyes (fictional)",
+     "pharmacy": "Westlake pharmacy (fictional)",
+     "refill_offset": 20
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-remy-1",
+     "type": "appointment",
+     "offset": 5,
+     "time": "10:30",
+     "title": "Check-up with Dr. Reyes",
+     "place": "Daly City clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-remy-1",
+     "program": "Medi-Medi (Medicare Parts A and B plus Medi-Cal)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "9XQ47731852",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-remy",
+    "contacts": [
+     {
+      "name": "Joy S. (niece)",
+      "phone": "(650) 555-0142",
+      "language": "en, tl"
+     }
+    ],
+    "allergies": [
+     "Penicillin"
+    ],
+    "conditions_shared": [
+     "High blood pressure",
+     "Type 2 diabetes"
+    ],
+    "interpreter": "Tagalog",
+    "advance_directive_location": "Blue folder in the kitchen drawer"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": -2,
+     "time": "09:05"
+    },
+    {
+     "type": "med",
+     "item_id": "med-remy-1",
+     "offset": -2,
+     "time": "08:10"
+    }
+   ]
+  },
+  {
+   "id": "p-wailing",
+   "display_name": "Wai Ling C.",
+   "age": 82,
+   "language": "zh-Hant",
+   "city": "San Francisco",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-wl-1",
+     "name": "Losartan",
+     "dose": "50 mg",
+     "times": [
+      "09:00"
+     ],
+     "purpose": "blood pressure",
+     "prescriber": "Dr. Wong (fictional)",
+     "pharmacy": "Stockton St. pharmacy (fictional)",
+     "refill_offset": 12
+    },
+    {
+     "id": "med-wl-2",
+     "name": "Latanoprost eye drops",
+     "dose": "1 drop each eye",
+     "times": [
+      "21:00"
+     ],
+     "purpose": "glaucoma (eye pressure)",
+     "prescriber": "Dr. Lam (fictional)",
+     "pharmacy": "Stockton St. pharmacy (fictional)",
+     "refill_offset": 25
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-wl-1",
+     "type": "appointment",
+     "offset": 8,
+     "time": "14:00",
+     "title": "Eye doctor visit",
+     "place": "Chinatown clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-wl-1",
+     "program": "Medi-Medi (Medicare plus Medi-Cal)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "8RT55201946",
+     "status": "renewal due"
+    }
+   ],
+   "emergency": {
+    "id": "ice-wl",
+    "contacts": [
+     {
+      "name": "Grace C. (daughter, Sacramento)",
+      "phone": "(916) 555-0177",
+      "language": "en, yue"
+     }
+    ],
+    "allergies": [
+     "Sulfa drugs"
+    ],
+    "conditions_shared": [
+     "High blood pressure",
+     "Glaucoma"
+    ],
+    "interpreter": "Cantonese",
+    "advance_directive_location": "With daughter Grace"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": 0,
+     "time": "08:30"
+    },
+    {
+     "type": "med",
+     "item_id": "med-wl-1",
+     "offset": 0,
+     "time": "09:10"
+    }
+   ]
+  },
+  {
+   "id": "p-hoa",
+   "display_name": "Hoa N.",
+   "age": 74,
+   "language": "vi",
+   "city": "San Jose",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-hoa-1",
+     "name": "Levothyroxine",
+     "dose": "50 mcg",
+     "times": [
+      "07:00"
+     ],
+     "purpose": "thyroid",
+     "prescriber": "Dr. Tran (fictional)",
+     "pharmacy": "Story Rd. pharmacy (fictional)",
+     "refill_offset": 4
+    }
+   ],
+   "events": [],
+   "coverage": [
+    {
+     "id": "cov-hoa-1",
+     "program": "Medicare Parts A and B; Medi-Cal ended (see notice)",
+     "plan": "Original Medicare",
+     "member_id": "4HK92210573",
+     "status": "Medi-Cal stopped"
+    }
+   ],
+   "emergency": {
+    "id": "ice-hoa",
+    "contacts": [
+     {
+      "name": "Minh N. (son)",
+      "phone": "(408) 555-0119",
+      "language": "en, vi"
+     }
+    ],
+    "allergies": [],
+    "conditions_shared": [
+     "Thyroid condition"
+    ],
+    "interpreter": "Vietnamese",
+    "advance_directive_location": "Not on file"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": -1,
+     "time": "10:00"
+    }
+   ]
+  },
+  {
+   "id": "p-soonja",
+   "display_name": "Soon-ja K.",
+   "age": 80,
+   "language": "ko",
+   "city": "Santa Clara",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-sj-1",
+     "name": "Donepezil",
+     "dose": "5 mg",
+     "times": [
+      "20:00"
+     ],
+     "purpose": "memory",
+     "prescriber": "Dr. Park (fictional)",
+     "pharmacy": "El Camino pharmacy (fictional)",
+     "refill_offset": 15
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-sj-1",
+     "type": "appointment",
+     "offset": 2,
+     "time": "11:00",
+     "title": "Memory clinic follow-up",
+     "place": "Santa Clara clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-sj-1",
+     "program": "Medicare Advantage plus Medi-Cal",
+     "plan": "Medicare Advantage plan (fictional)",
+     "member_id": "2LM73319044",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-sj",
+    "contacts": [
+     {
+      "name": "Esther K. (daughter)",
+      "phone": "(408) 555-0163",
+      "language": "en, ko"
+     }
+    ],
+    "allergies": [
+     "Aspirin"
+    ],
+    "conditions_shared": [
+     "Memory loss"
+    ],
+    "interpreter": "Korean",
+    "advance_directive_location": "Copy at memory clinic"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": 0,
+     "time": "08:00"
+    }
+   ]
+  },
+  {
+   "id": "p-kamala",
+   "display_name": "Kamala P.",
+   "age": 76,
+   "language": "hi",
+   "city": "Fremont",
+   "segment": "elder",
+   "lives_alone": true,
+   "medications": [
+    {
+     "id": "med-kp-1",
+     "name": "Metoprolol",
+     "dose": "25 mg",
+     "times": [
+      "08:00",
+      "20:00"
+     ],
+     "purpose": "blood pressure",
+     "prescriber": "Dr. Mehta (fictional)",
+     "pharmacy": "Fremont Blvd. pharmacy (fictional)",
+     "refill_offset": 7
+    },
+    {
+     "id": "med-kp-2",
+     "name": "Metformin",
+     "dose": "500 mg",
+     "times": [
+      "08:00",
+      "19:00"
+     ],
+     "purpose": "blood sugar",
+     "prescriber": "Dr. Mehta (fictional)",
+     "pharmacy": "Fremont Blvd. pharmacy (fictional)",
+     "refill_offset": 18
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-kp-1",
+     "type": "appointment",
+     "offset": 3,
+     "time": "15:30",
+     "title": "Diabetes check with Dr. Mehta",
+     "place": "Fremont clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-kp-1",
+     "program": "Medi-Medi (Medicare plus Medi-Cal)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "3FR66120589",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-kp",
+    "contacts": [
+     {
+      "name": "Arjun P. (son)",
+      "phone": "(510) 555-0154",
+      "language": "en, hi"
+     }
+    ],
+    "allergies": [],
+    "conditions_shared": [
+     "High blood pressure",
+     "Type 2 diabetes"
+    ],
+    "interpreter": "Hindi",
+    "advance_directive_location": "Top shelf, bedroom closet"
+   },
+   "checkins": [
+    {
+     "type": "daily",
+     "offset": 0,
+     "time": "07:45"
+    },
+    {
+     "type": "med",
+     "item_id": "med-kp-1",
+     "offset": 0,
+     "time": "08:05"
+    },
+    {
+     "type": "med",
+     "item_id": "med-kp-2",
+     "offset": 0,
+     "time": "08:05"
+    }
+   ]
+  },
+  {
+   "id": "p-ligaya",
+   "display_name": "Ligaya R.",
+   "age": 29,
+   "language": "tl",
+   "city": "Union City",
+   "segment": "women",
+   "lives_alone": false,
+   "medications": [
+    {
+     "id": "med-lig-1",
+     "name": "Prenatal vitamin",
+     "dose": "1 tablet",
+     "times": [
+      "08:00"
+     ],
+     "purpose": "pregnancy",
+     "prescriber": "Midwife clinic (fictional)",
+     "pharmacy": "Union City pharmacy (fictional)",
+     "refill_offset": 14
+    }
+   ],
+   "events": [
+    {
+     "id": "evt-lig-1",
+     "type": "appointment",
+     "offset": 6,
+     "time": "09:00",
+     "title": "Prenatal visit (week 25)",
+     "place": "Union City clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-lig-1",
+     "program": "Medi-Cal (pregnancy)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "7AC77310452",
+     "status": "ending (see notice)"
+    }
+   ],
+   "emergency": {
+    "id": "ice-lig",
+    "contacts": [
+     {
+      "name": "Marco R. (partner)",
+      "phone": "(510) 555-0131",
+      "language": "en, tl"
+     }
+    ],
+    "allergies": [],
+    "conditions_shared": [
+     "Pregnant, 24 weeks"
+    ],
+    "interpreter": "Tagalog",
+    "advance_directive_location": "Not on file"
+   },
+   "checkins": []
+  },
+  {
+   "id": "p-rosa",
+   "display_name": "Rosa D.",
+   "age": 31,
+   "language": "tl",
+   "city": "Vallejo",
+   "segment": "women",
+   "lives_alone": false,
+   "medications": [],
+   "events": [
+    {
+     "id": "evt-rosa-1",
+     "type": "appointment",
+     "offset": 10,
+     "time": "13:00",
+     "title": "Postpartum check and baby well visit",
+     "place": "Vallejo clinic (fictional)",
+     "source": "navigator"
+    }
+   ],
+   "coverage": [
+    {
+     "id": "cov-rosa-1",
+     "program": "Medi-Cal (12-month postpartum)",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "6SC20448117",
+     "status": "active"
+    }
+   ],
+   "emergency": {
+    "id": "ice-rosa",
+    "contacts": [
+     {
+      "name": "Tess D. (sister)",
+      "phone": "(707) 555-0188",
+      "language": "en, tl"
+     }
+    ],
+    "allergies": [],
+    "conditions_shared": [],
+    "interpreter": "Tagalog",
+    "advance_directive_location": "Not on file"
+   },
+   "checkins": []
+  },
+  {
+   "id": "p-carmen",
+   "display_name": "Carmen F.",
+   "age": 46,
+   "language": "es",
+   "city": "Oakland",
+   "segment": "women",
+   "lives_alone": false,
+   "medications": [],
+   "events": [],
+   "coverage": [
+    {
+     "id": "cov-car-1",
+     "program": "Medi-Cal",
+     "plan": "Medi-Cal managed care plan (fictional)",
+     "member_id": "5AC55102938",
+     "status": "renewal due"
+    }
+   ],
+   "emergency": {
+    "id": "ice-car",
+    "contacts": [
+     {
+      "name": "Luis F. (brother)",
+      "phone": "(510) 555-0166",
+      "language": "en, es"
+     }
+    ],
+    "allergies": [],
+    "conditions_shared": [],
+    "interpreter": "Spanish",
+    "advance_directive_location": "Not on file"
+   },
+   "checkins": []
+  }
+ ]
+}

@@ -1,0 +1,473 @@
+{
+ "review_status": "Draft translations for the hackathon demo. Each language will be reviewed by community members before the pilot.",
+ "languages": {
+  "en": "English",
+  "tl": "Tagalog",
+  "zh-Hant": "繁體中文",
+  "vi": "Tiếng Việt",
+  "ko": "한국어",
+  "es": "Español",
+  "hi": "हिन्दी"
+ },
+ "ui": {
+  "en": {
+   "my_meds": "My medicines",
+   "my_events": "My appointments and deadlines",
+   "my_coverage": "My coverage",
+   "emergency": "Emergency",
+   "im_ok": "I'm OK today",
+   "taken": "Taken",
+   "not_yet": "Not yet",
+   "ask_title": "Ask Kin",
+   "ask_placeholder": "Example: Did I take my blood pressure pill today?",
+   "ask_button": "Ask",
+   "call_navigator": "Call my navigator",
+   "today": "Today",
+   "card_title": "Emergency card",
+   "allergies": "Allergies",
+   "contacts": "Emergency contacts",
+   "directive": "Where my advance directive is",
+   "refill": "Refill",
+   "status_ok": "All set today",
+   "status_late": "Coming due",
+   "status_missed": "Something to confirm",
+   "status_missed_2_days": "Two days without a check-in",
+   "status_none": "No check-ins set up"
+  },
+  "tl": {
+   "my_meds": "Mga gamot ko",
+   "my_events": "Mga appointment at deadline ko",
+   "my_coverage": "Coverage ko",
+   "emergency": "Para sa emergency",
+   "im_ok": "Okay ako ngayon",
+   "taken": "Nainom na",
+   "not_yet": "Hindi pa",
+   "ask_title": "Tanungin si Kin",
+   "ask_placeholder": "Halimbawa: Nainom ko na ba ang gamot ko sa presyon?",
+   "ask_button": "Itanong",
+   "call_navigator": "Tawagan ang navigator ko",
+   "today": "Ngayong araw",
+   "card_title": "Emergency card",
+   "allergies": "Allergy",
+   "contacts": "Tawagan kung may emergency",
+   "directive": "Nasaan ang advance directive ko",
+   "refill": "Refill",
+   "status_ok": "Okay ngayong araw",
+   "status_late": "Malapit na ang oras",
+   "status_missed": "May kailangang i-check",
+   "status_missed_2_days": "Dalawang araw nang walang check-in",
+   "status_none": "Wala pang check-in"
+  },
+  "zh-Hant": {
+   "my_meds": "我的藥物",
+   "my_events": "我的預約和截止日期",
+   "my_coverage": "我的醫療保險",
+   "emergency": "緊急資料",
+   "im_ok": "我今天很好",
+   "taken": "已服用",
+   "not_yet": "未服用",
+   "ask_title": "問 Kin",
+   "ask_placeholder": "例如：我今天吃了血壓藥嗎？",
+   "ask_button": "提問",
+   "call_navigator": "打電話給我的協助員",
+   "today": "今天",
+   "card_title": "緊急資料卡",
+   "allergies": "過敏",
+   "contacts": "緊急聯絡人",
+   "directive": "預立醫療指示存放位置",
+   "refill": "續藥日期",
+   "status_ok": "今天一切正常",
+   "status_late": "快到時間了",
+   "status_missed": "有項目待確認",
+   "status_missed_2_days": "兩天沒有報平安",
+   "status_none": "尚未設定報平安"
+  },
+  "vi": {
+   "my_meds": "Thuốc của tôi",
+   "my_events": "Lịch hẹn và hạn chót",
+   "my_coverage": "Bảo hiểm của tôi",
+   "emergency": "Thông tin khẩn cấp",
+   "im_ok": "Hôm nay tôi khỏe",
+   "taken": "Đã uống",
+   "not_yet": "Chưa uống",
+   "ask_title": "Hỏi Kin",
+   "ask_placeholder": "Ví dụ: Hôm nay tôi đã uống thuốc huyết áp chưa?",
+   "ask_button": "Hỏi",
+   "call_navigator": "Gọi người hỗ trợ của tôi",
+   "today": "Hôm nay",
+   "card_title": "Thẻ khẩn cấp",
+   "allergies": "Dị ứng",
+   "contacts": "Người liên lạc khẩn cấp",
+   "directive": "Nơi để chỉ thị y tế trước",
+   "refill": "Ngày lấy thêm thuốc",
+   "status_ok": "Hôm nay ổn",
+   "status_late": "Sắp đến giờ",
+   "status_missed": "Có mục cần xác nhận",
+   "status_missed_2_days": "Hai ngày chưa báo bình an",
+   "status_none": "Chưa thiết lập báo bình an"
+  },
+  "ko": {
+   "my_meds": "내 약",
+   "my_events": "내 예약과 마감일",
+   "my_coverage": "내 보험",
+   "emergency": "응급 정보",
+   "im_ok": "오늘 잘 지내요",
+   "taken": "복용함",
+   "not_yet": "아직",
+   "ask_title": "Kin에게 물어보기",
+   "ask_placeholder": "예: 오늘 혈압약 먹었어요?",
+   "ask_button": "질문하기",
+   "call_navigator": "담당 도우미에게 전화",
+   "today": "오늘",
+   "card_title": "응급 카드",
+   "allergies": "알레르기",
+   "contacts": "비상 연락처",
+   "directive": "사전 의료 지시서 보관 장소",
+   "refill": "리필 날짜",
+   "status_ok": "오늘 이상 없음",
+   "status_late": "곧 시간이 됩니다",
+   "status_missed": "확인할 항목이 있어요",
+   "status_missed_2_days": "이틀 동안 안부 확인 없음",
+   "status_none": "안부 확인 미설정"
+  },
+  "es": {
+   "my_meds": "Mis medicinas",
+   "my_events": "Mis citas y fechas límite",
+   "my_coverage": "Mi cobertura",
+   "emergency": "Emergencia",
+   "im_ok": "Estoy bien hoy",
+   "taken": "Tomada",
+   "not_yet": "Todavía no",
+   "ask_title": "Pregúntale a Kin",
+   "ask_placeholder": "Ejemplo: ¿Ya tomé mi pastilla de la presión?",
+   "ask_button": "Preguntar",
+   "call_navigator": "Llamar a mi navegadora",
+   "today": "Hoy",
+   "card_title": "Tarjeta de emergencia",
+   "allergies": "Alergias",
+   "contacts": "Contactos de emergencia",
+   "directive": "Dónde está mi directiva anticipada",
+   "refill": "Resurtido",
+   "status_ok": "Todo bien hoy",
+   "status_late": "Ya casi es la hora",
+   "status_missed": "Algo por confirmar",
+   "status_missed_2_days": "Dos días sin reportarse",
+   "status_none": "Sin reportes configurados"
+  },
+  "hi": {
+   "my_meds": "मेरी दवाइयाँ",
+   "my_events": "मेरी अपॉइंटमेंट और अंतिम तिथियाँ",
+   "my_coverage": "मेरा बीमा",
+   "emergency": "आपातकालीन जानकारी",
+   "im_ok": "मैं आज ठीक हूँ",
+   "taken": "ले ली",
+   "not_yet": "अभी नहीं",
+   "ask_title": "Kin से पूछें",
+   "ask_placeholder": "उदाहरण: क्या मैंने आज बीपी की दवा ली?",
+   "ask_button": "पूछें",
+   "call_navigator": "मेरे सहायक को फ़ोन करें",
+   "today": "आज",
+   "card_title": "आपातकालीन कार्ड",
+   "allergies": "एलर्जी",
+   "contacts": "आपातकालीन संपर्क",
+   "directive": "मेरा एडवांस डायरेक्टिव कहाँ है",
+   "refill": "रीफ़िल",
+   "status_ok": "आज सब ठीक",
+   "status_late": "समय होने वाला है",
+   "status_missed": "कुछ पुष्टि करना बाकी है",
+   "status_missed_2_days": "दो दिन से कोई चेक-इन नहीं",
+   "status_none": "चेक-इन सेट नहीं है"
+  }
+ },
+ "answers": {
+  "en": {
+   "med_list": "Your medicines: {list}.",
+   "med_taken": "Yes. Your record shows you took {name} {dose} today at {time}.",
+   "med_not_confirmed": "Your record has no check mark for {name} {dose} today. Before taking another dose, please call your pharmacist. Tap 'Taken' after you take it.",
+   "deadline": "Your next important date is {date}: {title}.",
+   "appointment": "Your next appointment: {title} on {date} at {time}, {place}.",
+   "ice": "Your emergency contact is {name}, {phone}.",
+   "allergy": "Your record lists these allergies: {list}.",
+   "allergy_none": "Your record has no allergies listed.",
+   "coverage": "Your coverage: {program}. Status: {status}.",
+   "directive": "Your advance directive is kept here: {loc}.",
+   "not_found": "That is not in your record yet. Your navigator can add it. Call {phone}.",
+   "advice_guard": "Your pharmacist or doctor is the best person to answer that. Here is what your record says: {facts}. Please call your pharmacist, or your navigator at {phone}."
+  },
+  "tl": {
+   "med_list": "Ang mga gamot mo: {list}.",
+   "med_taken": "Oo. Nakatala na nainom mo ang {name} {dose} ngayong araw, {time}.",
+   "med_not_confirmed": "Wala pang tsek ang {name} {dose} ngayong araw. Bago uminom ng isa pa, tawagan muna ang iyong pharmacist. Pindutin ang 'Nainom na' pagkatapos mong inumin.",
+   "deadline": "Ang susunod mong mahalagang petsa ay {date}: {title}.",
+   "appointment": "Ang susunod mong appointment: {title}, {date}, {time}, sa {place}.",
+   "ice": "Ang emergency contact mo ay si {name}, {phone}.",
+   "allergy": "Nakatala ang mga allergy mo: {list}.",
+   "allergy_none": "Walang nakatalang allergy sa record mo.",
+   "coverage": "Ang coverage mo: {program}. Status: {status}.",
+   "directive": "Ang advance directive mo ay nasa: {loc}.",
+   "not_found": "Wala pa iyan sa record mo. Maidadagdag iyan ng navigator mo. Tumawag sa {phone}.",
+   "advice_guard": "Ang pharmacist o doktor mo ang pinakamainam na sumagot diyan. Ito ang nasa record mo: {facts}. Tawagan ang pharmacist mo, o ang navigator mo sa {phone}."
+  },
+  "zh-Hant": {
+   "med_list": "您的藥物：{list}。",
+   "med_taken": "是的。記錄顯示您今天 {time} 已服用 {name} {dose}。",
+   "med_not_confirmed": "今天的記錄裡，{name} {dose} 還沒有打勾。再吃一次之前，請先打電話問藥劑師。服藥後請按「已服用」。",
+   "deadline": "您下一個重要日期是 {date}：{title}。",
+   "appointment": "您下一個預約：{title}，{date} {time}，地點：{place}。",
+   "ice": "您的緊急聯絡人是 {name}，電話 {phone}。",
+   "allergy": "記錄中的過敏：{list}。",
+   "allergy_none": "記錄中沒有過敏資料。",
+   "coverage": "您的保險：{program}。狀態：{status}。",
+   "directive": "您的預立醫療指示放在：{loc}。",
+   "not_found": "您的記錄裡還沒有這項資料。您的協助員可以幫您加上，電話 {phone}。",
+   "advice_guard": "這個問題最好由藥劑師或醫生回答。您的記錄顯示：{facts}。請打電話給藥劑師，或打 {phone} 給您的協助員。"
+  },
+  "vi": {
+   "med_list": "Thuốc của bác: {list}.",
+   "med_taken": "Dạ có. Hồ sơ ghi bác đã uống {name} {dose} hôm nay lúc {time}.",
+   "med_not_confirmed": "Hôm nay {name} {dose} chưa được đánh dấu. Trước khi uống thêm một liều, xin bác gọi dược sĩ trước. Sau khi uống, bác bấm 'Đã uống'.",
+   "deadline": "Ngày quan trọng sắp tới của bác là {date}: {title}.",
+   "appointment": "Lịch hẹn sắp tới: {title}, ngày {date} lúc {time}, tại {place}.",
+   "ice": "Người liên lạc khẩn cấp của bác là {name}, số {phone}.",
+   "allergy": "Hồ sơ ghi bác dị ứng: {list}.",
+   "allergy_none": "Hồ sơ chưa ghi dị ứng nào.",
+   "coverage": "Bảo hiểm của bác: {program}. Tình trạng: {status}.",
+   "directive": "Chỉ thị y tế trước của bác để ở: {loc}.",
+   "not_found": "Thông tin này chưa có trong hồ sơ. Người hỗ trợ có thể thêm vào, gọi {phone}.",
+   "advice_guard": "Dược sĩ hoặc bác sĩ là người trả lời câu này tốt nhất. Hồ sơ của bác ghi: {facts}. Xin bác gọi dược sĩ, hoặc gọi người hỗ trợ số {phone}."
+  },
+  "ko": {
+   "med_list": "복용하시는 약: {list}.",
+   "med_taken": "네. 오늘 {time}에 {name} {dose}을(를) 복용하신 것으로 기록되어 있어요.",
+   "med_not_confirmed": "오늘 {name} {dose} 복용 표시가 아직 없어요. 한 번 더 드시기 전에 약사에게 먼저 전화해 주세요. 드신 후에는 '복용함'을 눌러 주세요.",
+   "deadline": "다음 중요한 날짜는 {date}: {title}입니다.",
+   "appointment": "다음 예약: {title}, {date} {time}, 장소: {place}.",
+   "ice": "비상 연락처는 {name}, {phone}입니다.",
+   "allergy": "기록된 알레르기: {list}.",
+   "allergy_none": "기록된 알레르기가 없어요.",
+   "coverage": "보험: {program}. 상태: {status}.",
+   "directive": "사전 의료 지시서 보관 장소: {loc}.",
+   "not_found": "그 내용은 아직 기록에 없어요. 담당 도우미가 추가해 드릴 수 있어요. 전화: {phone}.",
+   "advice_guard": "그 질문은 약사나 의사가 가장 잘 답해 드릴 수 있어요. 기록 내용: {facts}. 약사에게 전화하시거나 담당 도우미({phone})에게 연락해 주세요."
+  },
+  "es": {
+   "med_list": "Sus medicinas: {list}.",
+   "med_taken": "Sí. Su registro muestra que tomó {name} {dose} hoy a las {time}.",
+   "med_not_confirmed": "Hoy {name} {dose} aún no tiene marca. Antes de tomar otra dosis, llame primero a su farmacéutico. Después de tomarla, toque 'Tomada'.",
+   "deadline": "Su próxima fecha importante es {date}: {title}.",
+   "appointment": "Su próxima cita: {title}, {date} a las {time}, en {place}.",
+   "ice": "Su contacto de emergencia es {name}, {phone}.",
+   "allergy": "Su registro muestra estas alergias: {list}.",
+   "allergy_none": "Su registro no tiene alergias anotadas.",
+   "coverage": "Su cobertura: {program}. Estado: {status}.",
+   "directive": "Su directiva anticipada está en: {loc}.",
+   "not_found": "Eso todavía no está en su registro. Su navegadora puede agregarlo. Llame al {phone}.",
+   "advice_guard": "Su farmacéutico o médico es la mejor persona para responder eso. Su registro dice: {facts}. Llame a su farmacéutico o a su navegadora al {phone}."
+  },
+  "hi": {
+   "med_list": "आपकी दवाइयाँ: {list}।",
+   "med_taken": "हाँ। आपके रिकॉर्ड के अनुसार आपने आज {time} बजे {name} {dose} ली।",
+   "med_not_confirmed": "आज {name} {dose} पर अभी निशान नहीं लगा है। दूसरी खुराक लेने से पहले कृपया अपने फ़ार्मासिस्ट को फ़ोन करें। दवा लेने के बाद 'ले ली' दबाएँ।",
+   "deadline": "आपकी अगली ज़रूरी तारीख {date} है: {title}।",
+   "appointment": "आपकी अगली अपॉइंटमेंट: {title}, {date} को {time} बजे, {place}।",
+   "ice": "आपका आपातकालीन संपर्क {name}, {phone} है।",
+   "allergy": "आपके रिकॉर्ड में ये एलर्जी हैं: {list}।",
+   "allergy_none": "आपके रिकॉर्ड में कोई एलर्जी दर्ज नहीं है।",
+   "coverage": "आपका बीमा: {program}। स्थिति: {status}।",
+   "directive": "आपका एडवांस डायरेक्टिव यहाँ रखा है: {loc}।",
+   "not_found": "यह जानकारी अभी आपके रिकॉर्ड में नहीं है। आपका सहायक इसे जोड़ सकता है। {phone} पर फ़ोन करें।",
+   "advice_guard": "इस सवाल का सबसे अच्छा जवाब आपके फ़ार्मासिस्ट या डॉक्टर देंगे। आपके रिकॉर्ड में लिखा है: {facts}। कृपया अपने फ़ार्मासिस्ट को, या {phone} पर अपने सहायक को फ़ोन करें।"
+  }
+ },
+ "notice": {
+  "en": {
+   "intro": "This letter is about: {type}.",
+   "date": "Most important date: {date}. {label}.",
+   "exempt": "You may be exempt: {list}.",
+   "help": "Your navigator will help with the next step. Nothing is sent until you both agree.",
+   "types": {
+    "discontinuance": "your Medi-Cal is set to stop",
+    "work_rule_noncompliance": "the new work reporting rule",
+    "renewal_documents": "documents for your Medi-Cal renewal",
+    "annual_renewal": "your yearly Medi-Cal renewal",
+    "termination_no_renewal": "your Medi-Cal stopped because the renewal form was not received"
+   },
+   "labels": {
+    "hearing_deadline": "Last day to ask for a state hearing",
+    "aid_paid_pending": "Ask for a hearing by this day to keep your coverage during the appeal",
+    "work_rule_response": "Send proof that you are exempt",
+    "renewal_response": "Return the renewal form and documents",
+    "reconsideration": "Return the renewal form to restart coverage"
+   },
+   "exemptions": {
+    "pregnant": "pregnant",
+    "postpartum": "postpartum",
+    "caregiver_child_13": "caring for a child 13 or younger",
+    "age_outside_19_64": "age outside 19 to 64",
+    "medically_frail": "medically frail"
+   }
+  },
+  "tl": {
+   "intro": "Ang sulat na ito ay tungkol sa: {type}.",
+   "date": "Pinakamahalagang petsa: {date}. {label}.",
+   "exempt": "Maaaring exempt ka: {list}.",
+   "help": "Tutulungan ka ng navigator mo sa susunod na hakbang. Walang ipapadala hangga't hindi kayo parehong pumapayag.",
+   "types": {
+    "discontinuance": "ihihinto ang Medi-Cal mo",
+    "work_rule_noncompliance": "ang bagong patakaran sa pag-uulat ng trabaho",
+    "renewal_documents": "mga dokumento para sa renewal ng Medi-Cal mo",
+    "annual_renewal": "ang taunang renewal ng Medi-Cal mo",
+    "termination_no_renewal": "huminto ang Medi-Cal mo dahil hindi natanggap ang renewal form"
+   },
+   "labels": {
+    "hearing_deadline": "Huling araw para humingi ng state hearing",
+    "aid_paid_pending": "Humingi ng hearing bago ang araw na ito para tuloy ang coverage mo habang may apela",
+    "work_rule_response": "Ipadala ang patunay na exempt ka",
+    "renewal_response": "Ibalik ang renewal form at mga dokumento",
+    "reconsideration": "Ibalik ang renewal form para maibalik ang coverage"
+   },
+   "exemptions": {
+    "pregnant": "buntis",
+    "postpartum": "kapapanganak (postpartum)",
+    "caregiver_child_13": "nag-aalaga ng batang 13 taon pababa",
+    "age_outside_19_64": "edad na wala sa 19 hanggang 64",
+    "medically_frail": "medically frail"
+   }
+  },
+  "zh-Hant": {
+   "intro": "這封信是關於：{type}。",
+   "date": "最重要的日期：{date}。{label}。",
+   "exempt": "您可能可以豁免：{list}。",
+   "help": "您的協助員會幫您處理下一步。在你們雙方同意之前，不會寄出任何東西。",
+   "types": {
+    "discontinuance": "您的 Medi-Cal 將被停止",
+    "work_rule_noncompliance": "新的工作報告規定",
+    "renewal_documents": "Medi-Cal 續期所需文件",
+    "annual_renewal": "您每年的 Medi-Cal 續期",
+    "termination_no_renewal": "因未收到續期表格，您的 Medi-Cal 已停止"
+   },
+   "labels": {
+    "hearing_deadline": "申請州聽證會的最後一天",
+    "aid_paid_pending": "在這一天前申請聽證會，上訴期間保險可繼續",
+    "work_rule_response": "寄出豁免證明",
+    "renewal_response": "交回續期表格和文件",
+    "reconsideration": "交回續期表格以恢復保險"
+   },
+   "exemptions": {
+    "pregnant": "懷孕",
+    "postpartum": "產後",
+    "caregiver_child_13": "照顧 13 歲或以下的孩子",
+    "age_outside_19_64": "年齡不在 19 至 64 歲之間",
+    "medically_frail": "身體虛弱"
+   }
+  },
+  "vi": {
+   "intro": "Thư này nói về: {type}.",
+   "date": "Ngày quan trọng nhất: {date}. {label}.",
+   "exempt": "Bác có thể được miễn: {list}.",
+   "help": "Người hỗ trợ sẽ giúp bác bước tiếp theo. Không có gì được gửi đi cho đến khi hai bên đồng ý.",
+   "types": {
+    "discontinuance": "Medi-Cal của bác sắp bị ngưng",
+    "work_rule_noncompliance": "quy định mới về báo cáo việc làm",
+    "renewal_documents": "giấy tờ để gia hạn Medi-Cal",
+    "annual_renewal": "gia hạn Medi-Cal hằng năm",
+    "termination_no_renewal": "Medi-Cal đã ngưng vì chưa nhận được đơn gia hạn"
+   },
+   "labels": {
+    "hearing_deadline": "Ngày cuối để xin điều trần tiểu bang",
+    "aid_paid_pending": "Xin điều trần trước ngày này để giữ bảo hiểm trong lúc kháng cáo",
+    "work_rule_response": "Gửi giấy tờ chứng minh được miễn",
+    "renewal_response": "Gửi lại đơn gia hạn và giấy tờ",
+    "reconsideration": "Gửi lại đơn gia hạn để mở lại bảo hiểm"
+   },
+   "exemptions": {
+    "pregnant": "đang mang thai",
+    "postpartum": "sau sinh",
+    "caregiver_child_13": "chăm sóc con 13 tuổi trở xuống",
+    "age_outside_19_64": "tuổi ngoài khoảng 19 đến 64",
+    "medically_frail": "sức khỏe yếu"
+   }
+  },
+  "ko": {
+   "intro": "이 편지는 다음에 관한 것입니다: {type}.",
+   "date": "가장 중요한 날짜: {date}. {label}.",
+   "exempt": "면제 대상일 수 있어요: {list}.",
+   "help": "담당 도우미가 다음 단계를 도와드려요. 두 분이 모두 동의하기 전에는 아무것도 보내지 않아요.",
+   "types": {
+    "discontinuance": "Medi-Cal이 중단될 예정",
+    "work_rule_noncompliance": "새로운 근로 보고 규정",
+    "renewal_documents": "Medi-Cal 갱신 서류",
+    "annual_renewal": "연간 Medi-Cal 갱신",
+    "termination_no_renewal": "갱신 서류가 접수되지 않아 Medi-Cal이 중단됨"
+   },
+   "labels": {
+    "hearing_deadline": "주 청문회 신청 마지막 날",
+    "aid_paid_pending": "이 날 전에 청문회를 신청하면 이의 신청 기간에도 보험이 유지돼요",
+    "work_rule_response": "면제 증빙 보내기",
+    "renewal_response": "갱신 서류와 증빙 제출",
+    "reconsideration": "갱신 서류를 내면 보험이 다시 시작돼요"
+   },
+   "exemptions": {
+    "pregnant": "임신",
+    "postpartum": "출산 후",
+    "caregiver_child_13": "13세 이하 자녀 돌봄",
+    "age_outside_19_64": "19~64세 범위 밖",
+    "medically_frail": "의료적 허약"
+   }
+  },
+  "es": {
+   "intro": "Esta carta es sobre: {type}.",
+   "date": "Fecha más importante: {date}. {label}.",
+   "exempt": "Usted podría estar exenta: {list}.",
+   "help": "Su navegadora le ayudará con el siguiente paso. No se envía nada hasta que ambas estén de acuerdo.",
+   "types": {
+    "discontinuance": "su Medi-Cal va a terminar",
+    "work_rule_noncompliance": "la nueva regla de reporte de trabajo",
+    "renewal_documents": "documentos para renovar su Medi-Cal",
+    "annual_renewal": "su renovación anual de Medi-Cal",
+    "termination_no_renewal": "su Medi-Cal terminó porque no se recibió el formulario de renovación"
+   },
+   "labels": {
+    "hearing_deadline": "Último día para pedir una audiencia estatal",
+    "aid_paid_pending": "Pida la audiencia antes de este día para mantener su cobertura durante la apelación",
+    "work_rule_response": "Envíe prueba de que está exenta",
+    "renewal_response": "Devuelva el formulario y los documentos",
+    "reconsideration": "Devuelva el formulario para reactivar su cobertura"
+   },
+   "exemptions": {
+    "pregnant": "embarazada",
+    "postpartum": "posparto",
+    "caregiver_child_13": "cuida a un niño de 13 años o menos",
+    "age_outside_19_64": "edad fuera de 19 a 64",
+    "medically_frail": "médicamente frágil"
+   }
+  },
+  "hi": {
+   "intro": "यह पत्र इस बारे में है: {type}।",
+   "date": "सबसे ज़रूरी तारीख: {date}। {label}।",
+   "exempt": "आपको छूट मिल सकती है: {list}।",
+   "help": "आपका सहायक अगले कदम में मदद करेगा। आप दोनों की सहमति के बिना कुछ भी नहीं भेजा जाएगा।",
+   "types": {
+    "discontinuance": "आपका Medi-Cal बंद होने वाला है",
+    "work_rule_noncompliance": "काम की रिपोर्टिंग का नया नियम",
+    "renewal_documents": "Medi-Cal नवीनीकरण के दस्तावेज़",
+    "annual_renewal": "आपका सालाना Medi-Cal नवीनीकरण",
+    "termination_no_renewal": "नवीनीकरण फ़ॉर्म न मिलने से आपका Medi-Cal बंद हो गया"
+   },
+   "labels": {
+    "hearing_deadline": "राज्य सुनवाई माँगने का आखिरी दिन",
+    "aid_paid_pending": "अपील के दौरान बीमा जारी रखने के लिए इस दिन से पहले सुनवाई माँगें",
+    "work_rule_response": "छूट का प्रमाण भेजें",
+    "renewal_response": "नवीनीकरण फ़ॉर्म और दस्तावेज़ लौटाएँ",
+    "reconsideration": "बीमा फिर से शुरू करने के लिए नवीनीकरण फ़ॉर्म लौटाएँ"
+   },
+   "exemptions": {
+    "pregnant": "गर्भवती",
+    "postpartum": "प्रसव के बाद",
+    "caregiver_child_13": "13 साल या छोटे बच्चे की देखभाल",
+    "age_outside_19_64": "उम्र 19 से 64 के बाहर",
+    "medically_frail": "चिकित्सकीय रूप से कमज़ोर"
+   }
+  }
+ }
+}
