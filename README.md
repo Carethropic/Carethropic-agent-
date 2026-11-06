@@ -21,7 +21,7 @@ Starting January 1, 2027, new federal work reporting rules and six-month renewal
 
 **For navigators (the notice decoder).** Snap a photo of a Medi-Cal, CalFresh, IHSS, or Medicare Savings Program notice. Claude extracts the fields with confidence scores. A tested Python rules engine computes every deadline (hearing, aid paid pending, 30-day work rule response, 90-day reconsideration), finds notice defects, and screens for work rule exemptions. Two agents draft in parallel, a verifier removes any claim that cites outside the knowledge base or states a date the engine did not compute, and nothing leaves without a navigator's approval. New in v2: **Save to record** turns each deadline into a dated, cited entry in the person's Carethropic record, with titles in her language.
 
-**For elders who live alone (new).** The **Carethropic record** holds her medicines, appointments and deadlines, coverage, and emergency information, in large type and in her language (Tagalog, Traditional Chinese, Vietnamese, Korean, Hindi, Spanish, English). She taps *I'm OK today* and taps each medicine as taken. **Ask Carethropic** answers questions like *Did I take my blood pressure pill?* only from her own record, cites the entry it used, and refuses to give dosing advice. Missed check-ins flag on the navigator console. A consented **emergency QR card** gives EMTs her allergies, medicines, language, and contacts, with no member IDs or addresses.
+**For elders who live alone (new).** The **Carethropic record** holds her medicines, appointments and deadlines, coverage, and emergency information, in large type and in her language (Tagalog, Traditional Chinese, Vietnamese, Korean, Hindi, Spanish, English). She taps *I'm OK today* and taps each medicine as taken. With **voice on**, Carethropic reads her a short daily briefing in her language (composed in code from her record, with the record items it used), confirms every tap aloud, and she can ask by voice with one large button; the preference sticks to her tablet. **Ask Carethropic** answers questions like *Did I take my blood pressure pill?* only from her own record, cites the entry it used, and refuses to give dosing advice. Missed check-ins flag on the navigator console. A consented **emergency QR card** gives EMTs her allergies, medicines, language, and contacts, with no member IDs or addresses.
 
 **For nonprofits (new).** The **Nonprofit finder** searches a curated, versioned directory of Claude for Nonprofits partners and Bay Area organizations serving Asian American women and elders. Code parses the place and intent; Claude only re-ranks and explains fit within the candidate set.
 
@@ -36,6 +36,7 @@ Starting January 1, 2027, new federal work reporting rules and six-month renewal
 | Honest memory | "Did I take it?" is answered only from her confirmation log. No confirmation means Carethropic says so and points to the pharmacist. |
 | Consent and privacy | Emergency cards print only after recorded consent. IDs are masked. Pasted text is scrubbed. The audit chain stores hashes only. |
 | Replay mode | Every feature runs without an API key through the same verifiers, so the demo never depends on the network. |
+| Voice without a model | The daily briefing and every spoken confirmation are fixed templates filled from her record, so what she hears is exactly what her record says. Browser speech only; nothing spoken reaches a model. |
 | Durable records | Records, check-ins, consents, decoded notices and the audit chain live in SQLite and survive a restart. *Reset demo* reseeds from JSON. |
 | Evaluation harness | Labeled cases scored on deadline accuracy, escalation, exemptions, invented citations, advice-guard recall, grounding, and finder accuracy. |
 
@@ -56,7 +57,7 @@ Docker: `docker build -t carethropic . && docker run -p 8000:8000 -e ANTHROPIC_A
 ## Tests and evals
 
 ```bash
-python -m pytest -q tests        # 38 tests: rules for four programs, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence
+python -m pytest -q tests        # 40 tests: rules for four programs, rollback, exemptions, verifier, status, Ask Carethropic guard, consent, finder, API, env fallback, persistence, voice briefing
 python evals/run_evals.py        # replay
 python evals/run_evals.py --live # Claude agents and re-ranker end to end
 ```
@@ -92,7 +93,7 @@ All names, agencies, phone numbers, and case numbers are fictional.
 ## Architecture
 
 ```
-frontend/            static HTML, CSS, JS (no build step)
+frontend/            static HTML, CSS, JS (no build step); voice.js wraps browser speech
 backend/app.py       FastAPI
   rules.py           deadlines, rollback, defects, exemptions, escalation
   pipeline.py        extract → rules → agents ∥ → verifier → drafts → human gate → save to record
@@ -101,6 +102,7 @@ backend/app.py       FastAPI
   ask.py             Ask Carethropic: guard → retrieval → Claude (forced schema) → verifier → template fallback
   nonprofits.py      finder: parser, scorer, grouping, Claude re-rank (closed world)
   emergency.py       consent-gated QR card
+  briefing.py        spoken daily briefing and tap confirmations, composed in code per language
   llm.py             Claude client with forced tool schemas and replay fallback
   common.py          clock, env, scrubbing, masking, SHA-256 audit chain
   data/              kb.json, cases.json, people.json, nonprofits.json, i18n.json, insights.json
@@ -128,7 +130,7 @@ evals/               gold labels and harness
 
 1. Pilot with Filipino Advocates for Justice, then Self-Help for the Elderly, AACI, and HICAP programs.
 2. CalWORKs and SSI/SSP notices.
-3. Voice-first elder mode with recorded prompts in each language.
+3. Recorded prompts per language to replace browser speech synthesis in voice mode.
 4. Optional, consented family digest.
 5. Package Carethropic as a Claude for Nonprofits plugin so partner organizations can install it directly.
 

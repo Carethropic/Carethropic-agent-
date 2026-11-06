@@ -384,3 +384,36 @@ def test_regex_extraction_recognises_the_new_programs():
     assert pipeline._regex_extract("NOTICE OF EXPIRATION: your CalFresh certification period ends 12/31/2026")["notice_type"] == "calfresh_recertification"
     assert pipeline._regex_extract("Your CalFresh benefits will be reduced effective 12/01/2026")["notice_type"] == "calfresh_adverse_action"
     assert pipeline._regex_extract("Your Qualified Medicare Beneficiary (QMB) coverage will stop")["notice_type"] == "msp_discontinuance"
+
+
+# ---------- voice briefing ----------
+def test_briefing_is_composed_from_the_record_and_cites_it():
+    import briefing
+    b = briefing.compose(vault.get("p-remy"), "tl")
+    assert b["lang"] == "tl" and b["bcp47"] == "fil-PH" and b["status"] == "missed_2_days"
+    assert "Remedios" in b["text"] and "2026-11-06" in b["text"]
+    assert "Amlodipine" in b["text"] and "Metformin" in b["text"]          # the two medicines not confirmed
+    assert set(b["cited_record_ids"]) == {"med-remy-1", "med-remy-2", "evt-remy-1"}
+    assert all(any(cid in i for i in [b["cited_record_ids"]]) for cid in b["cited_record_ids"])
+    ok = briefing.compose(vault.get("p-kamala"), "hi")
+    assert ok["status"] == "ok" and "Kamala" in ok["text"] and ok["cited_record_ids"][0].startswith("med-kp")
+    zh = briefing.compose(vault.get("p-wailing"), "zh-Hant")
+    assert zh["text"].startswith("Wai Ling您好") and "  " not in zh["text"]
+    untracked = briefing.compose(vault.get("p-ligaya"), "en")
+    assert untracked["status"] == "none" and "medicines" not in untracked["text"] and "  " not in untracked["text"]
+
+
+def test_briefing_endpoint_and_spoken_checkin_feedback():
+    c = TestClient(app)
+    b = c.get("/api/people/p-remy/briefing?lang=es").json()
+    assert b["bcp47"] == "es-US" and "Remedios" in b["text"] and b["cited_record_ids"]
+    r = c.post("/api/people/p-remy/checkin", json={"type": "med", "item_id": "med-remy-1", "lang": "tl"}).json()
+    assert r["spoken"] == "Naitala. Nainom ang Amlodipine noong 10:30." and r["bcp47"] == "fil-PH"
+    r2 = c.post("/api/people/p-remy/checkin", json={"type": "daily"}).json()   # defaults to her own language
+    assert r2["spoken"].startswith("Salamat")
+    assert c.get("/api/people/nobody/briefing").status_code == 404
+    # every language has every voice string, so no template can raise KeyError
+    import briefing
+    keys = set(briefing.I18N["voice"]["en"])
+    for lang, strings in briefing.I18N["voice"].items():
+        assert set(strings) == keys, lang
