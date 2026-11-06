@@ -1,0 +1,1100 @@
+{
+ "version": "directory-2026.11.06",
+ "note": "Curated directory. Claude partner roles come from Anthropic announcements (Dec 2, 2025 and Oct 26, 2026). Bay Area entries are compiled for the pilot and will be re-verified with each organization. An empty hq_city means the source did not state one.",
+ "sources": {
+  "anthropic-2025": "https://www.anthropic.com/news/claude-for-nonprofits",
+  "claude-2026": "https://claude.com/blog/expanding-claude-for-nonprofits"
+ },
+ "organizations": [
+  {
+   "id": "tipping-point",
+   "name": "Tipping Point Community",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Pilot partner (piloted Claude with grantees)"
+   ],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco",
+    "Alameda",
+    "Contra Costa",
+    "Marin",
+    "San Mateo"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "grantmaking",
+    "poverty",
+    "housing",
+    "education",
+    "employment",
+    "early childhood"
+   ],
+   "populations": [
+    "low-income families"
+   ],
+   "website": "https://tippingpoint.org",
+   "source": "anthropic-2025",
+   "description": "Bay Area antipoverty grantmaker that piloted Claude with its grantee nonprofits."
+  },
+  {
+   "id": "taproot",
+   "name": "Taproot Foundation",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Claude Corps partner (pro bono consultants, announced Oct 2026)"
+   ],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "pro bono",
+    "capacity building",
+    "consulting",
+    "technology"
+   ],
+   "populations": [
+    "nonprofits"
+   ],
+   "website": "https://taprootfoundation.org",
+   "source": "claude-2026",
+   "description": "Matches nonprofits with skilled pro bono volunteers; planned partner for extending Claude Corps."
+  },
+  {
+   "id": "candid",
+   "name": "Candid",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Connector partner (nonprofit and funder data)"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "nonprofit data",
+    "grants",
+    "funder research"
+   ],
+   "populations": [
+    "nonprofits",
+    "funders"
+   ],
+   "website": "https://candid.org",
+   "source": "anthropic-2025",
+   "description": "Nonprofit and funder data; Claude connector for grant and partner research."
+  },
+  {
+   "id": "blackbaud",
+   "name": "Blackbaud",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Connector partner (CRM and fundraising)"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "crm",
+    "fundraising",
+    "donor management"
+   ],
+   "populations": [
+    "nonprofits"
+   ],
+   "website": "https://www.blackbaud.com",
+   "source": "anthropic-2025",
+   "description": "Fundraising and donor CRM platform with a Claude connector."
+  },
+  {
+   "id": "benevity",
+   "name": "Benevity",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Connector partner (2.4M+ validated nonprofits)"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "volunteering",
+    "giving",
+    "nonprofit search"
+   ],
+   "populations": [
+    "nonprofits",
+    "donors"
+   ],
+   "website": "https://benevity.com",
+   "source": "anthropic-2025",
+   "description": "Giving and volunteering platform; Claude connector covers 2.4M+ validated nonprofits."
+  },
+  {
+   "id": "givingtuesday",
+   "name": "GivingTuesday",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Training partner (AI Fluency for Nonprofits course)"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "training",
+    "ai fluency",
+    "generosity"
+   ],
+   "populations": [
+    "nonprofits"
+   ],
+   "website": "https://www.givingtuesday.org",
+   "source": "anthropic-2025",
+   "description": "Co-built the free AI Fluency for Nonprofits course with Anthropic."
+  },
+  {
+   "id": "robin-hood",
+   "name": "Robin Hood",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Pilot partner and customer"
+   ],
+   "hq_city": "New York",
+   "cities": [
+    "New York"
+   ],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "grantmaking",
+    "poverty"
+   ],
+   "populations": [
+    "low-income families"
+   ],
+   "website": "https://www.robinhood.org",
+   "source": "anthropic-2025",
+   "description": "Antipoverty funder that piloted Claude with grantees."
+  },
+  {
+   "id": "constellation-fund",
+   "name": "Constellation Fund",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Pilot partner"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "grantmaking",
+    "poverty"
+   ],
+   "populations": [
+    "low-income families"
+   ],
+   "website": "https://www.constellationfund.org",
+   "source": "anthropic-2025",
+   "description": "Antipoverty funder that piloted Claude with grantees."
+  },
+  {
+   "id": "direct-relief",
+   "name": "Direct Relief",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Design Partner Circle (Claude for Nonprofits plugin)"
+   ],
+   "hq_city": "Santa Barbara",
+   "cities": [
+    "Santa Barbara"
+   ],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "health",
+    "medical supplies",
+    "emergency response"
+   ],
+   "populations": [
+    "clinics",
+    "low-income patients"
+   ],
+   "website": "https://www.directrelief.org",
+   "source": "claude-2026",
+   "description": "Humanitarian health nonprofit in the plugin Design Partner Circle."
+  },
+  {
+   "id": "epilepsy-foundation",
+   "name": "Epilepsy Foundation",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Customer (24/7 support with Claude)"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "health",
+    "patient support",
+    "helpline"
+   ],
+   "populations": [
+    "people with epilepsy",
+    "caregivers"
+   ],
+   "website": "https://www.epilepsy.com",
+   "source": "anthropic-2025",
+   "description": "Runs 24/7 support with Claude for people with epilepsy."
+  },
+  {
+   "id": "myfriendben",
+   "name": "MyFriendBen",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Customer (benefits screening agents)"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en",
+    "es"
+   ],
+   "services": [
+    "benefits",
+    "tax credits",
+    "screening"
+   ],
+   "populations": [
+    "low-income families"
+   ],
+   "website": "https://www.myfriendben.org",
+   "source": "anthropic-2025",
+   "description": "Uses Claude-powered agents to find unclaimed benefits and tax credits."
+  },
+  {
+   "id": "irc",
+   "name": "International Rescue Committee",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Customer"
+   ],
+   "hq_city": "New York",
+   "cities": [
+    "New York",
+    "Oakland",
+    "San Jose"
+   ],
+   "counties": [
+    "Alameda",
+    "Santa Clara"
+   ],
+   "scope": "national",
+   "languages": [
+    "en",
+    "es",
+    "vi"
+   ],
+   "services": [
+    "refugee resettlement",
+    "health",
+    "immigration"
+   ],
+   "populations": [
+    "refugees",
+    "immigrants"
+   ],
+   "website": "https://www.rescue.org",
+   "source": "anthropic-2025",
+   "description": "Humanitarian nonprofit using Claude for partner communication and field data."
+  },
+  {
+   "id": "start-early",
+   "name": "Start Early",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Design Partner Circle"
+   ],
+   "hq_city": "Chicago",
+   "cities": [
+    "Chicago"
+   ],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "early childhood",
+    "maternal health",
+    "home visiting"
+   ],
+   "populations": [
+    "mothers",
+    "infants"
+   ],
+   "website": "https://www.startearly.org",
+   "source": "claude-2026",
+   "description": "Early childhood and family nonprofit in the plugin Design Partner Circle."
+  },
+  {
+   "id": "operation-fistula",
+   "name": "Operation Fistula",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Design Partner Circle"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en"
+   ],
+   "services": [
+    "women's health",
+    "maternal health",
+    "surgery funding"
+   ],
+   "populations": [
+    "women"
+   ],
+   "website": "https://www.opfistula.org",
+   "source": "claude-2026",
+   "description": "Women's health nonprofit in the plugin Design Partner Circle."
+  },
+  {
+   "id": "code-the-dream",
+   "name": "Code the Dream",
+   "list": "claude_partner",
+   "claude_roles": [
+    "Design Partner Circle"
+   ],
+   "hq_city": "",
+   "cities": [],
+   "counties": [],
+   "scope": "national",
+   "languages": [
+    "en",
+    "es"
+   ],
+   "services": [
+    "tech training",
+    "workforce"
+   ],
+   "populations": [
+    "immigrants",
+    "low-income adults"
+   ],
+   "website": "https://codethedream.org",
+   "source": "claude-2026",
+   "description": "Free coding training nonprofit in the plugin Design Partner Circle."
+  },
+  {
+   "id": "faj",
+   "name": "Filipino Advocates for Justice",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "Oakland",
+   "cities": [
+    "Oakland",
+    "Union City"
+   ],
+   "counties": [
+    "Alameda"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "tl",
+    "en"
+   ],
+   "services": [
+    "health access",
+    "benefits navigation",
+    "immigrant rights",
+    "worker rights",
+    "youth"
+   ],
+   "populations": [
+    "filipino",
+    "women",
+    "families",
+    "immigrants",
+    "seniors"
+   ],
+   "website": "https://www.filipinoadvocates.org",
+   "source": "website",
+   "description": "Kalinga pilot partner. Filipino community organizing and services in the East Bay."
+  },
+  {
+   "id": "self-help-elderly",
+   "name": "Self-Help for the Elderly",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco",
+    "San Mateo",
+    "San Jose",
+    "Oakland"
+   ],
+   "counties": [
+    "San Francisco",
+    "San Mateo",
+    "Santa Clara",
+    "Alameda"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "en",
+    "tl",
+    "vi",
+    "ko"
+   ],
+   "services": [
+    "hicap",
+    "medicare counseling",
+    "senior centers",
+    "home care",
+    "meals",
+    "health"
+   ],
+   "populations": [
+    "seniors",
+    "chinese",
+    "asian american"
+   ],
+   "website": "https://selfhelpelderly.org",
+   "source": "website",
+   "description": "Asian American senior services, including HICAP Medicare counseling in San Francisco."
+  },
+  {
+   "id": "on-lok",
+   "name": "On Lok",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco",
+    "Fremont",
+    "San Jose"
+   ],
+   "counties": [
+    "San Francisco",
+    "Alameda",
+    "Santa Clara"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "en",
+    "tl",
+    "vi",
+    "ko",
+    "es"
+   ],
+   "services": [
+    "pace",
+    "elder health care",
+    "adult day health",
+    "senior centers",
+    "health"
+   ],
+   "populations": [
+    "seniors",
+    "chinese",
+    "asian american"
+   ],
+   "website": "https://www.onlok.org",
+   "source": "website",
+   "description": "Founded the PACE model of all-inclusive care so frail elders can live at home."
+  },
+  {
+   "id": "kimochi",
+   "name": "Kimochi",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco",
+    "San Mateo"
+   ],
+   "counties": [
+    "San Francisco",
+    "San Mateo"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "ja",
+    "en"
+   ],
+   "services": [
+    "senior services",
+    "meals",
+    "case management",
+    "transportation",
+    "health"
+   ],
+   "populations": [
+    "seniors",
+    "japanese american",
+    "asian american"
+   ],
+   "website": "https://www.kimochi-inc.org",
+   "source": "website",
+   "description": "Japantown senior services for Japanese American and Asian American elders."
+  },
+  {
+   "id": "apilo",
+   "name": "API Legal Outreach",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco",
+    "Oakland"
+   ],
+   "counties": [
+    "San Francisco",
+    "Alameda"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "tl",
+    "vi",
+    "ko",
+    "en"
+   ],
+   "services": [
+    "legal aid",
+    "elder abuse prevention",
+    "public benefits",
+    "immigration",
+    "family safety"
+   ],
+   "populations": [
+    "asian american",
+    "seniors",
+    "women",
+    "immigrants"
+   ],
+   "website": "https://www.apilegaloutreach.org",
+   "source": "website",
+   "description": "Multilingual legal services for Asian and Pacific Islander communities, including elder and benefits work."
+  },
+  {
+   "id": "alc",
+   "name": "Asian Law Caucus",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "tl",
+    "vi",
+    "ko",
+    "en"
+   ],
+   "services": [
+    "legal aid",
+    "civil rights",
+    "immigration",
+    "housing",
+    "workers rights"
+   ],
+   "populations": [
+    "asian american",
+    "immigrants"
+   ],
+   "website": "https://www.advancingjustice-alc.org",
+   "source": "website",
+   "description": "Legal and civil rights organization for low-income Asian American communities."
+  },
+  {
+   "id": "nicos",
+   "name": "NICOS Chinese Health Coalition",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "en"
+   ],
+   "services": [
+    "health",
+    "community health",
+    "health education",
+    "gambling prevention"
+   ],
+   "populations": [
+    "chinese",
+    "asian american",
+    "seniors"
+   ],
+   "website": "https://www.nicoschc.org",
+   "source": "website",
+   "description": "Coalition improving the health of the Chinese community in San Francisco."
+  },
+  {
+   "id": "ccdc",
+   "name": "Chinatown Community Development Center",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "en"
+   ],
+   "services": [
+    "affordable housing",
+    "senior housing",
+    "tenant services",
+    "community organizing"
+   ],
+   "populations": [
+    "chinese",
+    "seniors",
+    "families"
+   ],
+   "website": "https://www.chinatowncdc.org",
+   "source": "website",
+   "description": "Affordable and senior housing plus tenant support in Chinatown and beyond."
+  },
+  {
+   "id": "aws-sf",
+   "name": "Asian Women's Shelter",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "tl",
+    "vi",
+    "ko",
+    "en"
+   ],
+   "services": [
+    "domestic violence shelter",
+    "women's safety",
+    "multilingual advocacy"
+   ],
+   "populations": [
+    "women",
+    "asian american",
+    "immigrants"
+   ],
+   "website": "https://www.sfaws.org",
+   "source": "website",
+   "description": "Shelter and multilingual advocacy for Asian and immigrant women and their children."
+  },
+  {
+   "id": "caa",
+   "name": "Chinese for Affirmative Action",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "en"
+   ],
+   "services": [
+    "civil rights",
+    "language access",
+    "policy advocacy"
+   ],
+   "populations": [
+    "chinese",
+    "asian american"
+   ],
+   "website": "https://caasf.org",
+   "source": "website",
+   "description": "Civil rights and language access advocacy for Asian Americans."
+  },
+  {
+   "id": "bayanihan",
+   "name": "Bayanihan Equity Center",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Francisco",
+   "cities": [
+    "San Francisco"
+   ],
+   "counties": [
+    "San Francisco"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "tl",
+    "en"
+   ],
+   "services": [
+    "senior services",
+    "veterans services",
+    "benefits navigation",
+    "case management"
+   ],
+   "populations": [
+    "filipino",
+    "seniors",
+    "veterans"
+   ],
+   "website": "https://bayanihanequitycenter.org",
+   "source": "website",
+   "description": "SoMa services for Filipino seniors, veterans, and families."
+  },
+  {
+   "id": "asian-health-services",
+   "name": "Asian Health Services",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "Oakland",
+   "cities": [
+    "Oakland"
+   ],
+   "counties": [
+    "Alameda"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "zh-Hant",
+    "vi",
+    "ko",
+    "tl",
+    "en"
+   ],
+   "services": [
+    "community health center",
+    "primary care",
+    "dental",
+    "behavioral health",
+    "health",
+    "insurance enrollment"
+   ],
+   "populations": [
+    "asian american",
+    "immigrants",
+    "seniors",
+    "women"
+   ],
+   "website": "https://asianhealthservices.org",
+   "source": "website",
+   "description": "Multilingual community health center serving Asian American and immigrant patients."
+  },
+  {
+   "id": "cei",
+   "name": "Center for Elders' Independence",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "Oakland",
+   "cities": [
+    "Oakland",
+    "Berkeley",
+    "San Leandro"
+   ],
+   "counties": [
+    "Alameda",
+    "Contra Costa"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "en",
+    "zh-Hant",
+    "es"
+   ],
+   "services": [
+    "pace",
+    "elder health care",
+    "health"
+   ],
+   "populations": [
+    "seniors"
+   ],
+   "website": "https://cei.elders.org",
+   "source": "website",
+   "description": "PACE program helping East Bay elders stay healthy at home."
+  },
+  {
+   "id": "kcceb",
+   "name": "Korean Community Center of the East Bay",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "Oakland",
+   "cities": [
+    "Oakland"
+   ],
+   "counties": [
+    "Alameda"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "ko",
+    "en"
+   ],
+   "services": [
+    "senior services",
+    "health access",
+    "benefits navigation",
+    "youth"
+   ],
+   "populations": [
+    "korean american",
+    "seniors",
+    "families"
+   ],
+   "website": "https://www.kcceb.org",
+   "source": "website",
+   "description": "Services and advocacy for Korean American families and seniors in the East Bay."
+  },
+  {
+   "id": "narika",
+   "name": "Narika",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "Berkeley",
+   "cities": [
+    "Berkeley"
+   ],
+   "counties": [
+    "Alameda"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "hi",
+    "en"
+   ],
+   "services": [
+    "domestic violence support",
+    "women's safety",
+    "helpline"
+   ],
+   "populations": [
+    "women",
+    "south asian",
+    "immigrants"
+   ],
+   "website": "https://www.narika.org",
+   "source": "website",
+   "description": "Support for survivors of domestic violence, centered on South Asian and immigrant women."
+  },
+  {
+   "id": "aaci",
+   "name": "AACI (Asian Americans for Community Involvement)",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Jose",
+   "cities": [
+    "San Jose"
+   ],
+   "counties": [
+    "Santa Clara"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "vi",
+    "zh-Hant",
+    "tl",
+    "ko",
+    "en",
+    "es"
+   ],
+   "services": [
+    "community health center",
+    "behavioral health",
+    "senior wellness",
+    "domestic violence shelter",
+    "health"
+   ],
+   "populations": [
+    "asian american",
+    "immigrants",
+    "seniors",
+    "women"
+   ],
+   "website": "https://aaci.org",
+   "source": "website",
+   "description": "Health, behavioral health, senior, and survivor services in Santa Clara County."
+  },
+  {
+   "id": "maitri",
+   "name": "Maitri",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Jose",
+   "cities": [
+    "San Jose"
+   ],
+   "counties": [
+    "Santa Clara"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "hi",
+    "en"
+   ],
+   "services": [
+    "domestic violence support",
+    "women's safety",
+    "transitional housing",
+    "helpline"
+   ],
+   "populations": [
+    "women",
+    "south asian",
+    "immigrants"
+   ],
+   "website": "https://www.maitri.org",
+   "source": "website",
+   "description": "Support for South Asian survivors of domestic violence and their families."
+  },
+  {
+   "id": "sourcewise",
+   "name": "Sourcewise",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "San Jose",
+   "cities": [
+    "San Jose",
+    "Santa Clara"
+   ],
+   "counties": [
+    "Santa Clara"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "en",
+    "vi",
+    "zh-Hant",
+    "es"
+   ],
+   "services": [
+    "hicap",
+    "medicare counseling",
+    "area agency on aging",
+    "meals",
+    "caregiver support"
+   ],
+   "populations": [
+    "seniors",
+    "caregivers"
+   ],
+   "website": "https://www.mysourcewise.com",
+   "source": "website",
+   "description": "Santa Clara County Area Agency on Aging, including HICAP Medicare counseling."
+  },
+  {
+   "id": "icc",
+   "name": "India Community Center",
+   "list": "bay_area",
+   "claude_roles": [],
+   "hq_city": "Milpitas",
+   "cities": [
+    "Milpitas",
+    "San Jose",
+    "Sunnyvale"
+   ],
+   "counties": [
+    "Santa Clara"
+   ],
+   "scope": "bay_area",
+   "languages": [
+    "hi",
+    "en"
+   ],
+   "services": [
+    "senior programs",
+    "health and wellness",
+    "community center",
+    "cultural programs"
+   ],
+   "populations": [
+    "indian american",
+    "south asian",
+    "seniors",
+    "families"
+   ],
+   "website": "https://www.indiacc.org",
+   "source": "website",
+   "description": "South Bay community center with senior, wellness, and cultural programs for Indian American families."
+  }
+ ]
+}

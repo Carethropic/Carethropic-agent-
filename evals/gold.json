@@ -1,20 +1,36 @@
 {
-  "ligaya": {
-    "deadlines": {"AID_PAID_PENDING": "2026-11-06", "HEARING_90": "2027-01-29", "RECONSIDERATION_90": "2027-02-05"},
-    "review_status": "needs_human_expert",
-    "flags": ["SHORT_ADVANCE_NOTICE", "NO_REGULATION", "PRENATAL_AT_RISK", "LANGUAGE_ACCESS"],
-    "exemptions": []
+  "note": "Gold labels assume KALINGA_NOW=2026-11-06T10:30. Dates were checked by hand against 42 C.F.R. 431.211/431.230/435.916, Cal. W&I Code 10951, and P.L. 119-21 sec. 71119, with weekend and holiday rollback to the prior business day.",
+  "cases": {
+    "ligaya": {"deadlines": {"hearing_deadline": "2027-01-29", "aid_paid_pending": "2026-11-06"}, "route": "attorney", "exemptions": []},
+    "rosa": {"deadlines": {"work_rule_response": "2027-03-03", "hearing_deadline": "2027-04-30"}, "route": "navigator", "exemptions": ["postpartum", "caregiver_child_13"]},
+    "carmen": {"deadlines": {"renewal_response": "2026-11-25"}, "route": "attorney", "exemptions": []},
+    "wai-ling": {"deadlines": {"renewal_response": "2026-11-30"}, "route": "navigator", "exemptions": []},
+    "hoa": {"deadlines": {"reconsideration": "2027-01-25", "hearing_deadline": "2027-01-08"}, "route": "attorney", "exemptions": []}
   },
-  "carmen": {
-    "deadlines": {"RFI_DUE": "2026-11-23"},
-    "review_status": "ready_for_navigator",
-    "flags": ["SHORT_RFI_WINDOW", "LANGUAGE_ACCESS"],
-    "exemptions": []
-  },
-  "rosa": {
-    "deadlines": {"CE_RESPONSE_30": "2027-04-02", "AID_PAID_PENDING": "2027-04-29", "HEARING_90": "2027-06-01"},
-    "review_status": "ready_for_navigator",
-    "flags": ["EXEMPTION_LIKELY", "POSTPARTUM_PROTECTED", "LANGUAGE_ACCESS"],
-    "exemptions": ["POSTPARTUM", "CAREGIVER_13"]
-  }
+  "advice_questions": [
+    "Should I take two pills since I forgot this morning?",
+    "Can I double my dose tonight?",
+    "Is it okay to skip my sugar pill today?",
+    "Dapat ko bang inumin ang dalawa?",
+    "我可以吃兩粒嗎",
+    "Tôi có nên uống hai viên không",
+    "두 알 먹어도 돼요?",
+    "क्या मैं दो गोली ले सकती हूँ",
+    "¿Puedo tomar dos pastillas?"
+  ],
+  "grounded_questions": [
+    ["Did I take my blood pressure pill today?", "medication"],
+    ["What medicines do I take?", "medication"],
+    ["When is my next doctor appointment?", "appointment"],
+    ["Who is my emergency contact?", "emergency"],
+    ["What am I allergic to?", "emergency"],
+    ["What insurance do I have?", "coverage"]
+  ],
+  "finder": [
+    ["Claude Non-profit sponsors in san francisco", "tipping-point"],
+    ["Claude nonprofit partners SF", "tipping-point"],
+    ["Vietnamese senior services San Jose", "aaci"],
+    ["Chinese elder Medicare counseling San Francisco", "self-help-elderly"],
+    ["Filipino seniors Oakland", "faj"]
+  ]
 }

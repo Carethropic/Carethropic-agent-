@@ -1,96 +1,232 @@
-"""Kalinga API server. Run: uvicorn app:app --reload --port 8000 (from backend/)."""
+"""Kin, by Kalinga: FastAPI backend.
+
+Run:  cd backend && uvicorn app:app --port 8000
+"""
 from __future__ import annotations
 
-import json
-import uuid
-from datetime import date
+import base64
 from pathlib import Path
 
-from fastapi import FastAPI, File, Form, UploadFile
-from fastapi.responses import FileResponse, JSONResponse, StreamingResponse
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
+from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
-import agents
+import ask as ask_mod
+import emergency
+import llm
+import nonprofits
 import pipeline
-import samples
-from governance import audit, case_trail, verify_chain
-from rules import compute
+import vault
+from common import AUDIT, load, today, now, scrub
 
-ROOT = Path(__file__).resolve().parent.parent
-app = FastAPI(title="Kalinga", version="1.0")
-app.mount("/static", StaticFiles(directory=ROOT / "frontend"), name="static")
-app.mount("/samples", StaticFiles(directory=ROOT / "samples"), name="samples")
+app = FastAPI(title="Kin, by Kalinga", version="2.0")
+FRONTEND = Path(__file__).resolve().parent.parent / "frontend"
+I18N = load("i18n.json")
+INSIGHTS = load("insights.json")
 
 
+# ---------- meta ----------
+@app.get("/api/meta")
+def meta():
+    return {"name": "Kin", "engine": "Kalinga", "mode": "live" if llm.live() else "replay", "model": llm.MODEL,
+            "today": today().isoformat(), "now": now().strftime("%H:%M"), "kb_version": pipeline.KB["version"],
+            "directory_version": nonprofits.DIR["version"], "organization": vault.ORG,
+            "languages": I18N["languages"], "translation_review": I18N["review_status"]}
+
+
+@app.get("/api/i18n/{lang}")
+def i18n(lang: str):
+    return I18N["ui"].get(lang, I18N["ui"]["en"])
+
+
+@app.get("/api/insights")
+def insights():
+    return INSIGHTS
+
+
+@app.get("/api/audit")
+def audit():
+    return {"valid": AUDIT.verify(), "entries": list(reversed(AUDIT.entries))[:50], "count": len(AUDIT.entries)}
+
+
+@app.post("/api/reset")
+def reset():
+    vault.reset()
+    pipeline.RESULTS.clear()
+    return {"ok": True}
+
+
+# ---------- console ----------
+@app.get("/api/console")
+def console():
+    rows = []
+    cases_by_person = {}
+    for c in pipeline.cases():
+        cases_by_person.setdefault(c["person_id"], []).append(c)
+    for p in vault.all_people():
+        st = vault.status(p)
+        upcoming = sorted([e for e in p["events"] if e["date"] >= today().isoformat()], key=lambda e: (e["date"], e.get("time", "")))
+        flags = []
+        next_ev = upcoming[0] if upcoming else None
+        if next_ev and next_ev["type"] == "deadline":
+            from datetime import date as _d
+            days = (_d.fromisoformat(next_ev["date"]) - today()).days
+            if days <= 3:
+                flags.append({"kind": "act_today", "text": f"Deadline in {days} day(s): {next_ev['title']}"})
+            elif days <= 14:
+                flags.append({"kind": "upcoming", "text": f"Deadline {next_ev['date']}: {next_ev['title']}"})
+        for c in cases_by_person.get(p["id"], []):
+            res = pipeline.RESULTS.get(c["id"])
+            if res:
+                if res["gate"]["urgent"]:
+                    flags.insert(0, {"kind": "act_today", "text": "Notice deadline within 3 days"})
+                if res["gate"]["route"] == "attorney":
+                    flags.append({"kind": "attorney", "text": "Attorney review"})
+        if st["level"] in ("missed", "missed_2_days"):
+            flags.append({"kind": "missed_checkin", "text": "Two days without a check-in" if st["level"] == "missed_2_days" else "Missed medication check-in"})
+        elif st["level"] == "late":
+            flags.append({"kind": "late", "text": "Check-in coming due"})
+        rows.append({"id": p["id"], "name": p["display_name"], "age": p["age"], "language": p["language"], "city": p["city"],
+                     "segment": p["segment"], "lives_alone": p["lives_alone"], "status": st["level"], "flags": flags,
+                     "next_event": next_ev, "cases": cases_by_person.get(p["id"], [])})
+    order = {"act_today": 0, "attorney": 1, "missed_checkin": 2, "late": 3, "upcoming": 4}
+    rows.sort(key=lambda r: min([order[f["kind"]] for f in r["flags"]] or [9]))
+    return {"today": today().isoformat(), "rows": rows}
+
+
+# ---------- notices ----------
+@app.get("/api/cases")
+def cases():
+    return pipeline.cases()
+
+
+@app.post("/api/cases/{case_id}/run")
+def run_case(case_id: str):
+    if case_id not in pipeline._CASES:
+        raise HTTPException(404, "Unknown case")
+    return pipeline.run_case(case_id)
+
+
+@app.get("/api/cases/{case_id}")
+def get_case(case_id: str):
+    """Returns the cached result, or result: null when the case has not run yet."""
+    return {"result": pipeline.RESULTS.get(case_id)}
+
+
+class Approve(BaseModel):
+    navigator: str = Field(min_length=1)
+    letter: str | None = None
+
+
+@app.post("/api/cases/{case_id}/approve")
+def approve(case_id: str, body: Approve):
+    if case_id not in pipeline.RESULTS:
+        raise HTTPException(404, "Run the case first")
+    return pipeline.approve(case_id, body.navigator, body.letter)
+
+
+@app.post("/api/cases/{case_id}/save")
+def save(case_id: str):
+    if case_id not in pipeline.RESULTS:
+        raise HTTPException(404, "Run the case first")
+    return {"saved": pipeline.save_to_record(case_id)}
+
+
+@app.post("/api/decode")
+async def decode(person_id: str = Form(...), text: str = Form(""), image: UploadFile | None = File(None)):
+    if vault.get(person_id) is None:
+        raise HTTPException(404, "Unknown person")
+    b64 = None
+    media = "image/jpeg"
+    if image is not None:
+        data = await image.read()
+        if len(data) > 8_000_000:
+            raise HTTPException(413, "Image over 8 MB")
+        b64 = base64.b64encode(data).decode()
+        media = image.content_type or media
+    if not text and not b64:
+        raise HTTPException(400, "Paste notice text or upload an image")
+    return pipeline.decode_custom(person_id, text, b64, media)
+
+
+# ---------- record ----------
+@app.get("/api/people")
+def people():
+    return [{"id": p["id"], "name": p["display_name"], "language": p["language"], "segment": p["segment"], "city": p["city"]} for p in vault.all_people()]
+
+
+@app.get("/api/people/{pid}")
+def person(pid: str):
+    p = vault.get(pid)
+    if p is None:
+        raise HTTPException(404, "Unknown person")
+    return vault.public_view(p)
+
+
+class Checkin(BaseModel):
+    type: str = Field(pattern="^(daily|med)$")
+    item_id: str | None = None
+
+
+@app.post("/api/people/{pid}/checkin")
+def checkin(pid: str, body: Checkin):
+    if vault.get(pid) is None:
+        raise HTTPException(404, "Unknown person")
+    try:
+        entry = vault.checkin(pid, body.type, body.item_id)
+    except ValueError as e:
+        raise HTTPException(400, str(e))
+    return {"entry": entry, "status": vault.status(vault.get(pid))}
+
+
+class Ask(BaseModel):
+    question: str = Field(min_length=1, max_length=500)
+    lang: str | None = None
+
+
+@app.post("/api/people/{pid}/ask")
+def ask(pid: str, body: Ask):
+    if vault.get(pid) is None:
+        raise HTTPException(404, "Unknown person")
+    return ask_mod.ask(pid, scrub(body.question), body.lang)
+
+
+class Consent(BaseModel):
+    granted: bool
+    given_by: str = "self"
+    recorded_by: str = Field(min_length=1)
+
+
+@app.post("/api/people/{pid}/consent")
+def consent(pid: str, body: Consent):
+    if vault.get(pid) is None:
+        raise HTTPException(404, "Unknown person")
+    return {"consent": vault.set_consent(pid, body.granted, body.given_by, body.recorded_by)}
+
+
+@app.get("/api/people/{pid}/emergency-card")
+def emergency_card(pid: str):
+    try:
+        return emergency.card(pid)
+    except KeyError:
+        raise HTTPException(404, "Unknown person")
+    except emergency.ConsentRequired as e:
+        raise HTTPException(403, str(e))
+
+
+# ---------- nonprofit finder ----------
+@app.get("/api/nonprofits/search")
+def nonprofit_search(q: str = "", limit: int = 12):
+    if not q.strip():
+        raise HTTPException(400, "Enter a search, for example: Claude nonprofit partners in San Francisco")
+    return nonprofits.search(q.strip()[:200], max(1, min(limit, 30)))
+
+
+# ---------- static ----------
 @app.get("/")
 def index():
-    return FileResponse(ROOT / "frontend" / "index.html")
+    return FileResponse(FRONTEND / "index.html")
 
 
-@app.get("/api/status")
-def status():
-    return {"live": agents.live_available(), "model": agents.MODEL, "kb_version": pipeline.KB["version"]}
-
-
-@app.get("/api/samples")
-def list_samples():
-    out = []
-    for sid, s in samples.SAMPLES.items():
-        rr = compute(s["facts"], s["client"], date.fromisoformat(s["as_of"]))
-        nxt = min(rr.deadlines, key=lambda d: d.days_left) if rr.deadlines else None
-        out.append({
-            "id": sid, "title": s["title"], "client": s["client"], "as_of": s["as_of"],
-            "simulated": s.get("simulated", False), "image": "/" + s["image"],
-            "triage": rr.triage_score, "review_status": rr.review_status,
-            "next_deadline": nxt.__dict__ if nxt else None,
-        })
-    return sorted(out, key=lambda x: -x["triage"])
-
-
-@app.post("/api/analyze")
-async def analyze(
-    sample_id: str = Form(""),
-    client_json: str = Form("{}"),
-    text: str = Form(""),
-    force_replay: bool = Form(False),
-    file: UploadFile | None = File(None),
-):
-    client = json.loads(client_json or "{}")
-    case = {"case_id": f"case-{uuid.uuid4().hex[:8]}", "client": client, "text": text, "force_replay": force_replay}
-    if sample_id and sample_id in samples.SAMPLES:
-        s = samples.SAMPLES[sample_id]
-        case.update(sample_id=sample_id, as_of=s["as_of"], client=client or s["client"])
-        img = ROOT / s["image"]
-        if img.exists():
-            case.update(file_bytes=img.read_bytes(), media_type="image/png")
-    if file is not None:
-        case.update(file_bytes=await file.read(), media_type=file.content_type or "image/png")
-
-    async def stream():
-        try:
-            async for event in pipeline.run(case):
-                yield f"data: {json.dumps(event, default=str)}\n\n"
-        except Exception as exc:  # surface failures to the UI rather than hanging
-            audit(case["case_id"], "error", "system", meta={"error": type(exc).__name__})
-            yield f"data: {json.dumps({'type': 'error', 'message': str(exc)})}\n\n"
-
-    return StreamingResponse(stream(), media_type="text/event-stream")
-
-
-class Approval(BaseModel):
-    case_id: str
-    navigator: str
-    letter: str
-    edits_made: bool
-
-
-@app.post("/api/approve")
-def approve(a: Approval):
-    entry = audit(a.case_id, "navigator_approved", f"navigator:{a.navigator}", payload_out=a.letter, meta={"edits_made": a.edits_made})
-    return {"ok": True, "entry_hash": entry["entry_hash"]}
-
-
-@app.get("/api/audit/{case_id}")
-def get_trail(case_id: str):
-    return {"trail": case_trail(case_id), "chain": verify_chain()}
+app.mount("/static", StaticFiles(directory=str(FRONTEND)), name="static")

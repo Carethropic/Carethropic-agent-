@@ -1,220 +1,178 @@
-"""Deterministic legal logic for Kalinga.
+"""Deterministic legal core: deadlines, defects, exemptions, escalation.
 
-Everything in this file is plain Python on purpose. Dates, deadlines, notice
-defects, and exemption screening are never left to a language model. Claude
-reads and explains; this module computes. The LLM output is then checked
-against these computed values by the verifier.
+The model never does date math. Every date in any Kalinga output comes from here.
 """
 from __future__ import annotations
 
-import json
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, field, asdict
 from datetime import date, timedelta
-from pathlib import Path
-from typing import Optional
 
-KB_PATH = Path(__file__).parent / "knowledge_base.json"
+# California state holidays (observed) used for conservative roll-back.
+CA_HOLIDAYS = {
+    date(2026, 11, 11), date(2026, 11, 26), date(2026, 11, 27), date(2026, 12, 25),
+    date(2027, 1, 1), date(2027, 1, 18), date(2027, 2, 15), date(2027, 3, 31),
+    date(2027, 5, 31), date(2027, 7, 5), date(2027, 9, 6), date(2027, 11, 11),
+    date(2027, 11, 25), date(2027, 11, 26), date(2027, 12, 24),
+}
 
-
-def load_kb() -> dict:
-    return json.loads(KB_PATH.read_text())
-
-
-KB = load_kb()
-AUTH_BY_ID = {a["id"]: a for a in KB["authorities"]}
-
-
-def parse_date(value: Optional[str]) -> Optional[date]:
-    if not value:
-        return None
-    try:
-        return date.fromisoformat(value[:10])
-    except ValueError:
-        return None
+ADVANCE_NOTICE_MIN_DAYS = 10      # 42 C.F.R. 431.211
+HEARING_WINDOW_DAYS = 90          # 42 C.F.R. 431.221(d); Cal. W&I Code 10951
+WORK_RULE_RESPONSE_DAYS = 30      # P.L. 119-21 sec. 71119 noncompliance notice
+RENEWAL_RESPONSE_MIN_DAYS = 30    # 42 C.F.R. 435.916
+RECONSIDERATION_DAYS = 90         # 42 C.F.R. 435.916 reconsideration period
+URGENT_DAYS = 3
 
 
-def prev_business_day(d: date) -> date:
-    """Conservative rule: if a deadline lands on a weekend, act by the Friday before."""
-    while d.weekday() >= 5:
+def business_day_on_or_before(d: date) -> date:
+    """Conservative act-by date: weekends and holidays roll BACK to the prior business day."""
+    while d.weekday() >= 5 or d in CA_HOLIDAYS:
         d -= timedelta(days=1)
     return d
 
 
 @dataclass
 class Deadline:
-    rule: str
+    key: str
     label: str
-    due: str
-    act_by: str
+    date: str
     days_left: int
-    basis: str
-    authority_id: str
-    severity: str  # critical | high | normal
-    note: str = ""
+    authority: str
+    action: str
+    rolled_back: bool = False
 
 
 @dataclass
-class Flag:
+class Finding:
+    kind: str          # defect | exemption | escalation
     code: str
-    level: str  # escalate | warn | info
     message: str
-    authority_id: Optional[str] = None
+    authority: str | None = None
 
 
 @dataclass
-class RuleResult:
-    deadlines: list = field(default_factory=list)
-    flags: list = field(default_factory=list)
-    exemptions: list = field(default_factory=list)
-    authority_ids: list = field(default_factory=list)
-    triage_score: int = 0
-    review_status: str = "ready_for_navigator"
-    review_reasons: list = field(default_factory=list)
+class RulesResult:
+    deadlines: list[Deadline] = field(default_factory=list)
+    defects: list[Finding] = field(default_factory=list)
+    exemptions: list[Finding] = field(default_factory=list)
+    escalations: list[Finding] = field(default_factory=list)
+    authorities: list[str] = field(default_factory=list)
+    route: str = "navigator"   # navigator | attorney
+    urgent: bool = False
 
     def to_dict(self) -> dict:
-        d = asdict(self)
-        return d
+        return asdict(self)
+
+    def deadline_map(self) -> dict[str, str]:
+        return {d.key: d.date for d in self.deadlines}
 
 
-def _mk(rule, label, due: date, today: date, basis, auth, note="") -> Deadline:
-    act_by = prev_business_day(due)
-    left = (act_by - today).days
-    sev = "critical" if left <= 3 else "high" if left <= 10 else "normal"
-    return Deadline(rule, label, due.isoformat(), act_by.isoformat(), left, basis, auth, sev, note)
+def _d(s: str | None) -> date | None:
+    return date.fromisoformat(s) if s else None
 
 
-ADVERSE = {"discontinuance", "denial", "reduction", "ce_noncompliance"}
+def _mk(key, label, raw: date, today: date, authority, action) -> Deadline:
+    adj = business_day_on_or_before(raw)
+    return Deadline(key, label, adj.isoformat(), (adj - today).days, authority, action, adj != raw)
 
 
-def compute(facts: dict, client: dict, today: date) -> RuleResult:
-    """facts: structured notice extraction. client: navigator-entered profile."""
-    r = RuleResult()
-    ntype = (facts.get("notice_type") or "unknown").lower()
-    notice_date = parse_date(facts.get("notice_date"))
-    effective = parse_date(facts.get("effective_date"))
-    printed_due = parse_date(facts.get("response_due_date"))
-    auth = set()
-
-    if not notice_date:
-        r.flags.append(Flag("NO_NOTICE_DATE", "escalate", "No notice date could be read, so legal deadlines cannot be computed safely."))
-
-    # ---- Deadlines -------------------------------------------------------
-    if notice_date and ntype in ADVERSE:
-        r.deadlines.append(_mk("HEARING_90", "Last day to request a State Hearing",
-                               notice_date + timedelta(days=90), today,
-                               "90 days from the notice date (counted conservatively from the date printed, not the date received).",
-                               "MC-HEARING-90"))
-        auth.add("MC-HEARING-90")
-        if ntype != "denial":
-            if effective:
-                app_due = effective - timedelta(days=1)
-                basis = "Request before the effective date printed on the notice."
-            else:
-                app_due = notice_date + timedelta(days=10)
-                basis = "No effective date printed, so 10 days from the notice date."
-            r.deadlines.append(_mk("AID_PAID_PENDING", "Request hearing to keep coverage during appeal (aid paid pending)",
-                                   app_due, today, basis, "MC-AID-PENDING"))
-            auth.add("MC-AID-PENDING")
-
-    if ntype == "ce_noncompliance" and notice_date:
-        r.deadlines.append(_mk("CE_RESPONSE_30", "Respond with proof of hours or an exemption",
-                               notice_date + timedelta(days=30), today,
-                               "30 days from the notice date. The law may allow a few extra days for mailing; Kalinga uses the earlier date.",
-                               "MC-CE-NONCOMPLIANCE"))
-        auth.update({"MC-CE-NONCOMPLIANCE", "MC-CE-RULE"})
-
-    if ntype in {"request_for_information", "renewal"}:
-        due = printed_due or (notice_date + timedelta(days=30) if notice_date else None)
-        if due:
-            r.deadlines.append(_mk("RFI_DUE", "Return requested documents or renewal form", due, today,
-                                   "Due date printed on the notice." if printed_due else "No due date printed; federal rules give at least 30 days, so Kalinga assumes 30.",
-                                   "MC-RENEWAL"))
-        auth.add("MC-RENEWAL")
-        if printed_due and notice_date and (printed_due - notice_date).days < 30:
-            r.flags.append(Flag("SHORT_RFI_WINDOW", "warn",
-                                f"The notice gives only {(printed_due - notice_date).days} days to respond. Federal rules require at least 30 days for renewal information.",
-                                "MC-RENEWAL"))
-
-    if ntype == "discontinuance" and (facts.get("reason_code") or "").lower() in {"missing_information", "renewal_not_returned"} and effective:
-        r.deadlines.append(_mk("RECONSIDERATION_90", "Return the form to restore coverage without reapplying",
-                               effective + timedelta(days=90), today,
-                               "90 days after coverage ends for a missing renewal form.", "MC-RENEWAL"))
-        auth.add("MC-RENEWAL")
-
-    # ---- Notice defect checks ------------------------------------------
-    if ntype in ADVERSE and notice_date and effective:
-        gap = (effective - notice_date).days
-        if gap < 10:
-            r.flags.append(Flag("SHORT_ADVANCE_NOTICE", "escalate",
-                                f"The action takes effect {gap} days after the notice date. Federal rules generally require at least 10 days of advance notice.",
-                                "MC-ADVANCE-NOTICE"))
-            auth.add("MC-ADVANCE-NOTICE")
-    if ntype in ADVERSE:
-        if not facts.get("reason_text"):
-            r.flags.append(Flag("NO_REASON", "escalate", "The notice does not state a clear reason for the action.", "MC-NOTICE-CONTENT"))
-            auth.add("MC-NOTICE-CONTENT")
-        if not facts.get("regulations_cited"):
-            r.flags.append(Flag("NO_REGULATION", "warn", "The notice does not cite the regulation that supports the action.", "MC-NOTICE-CONTENT"))
-            auth.add("MC-NOTICE-CONTENT")
-
-    pref = (client.get("preferred_language") or "English").lower()
-    notice_lang = (facts.get("language") or "English").lower()
-    if pref != notice_lang:
-        r.flags.append(Flag("LANGUAGE_ACCESS", "info",
-                            f"The client prefers {client.get('preferred_language')}, and the notice is in {facts.get('language') or 'English'}. Request translated notices and an interpreter.",
-                            "LANG-ACCESS"))
-        auth.add("LANG-ACCESS")
-
-    # ---- Exemption screener (community engagement) ---------------------
-    if ntype == "ce_noncompliance" or "community_engagement" in (facts.get("topics") or []):
-        birth = parse_date(client.get("pregnancy_end_date"))
-        ref = notice_date or today
-        if client.get("pregnant"):
-            r.exemptions.append({"code": "PREGNANT", "label": "Currently pregnant", "proof": "Clinician statement or pregnancy verification"})
-        if birth and (ref - birth).days <= 365:
-            r.exemptions.append({"code": "POSTPARTUM", "label": f"Postpartum (pregnancy ended {birth.isoformat()})", "proof": "Birth record or hospital discharge summary"})
-        ages = client.get("children_ages") or []
-        if any(a is not None and a <= 13 for a in ages):
-            r.exemptions.append({"code": "CAREGIVER_13", "label": "Parent or caregiver of a child age 13 or younger", "proof": "Child's birth certificate or school record"})
-        if client.get("disability_or_medically_frail"):
-            r.exemptions.append({"code": "MEDICALLY_FRAIL", "label": "Disability or serious medical condition", "proof": "Clinician statement describing how the condition limits work"})
-        if client.get("meets_calfresh_or_calworks_work_rules"):
-            r.exemptions.append({"code": "SNAP_TANF", "label": "Already meets CalFresh or CalWORKs work rules", "proof": "CalFresh or CalWORKs case record"})
-        if r.exemptions:
-            auth.add("MC-CE-EXEMPT")
-            r.flags.append(Flag("EXEMPTION_LIKELY", "warn",
-                                f"{len(r.exemptions)} exemption(s) appear to apply, so this noncompliance notice may be in error.", "MC-CE-EXEMPT"))
-
-    # ---- Health continuity --------------------------------------------
-    birth = parse_date(client.get("pregnancy_end_date"))
+def screen_exemptions(client: dict, notice_type: str) -> list[Finding]:
+    """Work rule exemptions (P.L. 119-21 sec. 71119)."""
+    if notice_type != "work_rule_noncompliance":
+        return []
+    out = []
     if client.get("pregnant"):
-        auth.update({"MC-PREGNANCY", "US-EMTALA"})
-        if ntype in ADVERSE:
-            r.flags.append(Flag("PRENATAL_AT_RISK", "escalate", "The client is pregnant and faces a loss of coverage. Prenatal care continuity is at risk.", "MC-PREGNANCY"))
-    if birth and ((notice_date or today) - birth).days <= 365:
-        auth.update({"MC-POSTPARTUM-12", "US-ACA-PREVENTIVE"})
-        if ntype in ADVERSE:
-            r.flags.append(Flag("POSTPARTUM_PROTECTED", "warn", "The client is within 12 months postpartum, which carries continuous coverage protections.", "MC-POSTPARTUM-12"))
+        out.append(Finding("exemption", "pregnant", "Pregnant members are exempt from work reporting.", "pl-119-21-71119"))
+    pp = client.get("postpartum_months")
+    if pp is not None and pp <= 12:
+        out.append(Finding("exemption", "postpartum", f"Postpartum ({pp} months) is within the exempt postpartum period.", "pl-119-21-71119"))
+    ages = client.get("children_ages") or []
+    if any(a <= 13 for a in ages):
+        out.append(Finding("exemption", "caregiver_child_13", "Parent or caretaker of a child age 13 or younger is exempt.", "pl-119-21-71119"))
+    age = client.get("age")
+    if age is not None and (age < 19 or age > 64):
+        out.append(Finding("exemption", "age_outside_19_64", "Work reporting applies only to adults age 19 to 64.", "pl-119-21-71119"))
+    if client.get("medically_frail"):
+        out.append(Finding("exemption", "medically_frail", "Medically frail members are exempt.", "pl-119-21-71119"))
+    return out
 
-    # ---- Extraction confidence gate ------------------------------------
-    low = [k for k, v in (facts.get("confidence") or {}).items() if isinstance(v, (int, float)) and v < 0.7]
+
+def evaluate(notice: dict, client: dict, today: date) -> RulesResult:
+    """notice: extracted fields (ISO date strings). client: screening facts."""
+    r = RulesResult()
+    t = notice["notice_type"]
+    nd = _d(notice.get("notice_date"))
+    eff = _d(notice.get("effective_date"))
+    stated_due = _d(notice.get("stated_due_date"))
+    conf = notice.get("confidence", {})
+
+    low = [k for k, v in conf.items() if v < 0.7]
     if low:
-        r.flags.append(Flag("LOW_CONFIDENCE_FIELDS", "escalate", "Kalinga could not read these fields with confidence: " + ", ".join(low) + "."))
-    if printed_due and notice_date and printed_due < notice_date:
-        r.flags.append(Flag("DATE_CONFLICT", "escalate", "The response date printed on the notice is earlier than the notice date."))
+        r.escalations.append(Finding("escalation", "low_confidence", f"Low confidence on: {', '.join(low)}. A human must confirm."))
 
-    # ---- Triage and human review gate ----------------------------------
-    min_left = min([d.days_left for d in r.deadlines], default=99)
-    score = 0
-    score += 50 if min_left <= 3 else 30 if min_left <= 10 else 10 if min_left <= 30 else 0
-    score += 15 * sum(1 for f in r.flags if f.level == "escalate")
-    score += 5 * sum(1 for f in r.flags if f.level == "warn")
-    score += 10 if client.get("pregnant") else 0
-    r.triage_score = min(score, 100)
+    if nd is None:
+        r.escalations.append(Finding("escalation", "missing_notice_date", "Notice date missing. No deadlines computed."))
+        r.route = "attorney"
+        return r
 
-    esc = [f for f in r.flags if f.level == "escalate"]
-    if esc:
-        r.review_status = "needs_human_expert"
-        r.review_reasons = [f.message for f in esc]
-    r.authority_ids = sorted(auth)
+    if t == "discontinuance":
+        r.deadlines.append(_mk("hearing_deadline", "Request a state hearing", nd + timedelta(days=HEARING_WINDOW_DAYS), today,
+                               "ca-wic-10951", "File a hearing request"))
+        if eff:
+            r.deadlines.append(_mk("aid_paid_pending", "Keep coverage during appeal (aid paid pending)", eff - timedelta(days=1), today,
+                                   "fed-431-230", "Request the hearing before coverage ends"))
+            notice_days = (eff - nd).days
+            if notice_days < ADVANCE_NOTICE_MIN_DAYS:
+                r.defects.append(Finding("defect", "short_advance_notice",
+                                         f"Notice gave {notice_days} days of advance notice. Federal rules require at least {ADVANCE_NOTICE_MIN_DAYS}.",
+                                         "fed-431-211"))
+
+    elif t == "work_rule_noncompliance":
+        r.deadlines.append(_mk("work_rule_response", "Respond to work rule notice", nd + timedelta(days=WORK_RULE_RESPONSE_DAYS), today,
+                               "pl-119-21-71119", "Send exemption proof or compliance proof"))
+        r.deadlines.append(_mk("hearing_deadline", "Request a state hearing", nd + timedelta(days=HEARING_WINDOW_DAYS), today,
+                               "ca-wic-10951", "File a hearing request if the county acts"))
+
+    elif t in ("renewal_documents", "annual_renewal"):
+        legal_due = nd + timedelta(days=RENEWAL_RESPONSE_MIN_DAYS)
+        act_by = min(stated_due, legal_due) if stated_due else legal_due
+        r.deadlines.append(_mk("renewal_response", "Return renewal form and documents", act_by, today,
+                               "fed-435-916", "Return the form and the listed documents"))
+        if stated_due and (stated_due - nd).days < RENEWAL_RESPONSE_MIN_DAYS:
+            r.defects.append(Finding("defect", "short_renewal_window",
+                                     f"Notice gives {(stated_due - nd).days} days. Federal rules require at least {RENEWAL_RESPONSE_MIN_DAYS}.",
+                                     "fed-435-916"))
+
+    elif t == "termination_no_renewal":
+        term = eff or nd
+        r.deadlines.append(_mk("reconsideration", "Return renewal form to restore coverage (reconsideration)",
+                               term + timedelta(days=RECONSIDERATION_DAYS), today, "fed-435-916",
+                               "Return the renewal form; coverage can restart without a new application"))
+        r.deadlines.append(_mk("hearing_deadline", "Request a state hearing", nd + timedelta(days=HEARING_WINDOW_DAYS), today,
+                               "ca-wic-10951", "File a hearing request"))
+    else:
+        r.escalations.append(Finding("escalation", "unknown_notice_type", f"Notice type '{t}' is outside the knowledge base."))
+
+    if t in ("discontinuance", "termination_no_renewal", "work_rule_noncompliance") and not notice.get("legal_basis_cited", True):
+        r.defects.append(Finding("defect", "missing_legal_basis", "Notice does not cite the law or rule behind the action.", "fed-431-210"))
+
+    r.exemptions = screen_exemptions(client, t)
+
+    # Escalation rules
+    if r.defects:
+        r.escalations.append(Finding("escalation", "notice_defect", "Notice defect found. Attorney review recommended."))
+    loses_coverage = t in ("discontinuance", "termination_no_renewal")
+    if loses_coverage and (client.get("pregnant") or (client.get("postpartum_months") is not None and client["postpartum_months"] <= 12)):
+        r.escalations.append(Finding("escalation", "pregnancy_coverage_loss", "Pregnant or postpartum client facing loss of coverage."))
+    soonest = min((d.days_left for d in r.deadlines), default=99)
+    r.urgent = soonest <= URGENT_DAYS
+    if r.urgent:
+        r.escalations.append(Finding("escalation", "urgent_deadline", f"A deadline is {max(soonest, 0)} day(s) away."))
+    if any(e.code in ("notice_defect", "pregnancy_coverage_loss", "low_confidence", "unknown_notice_type") for e in r.escalations):
+        r.route = "attorney"
+
+    auth = []
+    for x in [*(d.authority for d in r.deadlines), *(f.authority for f in r.defects + r.exemptions)]:
+        if x and x not in auth:
+            auth.append(x)
+    r.authorities = auth
     return r
